@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'WtCore_Example' do
+  pod 'WtCore', :path => '../'
+
+  target 'WtCore_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
