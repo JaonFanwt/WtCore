@@ -24,6 +24,11 @@
 		6D545D31A1F215F2AEA0D469 /* Pods_WtCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7487ABAC0D62295FE57BDEF3 /* Pods_WtCore_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		B05A212A1F59026100FBB990 /* WtDemoCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21291F59026100FBB990 /* WtDemoCellModel.m */; };
+		B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */; };
+		B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */; };
+		B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21361F59313900FBB990 /* WtDemoObserverViewController.m */; };
+		B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21371F59313900FBB990 /* WtDemoObserverViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,14 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7487ABAC0D62295FE57BDEF3 /* Pods_WtCore_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WtCore_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B05A21281F59026100FBB990 /* WtDemoCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCellModel.h; sourceTree = "<group>"; };
+		B05A21291F59026100FBB990 /* WtDemoCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCellModel.m; sourceTree = "<group>"; };
+		B05A21301F5909AC00FBB990 /* WtDemoDelegateProxyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoDelegateProxyViewController.h; sourceTree = "<group>"; };
+		B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoDelegateProxyViewController.m; sourceTree = "<group>"; };
+		B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoDelegateProxyViewController.xib; sourceTree = "<group>"; };
+		B05A21351F59313900FBB990 /* WtDemoObserverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoObserverViewController.h; sourceTree = "<group>"; };
+		B05A21361F59313900FBB990 /* WtDemoObserverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoObserverViewController.m; sourceTree = "<group>"; };
+		B05A21371F59313900FBB990 /* WtDemoObserverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoObserverViewController.xib; sourceTree = "<group>"; };
 		F0F2F4244F4B8DFAE6074F8E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F8F45F305DAF92D6A023524A /* Pods-WtCore_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +145,7 @@
 		6003F593195388D20070C39A /* Example for WtCore */ = {
 			isa = PBXGroup;
 			children = (
+				B05A21221F58FFA900FBB990 /* Classes */,
 				6003F59C195388D20070C39A /* WtAppDelegate.h */,
 				6003F59D195388D20070C39A /* WtAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -183,6 +197,37 @@
 				3D226771933FE0B24C9098EB /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		B05A21221F58FFA900FBB990 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B05A212F1F59098200FBB990 /* ViewControllers */,
+				B05A21271F59022700FBB990 /* DemoCellModels */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		B05A21271F59022700FBB990 /* DemoCellModels */ = {
+			isa = PBXGroup;
+			children = (
+				B05A21281F59026100FBB990 /* WtDemoCellModel.h */,
+				B05A21291F59026100FBB990 /* WtDemoCellModel.m */,
+			);
+			path = DemoCellModels;
+			sourceTree = "<group>";
+		};
+		B05A212F1F59098200FBB990 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B05A21301F5909AC00FBB990 /* WtDemoDelegateProxyViewController.h */,
+				B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */,
+				B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */,
+				B05A21351F59313900FBB990 /* WtDemoObserverViewController.h */,
+				B05A21361F59313900FBB990 /* WtDemoObserverViewController.m */,
+				B05A21371F59313900FBB990 /* WtDemoObserverViewController.xib */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		D626093B707FCAE02FD112D0 /* Pods */ = {
@@ -281,6 +326,8 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */,
+				B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -385,10 +432,18 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WtCore_Example/Pods-WtCore_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
+				"${BUILT_PRODUCTS_DIR}/KMCGeigerCounter/KMCGeigerCounter.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/WtCore/WtCore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMCGeigerCounter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WtCore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,8 +458,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */,
 				6003F59E195388D20070C39A /* WtAppDelegate.m in Sources */,
+				B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* WtViewController.m in Sources */,
+				B05A212A1F59026100FBB990 /* WtDemoCellModel.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

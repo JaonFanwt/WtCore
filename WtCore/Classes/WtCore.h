@@ -13,3 +13,4 @@
 
 #import "WtSwizzle.h"
 #import "WtDispatch.h"
+#import "WtDelegateProxy.h"

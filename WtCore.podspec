@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WtCore'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = 'WtCore library.'
 
 # This description is used to generate tags and improve search results.
@@ -31,8 +31,6 @@ blablabla private~
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'WtCore/Classes/**/*'
-  
   # s.resource_bundles = {
   #   'WtCore' => ['WtCore/Assets/*.png']
   # }
@@ -40,4 +38,32 @@ blablabla private~
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+
+  s.dependency 'ReactiveCocoa', '~> 2.5'
+
+  s.subspec "Core" do |ss|
+    ss.ios.source_files = "WtCore/Classes/**/*"
+    ss.ios.public_header_files = "WtCore/Classes/**/*.h"
+  end
+
+  s.subspec "Observer" do |ss|
+    ss.ios.source_files = "Extensions/WtObserver/**/*"
+    ss.ios.public_header_files = "Extensions/WtObserver/**/*.h"
+  end
+
+  s.subspec "UI" do |ss|
+    ss.ios.source_files = "Components/UI/**/*"
+    ss.ios.public_header_files = "Components/UI/**/*.h"
+  end
+
+  s.subspec "DebugTools" do |ss|
+    ss.ios.source_files = "Components/DebugTools/**/*"
+    ss.ios.public_header_files = "Components/DebugTools/**/*.h"
+    ss.dependency 'FLEX'
+    ss.dependency 'KMCGeigerCounter'
+    ss.dependency 'Masonry'
+    ss.dependency 'ReactiveCocoa', '~> 2.5'
+    ss.dependency 'WtCore/UI'
+  end
+
 end

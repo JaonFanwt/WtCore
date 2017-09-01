@@ -1,4 +1,5 @@
 use_frameworks!
+platform :ios, '8.0'
 
 target 'WtCore_Example' do
   pod 'WtCore', :path => '../'
