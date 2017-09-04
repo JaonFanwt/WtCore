@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WtDemoWebViewController">
+            <connections>
+                <outlet property="view" destination="WO7-8p-7KW" id="6t4-oS-vyF"/>
+                <outlet property="webView" destination="XO1-JP-cac" id="007-O8-n6P"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="WO7-8p-7KW">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XO1-JP-cac">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="a8K-Zm-V6k"/>
+                    </connections>
+                </webView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="XO1-JP-cac" firstAttribute="top" secondItem="WO7-8p-7KW" secondAttribute="top" id="Cm0-zl-VoV"/>
+                <constraint firstAttribute="bottom" secondItem="XO1-JP-cac" secondAttribute="bottom" id="GyQ-nr-cwM"/>
+                <constraint firstItem="XO1-JP-cac" firstAttribute="leading" secondItem="WO7-8p-7KW" secondAttribute="leading" id="uuC-pd-yCY"/>
+                <constraint firstAttribute="trailing" secondItem="XO1-JP-cac" secondAttribute="trailing" id="wni-h5-5U8"/>
+            </constraints>
+            <point key="canvasLocation" x="-267.5" y="-12.5"/>
+        </view>
+    </objects>
+</document>

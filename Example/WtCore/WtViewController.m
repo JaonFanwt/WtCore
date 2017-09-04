@@ -146,6 +146,19 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
     }
+    
+    {// ThunderWeb
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"WtThunderWeb";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            Class cls = NSClassFromString(@"WtDemoThunderWebViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource

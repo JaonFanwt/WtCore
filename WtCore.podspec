@@ -66,4 +66,10 @@ blablabla private~
     ss.dependency 'WtCore/UI'
   end
 
+  s.subspec "ThunderWeb" do |ss|
+    ss.ios.source_files = "Extensions/WtThunderWeb/**/*"
+    ss.ios.public_header_files = "Extensions/WtThunderWeb/**/*.h"
+    s.dependency 'ReactiveCocoa', '~> 2.5'
+  end
+
 end
