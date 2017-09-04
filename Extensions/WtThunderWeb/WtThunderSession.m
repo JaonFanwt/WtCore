@@ -48,7 +48,9 @@ NSString *thunderSessionID(NSString *urlString, NSString *userIdentifier) {
 }
 
 - (void)start {
-    self.connection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:YES];
+    self.connection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:NO];
+    [self.connection setDelegateQueue:[WtThunderQueueManager connectionQueue]];
+    [self.connection start];
     
     // 暂时未搞明白NSURLSession比NSURLConnection慢很多的原因，先屏蔽掉
 //    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];

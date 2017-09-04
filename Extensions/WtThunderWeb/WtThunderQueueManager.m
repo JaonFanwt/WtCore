@@ -23,7 +23,6 @@ void wtDispatchInMainQueue(dispatch_block_t block) {
     dispatch_once(&onceToken, ^{
         _connectionQueue = [[NSOperationQueue alloc] init];
         _connectionQueue.name = @"com.wtfan.WtThunderQueue.Connection";
-        _connectionQueue.maxConcurrentOperationCount = 1;
         _connectionQueue.qualityOfService = NSQualityOfServiceUserInitiated;
     });
     
