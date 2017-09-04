@@ -31,9 +31,20 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
 
 @implementation WtThunderURLProtocol
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    if (!([request.URL.scheme isEqualToString:@"http"] ||
+        [request.URL.scheme isEqualToString:@"https"])) {
+        return NO;
+    }
+    
     NSString *value = [request valueForHTTPHeaderField:WtThunderHeaderKeyLoadType];
     
-    if (value) {
+    if (value && [value isEqualToString:WtThunderHeaderValueRemoteLoad]) {
+        return NO;
+    }else if (value && [value isEqualToString:WtThunderHeaderValueWebviewLoad]) {
+        NSLog(@"[Pre load request]: %@", request.URL.absoluteString);
+        return YES;
+    }else if ([[WtThunderClient shared] isExistSessionWithUrlString:request.URL.absoluteString userIdentifier:@""]) {
+        NSLog(@"[Pre load request]: %@", request.URL.absoluteString);
         return YES;
     }
     
@@ -41,7 +52,9 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
-    return request;
+    NSMutableURLRequest *wrapRequest = request.mutableCopy;
+    [NSURLProtocol setProperty:WtThunderHeaderValueRemoteLoad forKey:WtThunderHeaderKeyLoadType inRequest:wrapRequest];
+    return wrapRequest;
 }
 
 - (void)startLoading {
@@ -88,11 +101,10 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
                                  kWtThunderProtocolDataKey: session};
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
         
+        NSString *t = [NSString stringWithFormat:@"%.0f", endTime - beginTime];
+        [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"session request" value:t error:nil];
+        
         if (containerStartInitTime > 0) {
-            NSString *t = [NSString stringWithFormat:@"%.0f", endTime - beginTime];
-            NSLog(@"[Glean Web BI]The session request takes %@ms", t);
-            [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"session request" value:t error:nil];
-            
             t = [NSString stringWithFormat:@"%.0f", endTime - containerStartInitTime];
             NSLog(@"[Glean Web BI]From the viewController initialization to the session request completion takes %@ms", t);
             [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"VC initialization to session completion" value:t error:nil];

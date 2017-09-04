@@ -8,6 +8,14 @@
 
 #import "WtThunderQueueManager.h"
 
+void wtDispatchInConnectionQueue(dispatch_block_t block) {
+    [WtThunderQueueManager dispatchInConnectionQueue:block];
+}
+
+void wtDispatchInMainQueue(dispatch_block_t block) {
+    [WtThunderQueueManager dispatchInMainQueue:block];
+}
+
 @implementation WtThunderQueueManager
 + (NSOperationQueue *)connectionQueue {
     static NSOperationQueue *_connectionQueue = nil;
@@ -15,7 +23,7 @@
     dispatch_once(&onceToken, ^{
         _connectionQueue = [[NSOperationQueue alloc] init];
         _connectionQueue.name = @"com.wtfan.WtThunderQueue.Connection";
-        _connectionQueue.maxConcurrentOperationCount = 10;
+        _connectionQueue.maxConcurrentOperationCount = 1;
         _connectionQueue.qualityOfService = NSQualityOfServiceUserInitiated;
     });
     
@@ -30,6 +38,16 @@
     }else {
         NSBlockOperation *blkOP = [NSBlockOperation blockOperationWithBlock:block];
         [[self connectionQueue] addOperation:blkOP];
+    }
+}
+
++ (void)dispatchInMainQueue:(dispatch_block_t)block {
+    if (!block) return;
+    
+    if ([NSThread isMainThread]) {
+        block();
+    }else {
+        dispatch_async(dispatch_get_main_queue(), block);
     }
 }
 @end

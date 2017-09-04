@@ -25,6 +25,7 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, WtThunderSession *> *sessionMapping;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *proxyMapping;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id> *urlStringWorkingMapping;
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, WtThunderSession *> *cacheSessionMapping;
 @end
@@ -46,6 +47,7 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
         
         _sessionMapping = @{}.mutableCopy;
         _proxyMapping = @{}.mutableCopy;
+        _urlStringWorkingMapping = @{}.mutableCopy;
         
         _cacheSessionMapping = @{}.mutableCopy;
     }
@@ -58,16 +60,22 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     
     [_lock lock];
     
+    _urlStringWorkingMapping[urlString] = @1;
+    
     WtThunderSession *cacheSession = _cacheSessionMapping[sessionID];
-    if (cacheSession && ![cacheSession isExpiredWithMaxAge:_cacheControlMaxAge]) {
+    BOOL isCacheSessionExpired = [cacheSession isExpiredWithMaxAge:_cacheControlMaxAge];
+    if (isCacheSessionExpired) {
+        [_urlStringWorkingMapping removeObjectForKey:urlString];
+        [_cacheSessionMapping removeObjectForKey:sessionID];
+    }
+    
+    if (cacheSession && !isCacheSessionExpired) {
         if (proxy) [_proxyMapping[sessionID] addObject:proxy];
         
         [self session:cacheSession didRecieveResponse:cacheSession.response];
         [self session:cacheSession didLoadData:cacheSession.responseData];
         [self sessionDidFinish:cacheSession];
     }else {
-        [_cacheSessionMapping removeObjectForKey:sessionID];
-        
         WtThunderSession *session = _sessionMapping[sessionID];
         if (session) {
             // Block Mapping
@@ -90,8 +98,14 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     [_lock unlock];
 }
 
+- (BOOL)isExistSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier {
+    BOOL isExist = _urlStringWorkingMapping[urlString]?YES:NO;
+    
+    return isExist;
+}
+
 #pragma mark - WtThunderSessionDelegate
-- (void)session:(WtThunderSession *)session didRecieveResponse:(NSHTTPURLResponse *)response {
+- (void)session:(WtThunderSession *)session didRecieveResponse:(NSURLResponse *)response {
     [_lock lock];
     
     for (WtDelegateProxy<WtThunderSessionDelegate> *proxy in _proxyMapping[session.sessionID]) {
@@ -119,6 +133,7 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     }
     [_proxyMapping[session.sessionID] removeAllObjects];
     [_sessionMapping removeObjectForKey:session.sessionID];
+    [_urlStringWorkingMapping removeObjectForKey:session.urlString];
     
     [_lock unlock];
 }

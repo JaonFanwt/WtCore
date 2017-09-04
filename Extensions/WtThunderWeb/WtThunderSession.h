@@ -11,7 +11,7 @@
 #pragma mark - Protocol
 @class WtThunderSession;
 @protocol WtThunderSessionDelegate <NSObject>
-- (void)session:(WtThunderSession *)session didRecieveResponse:(NSHTTPURLResponse *)response;
+- (void)session:(WtThunderSession *)session didRecieveResponse:(NSURLResponse *)response;
 - (void)session:(WtThunderSession *)session didLoadData:(NSData *)date;
 - (void)session:(WtThunderSession *)session didFaild:(NSError *)error;
 - (void)sessionDidFinish:(WtThunderSession *)session;
@@ -22,12 +22,15 @@ NSString *thunderSessionID(NSString *urlString, NSString *userIdentifier);
 
 #pragma mark - Class
 @interface WtThunderSession : NSObject
+@property (nonatomic, assign, readonly) NSTimeInterval beginTime;
+@property (nonatomic, assign, readonly) NSTimeInterval endTime;
+
 @property (nonatomic, readonly) NSString *urlString;
 @property (nonatomic, readonly) NSString *sessionID;
 @property (nonatomic, weak) id<WtThunderSessionDelegate> delegate;
 
 @property (nonatomic, assign, readonly) BOOL isCompletion;
-@property (nonatomic, strong, readonly) NSHTTPURLResponse *response;
+@property (nonatomic, strong, readonly) NSURLResponse *response;
 @property (nonatomic, strong, readonly) NSMutableData *responseData;
 @property (nonatomic, strong, readonly) NSError *error;
 

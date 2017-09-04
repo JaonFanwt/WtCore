@@ -18,4 +18,5 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
 @property (nonatomic, assign) NSTimeInterval cacheControlMaxAge; // Default 10s
 + (instancetype)shared;
 - (void)createSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier delegateProxy:(WtDelegateProxy<WtThunderSessionDelegate> *)proxy;
+- (BOOL)isExistSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier;
 @end

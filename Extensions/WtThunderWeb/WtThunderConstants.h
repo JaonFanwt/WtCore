@@ -10,6 +10,7 @@
 
 #define WtThunderHeaderKeyLoadType @"wtthunder-web-native-request-type"
 #define WtThunderHeaderValueWebviewLoad @"__WT_THUNDER_WEB_REQUEST__"
+#define WtThunderHeaderValueRemoteLoad @"__WT_THUNDER_REMOTE_REQUEST__"
 
 #define WtThunderHeaderKeySessionUserIdentifier @"wtthunder-web-native-session-identifier"
 
