@@ -48,7 +48,7 @@
         cellModel.subTitle = @"wtRemoveParams:";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
-            NSURL *url = [NSURL URLWithString:@"https://www.google.co.jp/search?q=params&oQ=params&aqs=chrome..69i57j0l5.854j0j7&sourceid=chrome&ie=UTF-8"];
+            NSURL *url = [NSURL URLWithString:@"https://www.google.co.jp/search?q=params&oQ=params&aqs=chrome..69i57j0l5.854j0j7&sourceid=chrome&iE=UTF-8"];
             NSURL *wrapURL = [url wtRemoveParams:@[@"Oq", @"sourceid"]];
             NSLog(@"[WtCore]URL before:%@", url);
             NSLog(@"[WtCore]URL after:%@", wrapURL);

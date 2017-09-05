@@ -70,13 +70,13 @@
 
 - (NSURL *)wtRemoveParams:(NSArray<NSString *> *)keys {
     NSMutableDictionary *queryComponents = [self wtQueryComponents].mutableCopy;
-    NSMutableDictionary *lowercaseQueryKeyComponents = @{}.mutableCopy;
+    NSMutableDictionary *lowercaseQueryKeyMapping = @{}.mutableCopy;
     
     NSMutableArray *lowercaseQueryKeys = @[].mutableCopy;
     for (NSString *key in queryComponents.allKeys) {
         NSString *lowKey = [key lowercaseString];
         [lowercaseQueryKeys addObject:lowKey];
-        [lowercaseQueryKeyComponents setObject:queryComponents[key] forKey:lowKey];
+        [lowercaseQueryKeyMapping setObject:key forKey:lowKey];
     }
     
     NSMutableArray *lowercaseInputKeys = @[].mutableCopy;
@@ -89,7 +89,7 @@
     NSMutableSet *paramKeys = [NSMutableSet setWithArray:lowercaseQueryKeys];
     [paramKeys minusSet:[NSSet setWithArray:lowercaseInputKeys]];
     for (NSString *key in paramKeys) {
-        [params addObject:[NSString stringWithFormat:@"%@=%@", key, lowercaseQueryKeyComponents[key]]];
+        [params addObject:[NSString stringWithFormat:@"%@=%@", key, queryComponents[lowercaseQueryKeyMapping[key]]]];
     }
     
     NSString *query = [params componentsJoinedByString:@"&"];
