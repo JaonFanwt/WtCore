@@ -10,9 +10,11 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <WtCore/WtObserver.h>
+#import <WtCore/WtDispatch.h>
 
 #import "WtThunderClient.h"
 #import "WtThunderConstants.h"
+
 
 typedef NS_ENUM(NSUInteger, eWtThunderURLProtocolActionType) {
     eWtThunderURLProtocolActionTypeDidRecieveResponse = 1,
@@ -40,11 +42,14 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
     
     if (value && [value isEqualToString:WtThunderHeaderValueRemoteLoad]) {
         return NO;
-    }else if (value && [value isEqualToString:WtThunderHeaderValueWebviewLoad]) {
+    }else if ((value && [value isEqualToString:WtThunderHeaderValueWebviewLoad]) ||
+              ([[WtThunderClient shared] isExistSessionWithUrlString:request.URL.absoluteString userIdentifier:@""])) {
         NSLog(@"[Pre load request]: %@", request.URL.absoluteString);
-        return YES;
-    }else if ([[WtThunderClient shared] isExistSessionWithUrlString:request.URL.absoluteString userIdentifier:@""]) {
-        NSLog(@"[Pre load request]: %@", request.URL.absoluteString);
+        
+        wtDispatch_in_main(^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:WtThunderCanInitWithRequestURLNotification object:[NSString stringWithFormat:@"%@", request.URL.absoluteString]];
+        });
+        
         return YES;
     }
     

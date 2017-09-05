@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define WtThunderCanInitWithRequestURLNotification @"WtThunderCanInitWithRequestURLNotification"
+
 @interface WtThunderURLProtocol : NSURLProtocol
 
 @end

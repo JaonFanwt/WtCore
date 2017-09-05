@@ -27,7 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.title = @"WtCore Library";
+    self.title = @"WtDelegateProxy Library";
     [self createDatas];
     [self.tableView reloadData];
 }

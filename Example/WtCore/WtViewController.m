@@ -43,6 +43,19 @@
     _datas = @[].mutableCopy;
     
     @weakify(self);
+    {// Core
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"WtCore";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            Class cls = NSClassFromString(@"WtDemoCoreViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoCoreViewController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+    }
+    
     {// DelegateProxy
         WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
         [_datas addObject:cellModel];

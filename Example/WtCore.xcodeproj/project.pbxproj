@@ -33,6 +33,8 @@
 		B05A213E1F594AD800FBB990 /* WtDemoThunderWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A213C1F594AD800FBB990 /* WtDemoThunderWebViewController.xib */; };
 		B05A21411F594B6D00FBB990 /* WtDemoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21401F594B6D00FBB990 /* WtDemoWebViewController.m */; };
 		B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */; };
+		B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */; };
+		B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,9 @@
 		B05A213F1F594B6D00FBB990 /* WtDemoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoWebViewController.h; sourceTree = "<group>"; };
 		B05A21401F594B6D00FBB990 /* WtDemoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoWebViewController.m; sourceTree = "<group>"; };
 		B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoWebViewController.xib; sourceTree = "<group>"; };
+		B05A21441F5E8CE400FBB990 /* WtDemoCoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCoreViewController.h; sourceTree = "<group>"; };
+		B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCoreViewController.m; sourceTree = "<group>"; };
+		B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoCoreViewController.xib; sourceTree = "<group>"; };
 		F0F2F4244F4B8DFAE6074F8E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F8F45F305DAF92D6A023524A /* Pods-WtCore_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -230,6 +235,9 @@
 		B05A212F1F59098200FBB990 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B05A21441F5E8CE400FBB990 /* WtDemoCoreViewController.h */,
+				B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */,
+				B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */,
 				B05A21301F5909AC00FBB990 /* WtDemoDelegateProxyViewController.h */,
 				B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */,
 				B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */,
@@ -346,6 +354,7 @@
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */,
 				B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */,
 				B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */,
 				B05A213E1F594AD800FBB990 /* WtDemoThunderWebViewController.xib in Resources */,
@@ -487,6 +496,7 @@
 				6003F5A7195388D20070C39A /* WtViewController.m in Sources */,
 				B05A212A1F59026100FBB990 /* WtDemoCellModel.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
