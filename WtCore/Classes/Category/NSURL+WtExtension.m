@@ -89,7 +89,7 @@
     NSMutableSet *paramKeys = [NSMutableSet setWithArray:lowercaseQueryKeys];
     [paramKeys minusSet:[NSSet setWithArray:lowercaseInputKeys]];
     for (NSString *key in paramKeys) {
-        [params addObject:[NSString stringWithFormat:@"%@=%@", key, queryComponents[lowercaseQueryKeyMapping[key]]]];
+        [params addObject:[NSString stringWithFormat:@"%@=%@", lowercaseQueryKeyMapping[key], queryComponents[lowercaseQueryKeyMapping[key]]]];
     }
     
     NSString *query = [params componentsJoinedByString:@"&"];
