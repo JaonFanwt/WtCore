@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #define WtThunderHeaderKeyLoadType @"wtthunder-web-native-request-type"
-#define WtThunderHeaderValueWebviewLoad @"__WT_THUNDER_WEB_REQUEST__"
+#define WtThunderHeaderValueProduceLoad @"__WT_THUNDER_PRODUCE_WEB_REQUEST__"
+#define WtThunderHeaderValueConsumeLoad @"__WT_THUNDER_CONSUME_WEB_REQUEST__"
 #define WtThunderHeaderValueRemoteLoad @"__WT_THUNDER_REMOTE_REQUEST__"
 
 #define WtThunderHeaderKeySessionUserIdentifier @"wtthunder-web-native-session-identifier"

@@ -70,7 +70,7 @@
             for (NSInteger i = 0; i < 10; i++) {
                 NSDate *date = [NSDate date];
                 NSTimeInterval beginTime = [date timeIntervalSince1970];
-                NSMutableURLRequest *request = [wtThunderWrapWebRequest([NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]], @"1") mutableCopy];
+                NSMutableURLRequest *request = [wtThunderProduceWebRequest([NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]], @"1") mutableCopy];
                 [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                     NSDate *date = [NSDate date];
                     NSTimeInterval endTime = [date timeIntervalSince1970];

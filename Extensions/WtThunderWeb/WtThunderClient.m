@@ -10,9 +10,18 @@
 
 #import "WtThunderConstants.h"
 
-NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdentifier) {
+NSURLRequest *wtThunderProduceWebRequest(NSURLRequest *request, NSString *userIdentifier) {
     NSMutableURLRequest *wrapRequest = [request mutableCopy];
-    [wrapRequest setValue:WtThunderHeaderValueWebviewLoad forHTTPHeaderField:WtThunderHeaderKeyLoadType];
+    [wrapRequest setValue:WtThunderHeaderValueProduceLoad forHTTPHeaderField:WtThunderHeaderKeyLoadType];
+    if (userIdentifier && userIdentifier.length > 0) {
+        [wrapRequest setValue:userIdentifier forHTTPHeaderField:WtThunderHeaderKeySessionUserIdentifier];
+    }
+    return wrapRequest;
+}
+
+NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userIdentifier) {
+    NSMutableURLRequest *wrapRequest = [request mutableCopy];
+    [wrapRequest setValue:WtThunderHeaderValueConsumeLoad forHTTPHeaderField:WtThunderHeaderKeyLoadType];
     if (userIdentifier && userIdentifier.length > 0) {
         [wrapRequest setValue:userIdentifier forHTTPHeaderField:WtThunderHeaderKeySessionUserIdentifier];
     }
@@ -25,7 +34,7 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, WtThunderSession *> *sessionMapping;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *proxyMapping;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, id> *urlStringWorkingMapping;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id> *urlStringWorkingMapping; // value: isConsumer
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, WtThunderSession *> *cacheSessionMapping;
 @end
@@ -40,9 +49,14 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     return kWtThunderClient;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         _lock = [[NSRecursiveLock alloc] init];
+        
         _cacheControlMaxAge = 10;
         
         _sessionMapping = @{}.mutableCopy;
@@ -50,22 +64,27 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
         _urlStringWorkingMapping = @{}.mutableCopy;
         
         _cacheSessionMapping = @{}.mutableCopy;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
     return self;
 }
 
-#pragma mark - public
-- (void)createSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier delegateProxy:(WtDelegateProxy<WtThunderSessionDelegate> *)proxy {
+- (void)didReceiveMemoryWarning:(id)sender {
+    [_cacheSessionMapping removeAllObjects];
+}
+
+- (void)newSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier isConsumer:(BOOL)isConsumer delegateProxy:(WtDelegateProxy<WtThunderSessionDelegate> *)proxy {
     NSString *sessionID = thunderSessionID(urlString, userIdentifier);
     
     [_lock lock];
     
-    _urlStringWorkingMapping[urlString] = @1;
+    _urlStringWorkingMapping[urlString] = [NSNumber numberWithBool:([_urlStringWorkingMapping[urlString] boolValue] || isConsumer)];
     
     WtThunderSession *cacheSession = _cacheSessionMapping[sessionID];
     BOOL isCacheSessionExpired = [cacheSession isExpiredWithMaxAge:_cacheControlMaxAge];
     if (isCacheSessionExpired) {
-        [_urlStringWorkingMapping removeObjectForKey:urlString];
+        _urlStringWorkingMapping[urlString] = [NSNumber numberWithBool:isConsumer];
         [_cacheSessionMapping removeObjectForKey:sessionID];
     }
     
@@ -75,6 +94,8 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
         [self session:cacheSession didRecieveResponse:cacheSession.response];
         [self session:cacheSession didLoadData:cacheSession.responseData];
         [self sessionDidFinish:cacheSession];
+        
+        [_cacheSessionMapping removeObjectForKey:sessionID];
     }else {
         WtThunderSession *session = _sessionMapping[sessionID];
         if (session) {
@@ -96,6 +117,15 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     }
     
     [_lock unlock];
+}
+
+#pragma mark - public
+- (void)createSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier delegateProxy:(WtDelegateProxy<WtThunderSessionDelegate> *)proxy {
+    [self newSessionWithUrlString:urlString userIdentifier:userIdentifier isConsumer:NO delegateProxy:proxy];
+}
+
+- (void)consumeSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier delegateProxy:(WtDelegateProxy<WtThunderSessionDelegate> *)proxy {
+    [self newSessionWithUrlString:urlString userIdentifier:userIdentifier isConsumer:YES delegateProxy:proxy];
 }
 
 - (BOOL)isExistSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier {
@@ -136,6 +166,8 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     [_urlStringWorkingMapping removeObjectForKey:session.urlString];
     
     [_lock unlock];
+    
+    NSLog(@"[Glean Web BI]%s - %@", __func__, session.urlString);
 }
 
 - (void)sessionDidFinish:(WtThunderSession *)session {
@@ -147,8 +179,13 @@ NSURLRequest *wtThunderWrapWebRequest(NSURLRequest *request, NSString *userIdent
     [_proxyMapping[session.sessionID] removeAllObjects];
     [_sessionMapping removeObjectForKey:session.sessionID];
     
-    [_cacheSessionMapping setObject:session forKey:session.sessionID];
+    BOOL isConsumer = [_urlStringWorkingMapping[session.urlString] boolValue];
+    if (!isConsumer) {
+        [_cacheSessionMapping setObject:session forKey:session.sessionID];
+    }else {}
     
     [_lock unlock];
+    
+    NSLog(@"[Glean Web BI]%s - %@", __func__, session.urlString);
 }
 @end

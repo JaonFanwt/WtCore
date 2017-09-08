@@ -42,7 +42,7 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
     
     if (value && [value isEqualToString:WtThunderHeaderValueRemoteLoad]) {
         return NO;
-    }else if ((value && [value isEqualToString:WtThunderHeaderValueWebviewLoad]) ||
+    }else if ((value && ([value isEqualToString:WtThunderHeaderValueProduceLoad] || [value isEqualToString:WtThunderHeaderValueConsumeLoad])) ||
               ([[WtThunderClient shared] isExistSessionWithUrlString:request.URL.absoluteString userIdentifier:@""])) {
         NSLog(@"[Pre load request]: %@", request.URL.absoluteString);
         
@@ -57,9 +57,7 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
-    NSMutableURLRequest *wrapRequest = request.mutableCopy;
-    [NSURLProtocol setProperty:WtThunderHeaderValueRemoteLoad forKey:WtThunderHeaderKeyLoadType inRequest:wrapRequest];
-    return wrapRequest;
+    return request;
 }
 
 - (void)startLoading {
@@ -68,6 +66,12 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
     
     NSString *userIdentifier = [self.request valueForHTTPHeaderField:WtThunderHeaderKeySessionUserIdentifier];
     NSTimeInterval containerStartInitTime = [[self.request valueForHTTPHeaderField:WtThunderHeaderKeyContainerInitTime] doubleValue];
+    NSString *loadType = [self.request valueForHTTPHeaderField:WtThunderHeaderKeyLoadType];
+    
+    BOOL isConsumer = YES;
+    if (loadType && [loadType isEqualToString:WtThunderHeaderValueProduceLoad]) {
+        isConsumer = NO;
+    }else {}
     
     WtDelegateProxy<WtThunderSessionDelegate> *proxy = (WtDelegateProxy<WtThunderSessionDelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(WtThunderSessionDelegate)];
     @weakify(self, currentThread);
@@ -121,7 +125,11 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
         }
     }];
     
-    [[WtThunderClient shared] createSessionWithUrlString:self.request.URL.absoluteString userIdentifier:userIdentifier delegateProxy:proxy];
+    if (isConsumer) {
+        [[WtThunderClient shared] consumeSessionWithUrlString:self.request.URL.absoluteString userIdentifier:userIdentifier delegateProxy:proxy];
+    }else {
+        [[WtThunderClient shared] createSessionWithUrlString:self.request.URL.absoluteString userIdentifier:userIdentifier delegateProxy:proxy];
+    }
 }
 
 - (void)stopLoading {
