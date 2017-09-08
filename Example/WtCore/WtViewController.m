@@ -43,6 +43,19 @@
     _datas = @[].mutableCopy;
     
     @weakify(self);
+    {// DelegateProxy
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"WtDelegateProxy";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            Class cls = NSClassFromString(@"WtDemoDelegateProxyViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+    }
+    
     {// Core
         WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
         [_datas addObject:cellModel];
@@ -56,15 +69,15 @@
         }];
     }
     
-    {// DelegateProxy
+    {// UI
         WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
         [_datas addObject:cellModel];
-        cellModel.title = @"WtDelegateProxy";
+        cellModel.title = @"WtUI";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDemoDelegateProxyViewController");
+            Class cls = NSClassFromString(@"WtDemoUIViewController");
             if (!cls) return;
-            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUIViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
     }

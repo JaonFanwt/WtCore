@@ -35,6 +35,8 @@
 		B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */; };
 		B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */; };
 		B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */; };
+		B05A21701F6270E800FBB990 /* WtDemoUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A216E1F6270E800FBB990 /* WtDemoUIViewController.m */; };
+		B05A21711F6270E800FBB990 /* WtDemoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,9 @@
 		B05A21441F5E8CE400FBB990 /* WtDemoCoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCoreViewController.h; sourceTree = "<group>"; };
 		B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCoreViewController.m; sourceTree = "<group>"; };
 		B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoCoreViewController.xib; sourceTree = "<group>"; };
+		B05A216D1F6270E800FBB990 /* WtDemoUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoUIViewController.h; sourceTree = "<group>"; };
+		B05A216E1F6270E800FBB990 /* WtDemoUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUIViewController.m; sourceTree = "<group>"; };
+		B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoUIViewController.xib; sourceTree = "<group>"; };
 		F0F2F4244F4B8DFAE6074F8E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F8F45F305DAF92D6A023524A /* Pods-WtCore_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,6 +255,9 @@
 				B05A213F1F594B6D00FBB990 /* WtDemoWebViewController.h */,
 				B05A21401F594B6D00FBB990 /* WtDemoWebViewController.m */,
 				B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */,
+				B05A216D1F6270E800FBB990 /* WtDemoUIViewController.h */,
+				B05A216E1F6270E800FBB990 /* WtDemoUIViewController.m */,
+				B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -351,6 +359,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B05A21711F6270E800FBB990 /* WtDemoUIViewController.xib in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
@@ -419,7 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C740B2BD321856B79E23F137 /* [CP] Embed Pods Frameworks */ = {
@@ -452,7 +461,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCA14E4E7F6891124A5960A3 /* [CP] Embed Pods Frameworks */ = {
@@ -494,6 +503,7 @@
 				6003F59E195388D20070C39A /* WtAppDelegate.m in Sources */,
 				B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* WtViewController.m in Sources */,
+				B05A21701F6270E800FBB990 /* WtDemoUIViewController.m in Sources */,
 				B05A212A1F59026100FBB990 /* WtDemoCellModel.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */,
