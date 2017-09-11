@@ -13,8 +13,28 @@
 
 #import "CTBlockDescription.h"
 
+static NSString *wtExtractStructName(NSString *typeEncodeString) {
+    if (!typeEncodeString || ![typeEncodeString isKindOfClass:[NSString class]]) {
+        return @"";
+    }
+    
+    NSArray *array = [typeEncodeString componentsSeparatedByString:@"="];
+    NSString *typeString = array[0];
+    int firstValidIndex = 0;
+    for (int i = 0; i< typeString.length; i++) {
+        char c = [typeString characterAtIndex:i];
+        if (c == '{' || c=='_') {
+            firstValidIndex++;
+        }else {
+            break;
+        }
+    }
+    return [typeString substringFromIndex:firstValidIndex];
+}
+
 @interface WtDelegateProxy (){
     Protocol *_protocol;
+    NSObject *_nilObj;
 }
 @end
 
@@ -32,6 +52,7 @@
     class_addProtocol(self.class, protocol);
     
     _protocol = protocol;
+    _nilObj = [[NSObject alloc] init];
     
     return self;
 }
@@ -59,10 +80,79 @@
         // 0 self           0 block
         // 1 selector       1 argument1
         // 2 argument1
-        for (int i = 2; i < invocation.methodSignature.numberOfArguments; i++) {
-            void *argument;
-            [invocation getArgument:&argument atIndex:i];
-            [blockInvocation setArgument:&argument atIndex:i-1];
+        for (NSInteger i = 2; i < invocation.methodSignature.numberOfArguments; i++) {
+            const char *argumentType = [invocation.methodSignature getArgumentTypeAtIndex:i];
+            switch (argumentType[0] == 'r' ? argumentType[1] : argumentType[0]) {
+#define WT_FF_ARG_CASE(_typeChar, _type) \
+case _typeChar: { \
+    _type arg; \
+    [invocation getArgument:&arg atIndex:i]; \
+    [blockInvocation setArgument:&arg atIndex:i-1]; \
+    break; \
+}
+                WT_FF_ARG_CASE('c', char)
+                WT_FF_ARG_CASE('C', unsigned char)
+                WT_FF_ARG_CASE('s', short)
+                WT_FF_ARG_CASE('S', unsigned short)
+                WT_FF_ARG_CASE('i', int)
+                WT_FF_ARG_CASE('I', unsigned int)
+                WT_FF_ARG_CASE('l', long)
+                WT_FF_ARG_CASE('L', unsigned long)
+                WT_FF_ARG_CASE('q', long long)
+                WT_FF_ARG_CASE('Q', unsigned long long)
+                WT_FF_ARG_CASE('f', float)
+                WT_FF_ARG_CASE('d', double)
+                WT_FF_ARG_CASE('B', BOOL)
+                case '@': {
+                    __unsafe_unretained id arg;
+                    [invocation getArgument:&arg atIndex:i];
+                    if ([arg isKindOfClass:NSClassFromString(@"NSBlock")]) {
+                        __unsafe_unretained id wrapArg = arg ? [arg copy]: _nilObj;
+                        [blockInvocation setArgument:&wrapArg atIndex:i-1];
+                    } else {
+                        [blockInvocation setArgument:&arg atIndex:i-1];
+                    }
+                    break;
+                }
+                case '{': {
+                    NSString *typeString = wtExtractStructName([NSString stringWithUTF8String:argumentType]);
+#define WT_FF_ARG_STRUCT(_type, _transFunc) \
+if ([typeString rangeOfString:@#_type].location != NSNotFound) { \
+    _type arg; \
+    [invocation getArgument:&arg atIndex:i]; \
+    [blockInvocation setArgument:&arg atIndex:i-1]; \
+    break; \
+}
+                    WT_FF_ARG_STRUCT(CGRect, valueWithRect)
+                    WT_FF_ARG_STRUCT(CGPoint, valueWithPoint)
+                    WT_FF_ARG_STRUCT(CGSize, valueWithSize)
+                    WT_FF_ARG_STRUCT(NSRange, valueWithRange)
+                    break;
+                }
+                case ':': {
+                    SEL selector;
+                    [invocation getArgument:&selector atIndex:i];
+                    [blockInvocation setArgument:&selector atIndex:i-1];
+                    break;
+                }
+                case '^':
+                case '*': {
+                    void *arg;
+                    [invocation getArgument:&arg atIndex:i];
+                    [blockInvocation setArgument:&arg atIndex:i-1];
+                    break;
+                }
+                case '#': {
+                    Class arg;
+                    [invocation getArgument:&arg atIndex:i];
+                    [blockInvocation setArgument:&arg atIndex:i-1];
+                    break;
+                }
+                default: {
+                    NSLog(@"error type %s", argumentType);
+                    break;
+                }
+            }
         }
         
         if (blockMethodSignature.methodReturnLength > 0) {

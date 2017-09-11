@@ -54,6 +54,16 @@
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = NSClassFromString(@"WtDemoDelegateProxyViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+        }];
     }
     
     {// Core
@@ -67,6 +77,16 @@
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoCoreViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = NSClassFromString(@"WtDemoCoreViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoCoreViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+        }];
     }
     
     {// UI
@@ -79,6 +99,16 @@
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUIViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = NSClassFromString(@"WtDemoUIViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUIViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
         }];
     }
     
@@ -158,6 +188,16 @@
             
             return result;
         };
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = NSClassFromString(@"WtDebugToolsViewController");
+            UIViewController *toViewCtrl = [[cls alloc] init];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+        }];
     }
     
     {// Observer
@@ -170,6 +210,16 @@
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoObserverViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = NSClassFromString(@"WtDemoObserverViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoObserverViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
         }];
     }
     
@@ -184,6 +234,16 @@
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = NSClassFromString(@"WtDemoThunderWebViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+        }];
     }
 }
 
@@ -194,7 +254,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WtTableViewCellModel *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    UITableViewCell *cell = [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([[UIDevice currentDevice] wtEqualOrGreaterThan:9]) {
+        [self registerForPreviewingWithDelegate:cellModel.previewingDelegate sourceView:cell];
+    }
+    
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
@@ -207,7 +274,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    
     [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
-
 @end

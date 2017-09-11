@@ -11,8 +11,8 @@
 @implementation WtTableViewCellModel
 - (instancetype)init {
     if (self = [super init]) {
-        self.tableViewDelegate = (WtDelegateProxy<UITableViewDelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(UITableViewDelegate)];
-        self.tableViewDataSource = (WtDelegateProxy<UITableViewDataSource> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(UITableViewDataSource)];
+        _tableViewDelegate = (WtDelegateProxy<UITableViewDelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(UITableViewDelegate)];
+        _tableViewDataSource = (WtDelegateProxy<UITableViewDataSource> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(UITableViewDataSource)];
     }
     return self;
 }

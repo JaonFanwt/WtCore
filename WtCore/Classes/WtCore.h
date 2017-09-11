@@ -10,6 +10,7 @@
 
 #import "NSString+WtEncrypt.h"
 #import "NSURL+WtExtension.h"
+#import "UIDevice+WtExtension.h"
 
 #import "WtSwizzle.h"
 #import "WtDispatch.h"
