@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+// Status
+#import "WtDebugManager.h"
+
 // RootViewController
 #import "WtDebugToolsViewController.h"
 #import "WtDebugTableViewCellBasicSwitch.h"
