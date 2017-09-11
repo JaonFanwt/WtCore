@@ -49,11 +49,13 @@ blablabla private~
   s.subspec "Observer" do |ss|
     ss.ios.source_files = "Extensions/WtObserver/**/*"
     ss.ios.public_header_files = "Extensions/WtObserver/**/*.h"
+    ss.dependency 'WtCore/Core'
   end
 
   s.subspec "UI" do |ss|
     ss.ios.source_files = "Components/UI/**/*"
     ss.ios.public_header_files = "Components/UI/**/*.h"
+    ss.dependency 'WtCore/Core'
   end
 
   s.subspec "DebugTools" do |ss|
@@ -69,7 +71,9 @@ blablabla private~
   s.subspec "ThunderWeb" do |ss|
     ss.ios.source_files = "Extensions/WtThunderWeb/**/*"
     ss.ios.public_header_files = "Extensions/WtThunderWeb/**/*.h"
-    s.dependency 'ReactiveCocoa', '~> 2.5'
+    ss.dependency 'ReactiveCocoa', '~> 2.5'
+    ss.dependency 'WtCore/UI'
+    ss.dependency 'WtCore/Observer'
   end
 
 end
