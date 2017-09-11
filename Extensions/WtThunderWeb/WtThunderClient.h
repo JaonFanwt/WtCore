@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <WtCore/WtDelegateProxy.h>
+#import "WtDelegateProxy.h"
 
 #import "WtThunderSession.h"
 

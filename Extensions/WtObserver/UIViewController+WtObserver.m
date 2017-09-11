@@ -11,7 +11,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
-#import <WtCore/WtSwizzle.h>
+#import "WtSwizzle.h"
 
 @implementation UIViewController (WtObserver)
 + (void)load {

@@ -7,7 +7,7 @@
 #import <Masonry/Masonry.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-#import <WtCore/WtTableViewCellModel.h>
+#import "WtTableViewCellModel.h"
 
 #import "WtDebugSwitchNetworkManager.h"
 #import "WtDebugBundle.h"

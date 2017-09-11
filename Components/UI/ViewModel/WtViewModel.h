@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <WtCore/WtDelegateProxy.h>
+#import "WtDelegateProxy.h"
 
 @interface WtViewModel : NSObject
 @property (nonatomic, strong, readonly) WtDelegateProxy<UIViewControllerPreviewingDelegate> *previewingDelegate;

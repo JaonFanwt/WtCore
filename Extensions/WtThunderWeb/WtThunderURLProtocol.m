@@ -9,8 +9,9 @@
 #import "WtThunderURLProtocol.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import <WtCore/WtObserver.h>
-#import <WtCore/WtDispatch.h>
+
+#import "WtObserver.h"
+#import "WtDispatch.h"
 
 #import "WtThunderClient.h"
 #import "WtThunderConstants.h"

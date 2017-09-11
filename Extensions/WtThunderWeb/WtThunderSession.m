@@ -8,9 +8,10 @@
 
 #import "WtThunderSession.h"
 
-#import <WtCore/WtCore.h>
-#import <WtCore/WtDispatch.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
+
+#import "WtCore.h"
+#import "WtDispatch.h"
 
 #import "WtThunderQueueManager.h"
 #import "WtThunderConstants.h"

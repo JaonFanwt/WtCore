@@ -6,7 +6,7 @@
 
 #import "WtDebugSwitchNetworkItem.h"
 
-#import <WtCore/WtTableViewCellModel.h>
+#import "WtTableViewCellModel.h"
 
 @interface WtDebugTableViewCellSwitchNetworkModel : WtTableViewCellModel
 @property (nonatomic, strong) WtDebugSwitchNetworkItem *model;

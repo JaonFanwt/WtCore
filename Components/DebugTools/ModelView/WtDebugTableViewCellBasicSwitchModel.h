@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <WtCore/WtTableViewCellModel.h>
+#import "WtTableViewCellModel.h"
 
 @interface WtDebugTableViewCellBasicSwitchModel : WtTableViewCellModel
 @property (nonatomic, copy) NSString *name;

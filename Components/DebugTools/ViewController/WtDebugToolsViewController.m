@@ -13,7 +13,7 @@
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-#import <WtCore/WtTableViewCellModel.h>
+#import "WtTableViewCellModel.h"
 
 #import "WtDebugTableViewCellBasicSwitchModel.h"
 #import "WtDebugTableViewCellRightDetailModel.h"

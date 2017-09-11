@@ -13,8 +13,8 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-#import <WtCore/WtSwizzle.h>
-#import <WtCore/WtDelegateProxy.h>
+#import "WtSwizzle.h"
+#import "WtDelegateProxy.h"
 
 @implementation UIWebView (WtObserver)
 + (void)load {
