@@ -18,7 +18,7 @@
 @end
 
 #pragma mark - Function
-NSString *thunderSessionID(NSString *urlString, NSString *userIdentifier);
+NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier);
 
 #pragma mark - Class
 @interface WtThunderSession : NSObject

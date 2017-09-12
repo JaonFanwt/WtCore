@@ -229,14 +229,6 @@
         cellModel.title = @"WtThunderWeb";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            // Pre-load
-            NSTimeInterval beginTime = [[NSDate date] timeIntervalSince1970];
-            NSMutableURLRequest *request = [wtThunderConsumeWebRequest([NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]], @"1") mutableCopy];
-            [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
-                NSLog(@"[ThunderWeb]Pre-load request consume :%.0f", (endTime - beginTime) * 1000);
-            }] resume];
-            
             Class cls = WTClassFromString(@"WtDemoThunderWebViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];

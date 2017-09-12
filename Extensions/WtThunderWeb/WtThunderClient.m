@@ -75,7 +75,7 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
 }
 
 - (void)newSessionWithUrlString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier isConsumer:(BOOL)isConsumer delegateProxy:(WtDelegateProxy<WtThunderSessionDelegate> *)proxy {
-    NSString *sessionID = thunderSessionID(urlString, userIdentifier);
+    NSString *sessionID = wtThunderSessionID(urlString, userIdentifier);
     
     [_lock lock];
     
