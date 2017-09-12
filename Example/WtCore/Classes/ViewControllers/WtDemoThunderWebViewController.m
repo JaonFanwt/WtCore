@@ -44,8 +44,6 @@
 - (void)createDatas {
     _datas = @[].mutableCopy;
     
-    [NSURLProtocol registerClass:[WtThunderURLProtocol class]];
-    
     @weakify(self);
     {
         WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];

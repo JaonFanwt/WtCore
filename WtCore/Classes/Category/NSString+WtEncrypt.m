@@ -16,7 +16,7 @@ NSString *wtStringFromMD5(NSString *str) {
     return [str wtStringFromMD5];
 }
 
-@implementation NSString (WtExtension)
+@implementation NSString (WtEncrypt)
 - (NSString *)wtStringFromMD5 {
     if (self.length == 0) return nil;
     

@@ -12,8 +12,10 @@
 
 #import <WtCore/WtCore.h>
 #import <WtCore/WtDebugTools.h>
+#import <WtCore/WtThunderWeb.h>
 
 #import "WtDemoCellModel.h"
+
 
 @interface WtViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -29,6 +31,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"WtCore Library";
+    
+    [NSURLProtocol registerClass:[WtThunderURLProtocol class]];
+    
     [self createDatas];
     [self.tableView reloadData];
 }
@@ -42,6 +47,11 @@
 - (void)createDatas {
     _datas = @[].mutableCopy;
     
+    void (^previewingToCommitBlock)(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit) = ^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
+        UIViewController *firstViewCtrl = [previewingContext.sourceView wtFirstViewController];
+        [firstViewCtrl.navigationController pushViewController:viewControllerToCommit animated:YES];
+    };
+    
     @weakify(self);
     {// DelegateProxy
         WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
@@ -49,21 +59,19 @@
         cellModel.title = @"WtDelegateProxy";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDemoDelegateProxyViewController");
+            Class cls = WTClassFromString(@"WtDemoDelegateProxyViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
-            Class cls = NSClassFromString(@"WtDemoDelegateProxyViewController");
+            Class cls = WTClassFromString(@"WtDemoDelegateProxyViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
-            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-        }];
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// Core
@@ -72,21 +80,19 @@
         cellModel.title = @"WtCore";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDemoCoreViewController");
+            Class cls = WTClassFromString(@"WtDemoCoreViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoCoreViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
-            Class cls = NSClassFromString(@"WtDemoCoreViewController");
+            Class cls = WTClassFromString(@"WtDemoCoreViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoCoreViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
-            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-        }];
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// UI
@@ -95,21 +101,19 @@
         cellModel.title = @"WtUI";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDemoUIViewController");
+            Class cls = WTClassFromString(@"WtDemoUIViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUIViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
-            Class cls = NSClassFromString(@"WtDemoUIViewController");
+            Class cls = WTClassFromString(@"WtDemoUIViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUIViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
-            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-        }];
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// DebugTools
@@ -118,7 +122,7 @@
         cellModel.title = @"DebugTools";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDebugToolsViewController");
+            Class cls = WTClassFromString(@"WtDebugToolsViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] init];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
@@ -190,14 +194,12 @@
         };
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
-            Class cls = NSClassFromString(@"WtDebugToolsViewController");
+            Class cls = WTClassFromString(@"WtDebugToolsViewController");
             UIViewController *toViewCtrl = [[cls alloc] init];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
-            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-        }];
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// Observer
@@ -206,21 +208,19 @@
         cellModel.title = @"WtObserver";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDemoObserverViewController");
+            Class cls = WTClassFromString(@"WtDemoObserverViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoObserverViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
-            Class cls = NSClassFromString(@"WtDemoObserverViewController");
+            Class cls = WTClassFromString(@"WtDemoObserverViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoObserverViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
-            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
-        }];
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// ThunderWeb
@@ -229,21 +229,48 @@
         cellModel.title = @"WtThunderWeb";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
-            Class cls = NSClassFromString(@"WtDemoThunderWebViewController");
+            // Pre-load
+            NSTimeInterval beginTime = [[NSDate date] timeIntervalSince1970];
+            NSMutableURLRequest *request = [wtThunderConsumeWebRequest([NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]], @"1") mutableCopy];
+            [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
+                NSLog(@"[ThunderWeb]Pre-load request consume :%.0f", (endTime - beginTime) * 1000);
+            }] resume];
+            
+            Class cls = WTClassFromString(@"WtDemoThunderWebViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
-            Class cls = NSClassFromString(@"WtDemoThunderWebViewController");
+            Class cls = WTClassFromString(@"WtDemoThunderWebViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:^(id <UIViewControllerPreviewing> previewingContext, UIViewController *viewControllerToCommit){
-            [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+    }
+    
+    {// Wattpad
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"WtWattpadView";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            Class cls = WTClassFromString(@"WtDemoWattpadViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = WTClassFromString(@"WtDemoWattpadViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
 }
 

@@ -47,10 +47,14 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    _webView.delegate = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    _webView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {

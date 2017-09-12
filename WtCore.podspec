@@ -39,27 +39,31 @@ blablabla private~
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 
-  s.dependency 'ReactiveCocoa', '~> 2.5'
-
   s.subspec "Core" do |ss|
-    ss.ios.source_files = "WtCore/Classes/**/*"
+    ss.ios.source_files = "WtCore/Classes/**/*.{h,m}"
     ss.ios.public_header_files = "WtCore/Classes/**/*.h"
+    ss.dependency 'ReactiveCocoa', '~> 2.5'
   end
 
   s.subspec "Observer" do |ss|
-    ss.ios.source_files = "Extensions/WtObserver/**/*"
+    ss.ios.source_files = "Extensions/WtObserver/**/*.{h,m}"
     ss.ios.public_header_files = "Extensions/WtObserver/**/*.h"
     ss.dependency 'WtCore/Core'
   end
 
   s.subspec "UI" do |ss|
-    ss.ios.source_files = "Components/UI/**/*"
+    ss.ios.source_files = "Components/UI/**/*.{h,m}"
     ss.ios.public_header_files = "Components/UI/**/*.h"
     ss.dependency 'WtCore/Core'
   end
 
+  s.subspec "UI-Swift" do |ss|
+    ss.ios.source_files = "Components/UI/**/*.{swift}"
+    ss.dependency 'SnapKit', '~> 3.2.0'
+  end
+
   s.subspec "DebugTools" do |ss|
-    ss.ios.source_files = "Components/DebugTools/**/*"
+    ss.ios.source_files = "Components/DebugTools/**/*.{h,m}"
     ss.ios.public_header_files = "Components/DebugTools/**/*.h"
     ss.dependency 'FLEX'
     ss.dependency 'KMCGeigerCounter'
@@ -69,7 +73,7 @@ blablabla private~
   end
 
   s.subspec "ThunderWeb" do |ss|
-    ss.ios.source_files = "Extensions/WtThunderWeb/**/*"
+    ss.ios.source_files = "Extensions/WtThunderWeb/**/*.{h,m}"
     ss.ios.public_header_files = "Extensions/WtThunderWeb/**/*.h"
     ss.dependency 'ReactiveCocoa', '~> 2.5'
     ss.dependency 'WtCore/UI'

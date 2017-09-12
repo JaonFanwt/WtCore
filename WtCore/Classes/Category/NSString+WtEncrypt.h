@@ -10,6 +10,6 @@
 
 NSString *wtStringFromMD5(NSString *str);
 
-@interface NSString (WtExtension)
+@interface NSString (WtEncrypt)
 - (NSString *)wtStringFromMD5;
 @end

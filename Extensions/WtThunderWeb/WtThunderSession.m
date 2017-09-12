@@ -37,6 +37,7 @@ NSString *thunderSessionID(NSString *urlString, NSString *userIdentifier) {
 @end
 
 @implementation WtThunderSession
+
 - (instancetype)initWithURLString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier {
     if (self = [super init]) {
         _beginTime = [[NSDate date] timeIntervalSince1970];
@@ -53,33 +54,11 @@ NSString *thunderSessionID(NSString *urlString, NSString *userIdentifier) {
     [self.connection setDelegateQueue:[WtThunderQueueManager connectionQueue]];
     [self.connection start];
     
-    // 暂时未搞明白NSURLSession比NSURLConnection慢很多的原因，先屏蔽掉
-//    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    // 每次创建NSURLSession请求都会进行三次TCP三次握手，等有时间时改为共享NSURLSession的方式
+//    //        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
 //    _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[WtThunderQueueManager connectionQueue]];
 //    _sessionTask = [_session dataTaskWithRequest:_request];
 //    [_sessionTask resume];
-    
-    // 测试
-//    {
-//        NSTimeInterval beginTime = [[NSDate date] timeIntervalSince1970];
-//        @weakify(self);
-//        _sessionTask = [[NSURLSession sharedSession] dataTaskWithRequest:_request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//            @strongify(self);
-//            NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
-//            NSString *t = [NSString stringWithFormat:@"%.0f", (endTime - beginTime)*1000 ];
-//            NSLog(@"[Glean Web BI]aaaa Session request start takes %@ms", t);
-//            
-//            if (error) {
-//                [self session:[NSURLSession sharedSession] didRecieveResponse:response];
-//                [self session:[NSURLSession sharedSession] didFaild:error];
-//            }else {
-//                [self session:[NSURLSession sharedSession] didRecieveResponse:response];
-//                [self session:[NSURLSession sharedSession] didLoadData:data];
-//                [self sessionDidFinish:[NSURLSession sharedSession]];
-//            }
-//        }];
-//        [_sessionTask resume];
-//    }
 }
 
 - (void)cancel {
@@ -221,6 +200,32 @@ NSString *thunderSessionID(NSString *urlString, NSString *userIdentifier) {
 //#pragma mark - NSURLSessionDelegate
 //- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error {
 //    [self session:session didFaild:error];
+//}
+//
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+//didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+// completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
+//    SecTrustRef trust = challenge.protectionSpace.serverTrust;
+//    SecTrustResultType result;
+//    NSString *host = [[task currentRequest] valueForHTTPHeaderField:@"host"];
+//    
+//    SecPolicyRef policyOverride = SecPolicyCreateSSL(true, (CFStringRef)host);
+//    NSMutableArray *policies = [NSMutableArray array];
+//    [policies addObject:(__bridge id)policyOverride];
+//    SecTrustSetPolicies(trust, (__bridge CFArrayRef)policies);
+//    
+//    OSStatus status = SecTrustEvaluate(trust, &result);
+//    
+//    if (status == errSecSuccess && (result == kSecTrustResultProceed || result == kSecTrustResultUnspecified)) {
+//        
+//        NSURLCredential *cred = [NSURLCredential credentialForTrust:trust];
+//        completionHandler(NSURLSessionAuthChallengeUseCredential, cred);
+//        
+//    } else {
+//        
+//        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+//        
+//    }
 //}
 //
 //#pragma mark - NSURLSessionDataDelegate
