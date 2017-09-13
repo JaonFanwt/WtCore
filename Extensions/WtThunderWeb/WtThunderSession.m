@@ -80,24 +80,25 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 }
 
 - (void)start {
-    _sessionTask = [[WtThunderURLSessionManager shared] wtTaskWithRequest:_request delegate:_taskDelegate];
-    [_sessionTask resume];
+    // 该方案仍无法解决第一次请求慢的问题，它不共享长链接
+//    _sessionTask = [[WtThunderURLSessionManager shared] wtTaskWithRequest:_request delegate:_taskDelegate];
+//    [_sessionTask resume];
     
-    // 暂时保留做数据测验
-    //    self.connection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:NO];
-    //    [self.connection setDelegateQueue:[WtThunderQueueManager connectionQueue]];
-    //    [self.connection start];
+//     暂时保留做数据测验
+        self.connection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:NO];
+        [self.connection setDelegateQueue:[WtThunderQueueManager connectionQueue]];
+        [self.connection start];
 }
 
 - (void)cancel {
-    if (_sessionTask && _sessionTask.state == NSURLSessionTaskStateRunning) {
-        [_sessionTask cancel];
-        [_session finishTasksAndInvalidate];
-    }else {
-        [_session invalidateAndCancel];
-    }
+//    if (_sessionTask && _sessionTask.state == NSURLSessionTaskStateRunning) {
+//        [_sessionTask cancel];
+//        [_session finishTasksAndInvalidate];
+//    }else {
+//        [_session invalidateAndCancel];
+//    }
     
-//    [self.connection cancel];
+    [self.connection cancel];
 }
 
 - (BOOL)isExpiredWithMaxAge:(NSTimeInterval)maxAge {
