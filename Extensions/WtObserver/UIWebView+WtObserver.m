@@ -18,12 +18,15 @@
 
 @implementation UIWebView (WtObserver)
 + (void)load {
-    wt_swizzleSelector([self class], @selector(init), @selector(swizzle_init));
-    wt_swizzleSelector([self class], @selector(initWithFrame:), @selector(swizzle_initWithFrame:));
-    wt_swizzleSelector([self class], @selector(initWithCoder:), @selector(swizzle_initWithCoder:));
-    wt_swizzleSelector([self class], @selector(awakeFromNib), @selector(swizzle_awakeFromNib));
-    wt_swizzleSelector([self class], @selector(setDelegate:), @selector(swizzle_setDelegate:));
-    wt_swizzleSelector([self class], @selector(loadRequest:), @selector(swizzle_loadRequest:));
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        wt_swizzleSelector([self class], @selector(init), @selector(swizzle_init));
+        wt_swizzleSelector([self class], @selector(initWithFrame:), @selector(swizzle_initWithFrame:));
+        wt_swizzleSelector([self class], @selector(initWithCoder:), @selector(swizzle_initWithCoder:));
+        wt_swizzleSelector([self class], @selector(awakeFromNib), @selector(swizzle_awakeFromNib));
+        wt_swizzleSelector([self class], @selector(setDelegate:), @selector(swizzle_setDelegate:));
+        wt_swizzleSelector([self class], @selector(loadRequest:), @selector(swizzle_loadRequest:));
+    });
 }
 
 #pragma mark - private

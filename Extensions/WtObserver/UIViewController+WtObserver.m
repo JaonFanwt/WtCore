@@ -15,11 +15,14 @@
 
 @implementation UIViewController (WtObserver)
 + (void)load {
-    wt_swizzleSelector([self class], @selector(initWithNibName:bundle:), @selector(swizzled_initWithNibName:bundle:));
-    wt_swizzleSelector([self class], @selector(initWithCoder:), @selector(swizzled_initWithCoder:));
-    wt_swizzleSelector([self class], @selector(viewDidLoad), @selector(swizzled_viewDidLoad));
-    wt_swizzleSelector([self class], @selector(viewWillAppear:), @selector(swizzled_viewWillAppear:));
-    wt_swizzleSelector([self class], @selector(viewDidAppear:), @selector(swizzled_viewDidAppear:));
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        wt_swizzleSelector([self class], @selector(initWithNibName:bundle:), @selector(swizzled_initWithNibName:bundle:));
+        wt_swizzleSelector([self class], @selector(initWithCoder:), @selector(swizzled_initWithCoder:));
+        wt_swizzleSelector([self class], @selector(viewDidLoad), @selector(swizzled_viewDidLoad));
+        wt_swizzleSelector([self class], @selector(viewWillAppear:), @selector(swizzled_viewWillAppear:));
+        wt_swizzleSelector([self class], @selector(viewDidAppear:), @selector(swizzled_viewDidAppear:));
+    });
 }
 
 - (void)setTimeInterval:(NSTimeInterval)timeInterval sel:(SEL)sel {
@@ -85,14 +88,22 @@
 }
 
 - (void)swizzled_viewDidLoad {
+    BOOL isFirstTime = NO;
     if ([self getTimeIntervalWithSEL:@selector(startViewDidLoadTime)] == 0) {
+        isFirstTime = YES;
+    }
+    
+    NSTimeInterval startTime = 0;
+    if (isFirstTime) {
         [self willChangeValueForKey:@"startViewDidLoadTime"];
-        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+        startTime = [[NSDate date] timeIntervalSince1970];
         [self setTimeInterval:startTime sel:@selector(startViewDidLoadTime)];
         [self didChangeValueForKey:@"startViewDidLoadTime"];
-        
-        [self swizzled_viewDidLoad];
-        
+    }
+    
+    [self swizzled_viewDidLoad];
+    
+    if (isFirstTime) {
         [self willChangeValueForKey:@"endViewDidLoadTime"];
         NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
         [self setTimeInterval:endTime sel:@selector(endViewDidLoadTime)];
@@ -103,14 +114,22 @@
 }
 
 - (void)swizzled_viewWillAppear:(BOOL)animated {
+    BOOL isFirstTime = NO;
     if ([self getTimeIntervalWithSEL:@selector(startViewWillAppearTime)] == 0) {
+        isFirstTime = YES;
+    }
+    
+    NSTimeInterval startTime = 0;
+    if (isFirstTime) {
         [self willChangeValueForKey:@"startViewWillAppearTime"];
-        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+        startTime = [[NSDate date] timeIntervalSince1970];
         [self setTimeInterval:startTime sel:@selector(startViewWillAppearTime)];
         [self didChangeValueForKey:@"startViewWillAppearTime"];
-        
-        [self swizzled_viewWillAppear:animated];
-        
+    }
+    
+    [self swizzled_viewWillAppear:animated];
+    
+    if (isFirstTime) {
         [self willChangeValueForKey:@"endViewWillAppearTime"];
         NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
         [self setTimeInterval:endTime sel:@selector(endViewWillAppearTime)];
@@ -121,14 +140,22 @@
 }
 
 - (void)swizzled_viewDidAppear:(BOOL)animated {
+    BOOL isFirstTime = NO;
     if ([self getTimeIntervalWithSEL:@selector(startViewDidAppearTime)] == 0) {
+        isFirstTime = YES;
+    }
+    
+    NSTimeInterval startTime = 0;
+    if (isFirstTime) {
         [self willChangeValueForKey:@"startViewDidAppearTime"];
-        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+        startTime = [[NSDate date] timeIntervalSince1970];
         [self setTimeInterval:startTime sel:@selector(startViewDidAppearTime)];
         [self didChangeValueForKey:@"startViewDidAppearTime"];
-        
-        [self swizzled_viewDidAppear:animated];
-        
+    }
+    
+    [self swizzled_viewDidAppear:animated];
+    
+    if (isFirstTime) {
         [self willChangeValueForKey:@"endViewDidAppearTime"];
         NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
         [self setTimeInterval:endTime sel:@selector(endViewDidAppearTime)];

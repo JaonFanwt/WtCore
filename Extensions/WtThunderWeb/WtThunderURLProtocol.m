@@ -97,12 +97,6 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
     }];
     
-    if (containerStartInitTime > 0) {
-        NSString *t = [NSString stringWithFormat:@"%.0f", beginTime - containerStartInitTime];
-        NSLog(@"[Glean Web BI]From the viewController initialization to start the session request takes %@ms", t);
-        [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"VC initialization to start session" value:t error:nil];
-    }
-    
     [proxy selector:@selector(sessionDidFinish:) block:^(WtThunderSession *session){
         @strongify(self, currentThread);
         NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970] * 1000;
@@ -110,20 +104,6 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
         NSDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidFinish),
                                  kWtThunderProtocolDataKey: session};
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
-        
-        NSString *t = [NSString stringWithFormat:@"%.0f", endTime - beginTime];
-        [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"session request" value:t error:nil];
-        
-        if (containerStartInitTime > 0) {
-            t = [NSString stringWithFormat:@"%.0f", endTime - containerStartInitTime];
-            NSLog(@"[Glean Web BI]From the viewController initialization to the session request completion takes %@ms", t);
-            [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"VC initialization to session completion" value:t error:nil];
-            
-            NSString *cachePath = [[WtObserveDataGleaner shared] cacheToDisk];
-            NSLog(@"[Glean Web BI]CachefilePath: %@", cachePath);
-            
-            [WtObserveDataWritter toCSV:[WtObserveDataGleaner shared].treasures.allValues];
-        }
     }];
     
     if (isConsumer) {

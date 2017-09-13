@@ -37,10 +37,6 @@
         request = [[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]] mutableCopy];
     }
     
-    NSString *t = [NSString stringWithFormat:@"%.0f", ([[NSDate date] timeIntervalSince1970] - self.startInitTime) * 1000];
-    NSLog(@"[Glean Web BI]From the viewController initialization to start the webView request takes %@ms", t);
-    [[WtObserveDataGleaner shared] glean:@"https://www.qidian.com" columnName:@"VC initialization to start webView request" value:t error:nil];
-    
     [self.webView loadRequest:request];
     
 }
