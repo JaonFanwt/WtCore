@@ -62,11 +62,9 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
 }
 
 - (void)startLoading {
-    NSTimeInterval beginTime = [[NSDate date] timeIntervalSince1970] * 1000;
     NSThread *currentThread = [NSThread currentThread];
     
     NSString *userIdentifier = [self.request valueForHTTPHeaderField:WtThunderHeaderKeySessionUserIdentifier];
-    NSTimeInterval containerStartInitTime = [[self.request valueForHTTPHeaderField:WtThunderHeaderKeyContainerInitTime] doubleValue];
     NSString *loadType = [self.request valueForHTTPHeaderField:WtThunderHeaderKeyLoadType];
     
     BOOL isConsumer = YES;
@@ -99,8 +97,6 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
     
     [proxy selector:@selector(sessionDidFinish:) block:^(WtThunderSession *session){
         @strongify(self, currentThread);
-        NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970] * 1000;
-        
         NSDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidFinish),
                                  kWtThunderProtocolDataKey: session};
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
