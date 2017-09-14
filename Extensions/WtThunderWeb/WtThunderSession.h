@@ -31,6 +31,7 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier);
 
 @property (nonatomic, assign, readonly) BOOL isCompletion;
 @property (nonatomic, strong, readonly) NSURLResponse *response;
+@property (nonatomic, strong, readonly) NSMutableArray *responseDataArray;
 @property (nonatomic, strong, readonly) NSMutableData *responseData;
 @property (nonatomic, strong, readonly) NSError *error;
 

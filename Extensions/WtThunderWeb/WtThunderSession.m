@@ -40,6 +40,10 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 @end
 
 @implementation WtThunderSession
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+    [self cancel];
+}
 
 - (instancetype)initWithURLString:(NSString *)urlString userIdentifier:(NSString *)userIdentifier {
     if (self = [super init]) {
@@ -80,25 +84,25 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 }
 
 - (void)start {
+    self.connection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:NO];
+    [self.connection setDelegateQueue:[WtThunderQueueManager connectionQueue]];
+    [self.connection start];
+    
     // 该方案仍无法解决第一次请求慢的问题，它不共享长链接
+    // 留作试验
 //    _sessionTask = [[WtThunderURLSessionManager shared] wtTaskWithRequest:_request delegate:_taskDelegate];
 //    [_sessionTask resume];
-    
-//     暂时保留做数据测验
-        self.connection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:NO];
-        [self.connection setDelegateQueue:[WtThunderQueueManager connectionQueue]];
-        [self.connection start];
 }
 
 - (void)cancel {
+    [self.connection cancel];
+    
 //    if (_sessionTask && _sessionTask.state == NSURLSessionTaskStateRunning) {
 //        [_sessionTask cancel];
 //        [_session finishTasksAndInvalidate];
 //    }else {
 //        [_session invalidateAndCancel];
 //    }
-    
-    [self.connection cancel];
 }
 
 - (BOOL)isExpiredWithMaxAge:(NSTimeInterval)maxAge {
@@ -109,9 +113,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     _response = response;
     
-    @weakify(self);
+    @weakify(self, response);
     wtDispatch_in_main(^{
-        @strongify(self);
+        @strongify(self, response);
         if (self.delegate && [self.delegate respondsToSelector:@selector(session:didRecieveResponse:)]) {
             [self.delegate session:self didRecieveResponse:response];
         }
@@ -121,19 +125,22 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if (!_responseData) {
         _responseData = [NSMutableData data];
+        _responseDataArray = @[].mutableCopy;
     }
     
+    data = [data copy];
     if (data) {
         [_responseData appendData:data];
+        [_responseDataArray addObject:data];
+        
+        @weakify(self, data);
+        wtDispatch_in_main(^{
+            @strongify(self, data);
+            if (self.delegate && [self.delegate respondsToSelector:@selector(session:didLoadData:)]) {
+                [self.delegate session:self didLoadData:data];
+            }
+        });
     }
-    
-    @weakify(self);
-    wtDispatch_in_main(^{
-        @strongify(self);
-        if (self.delegate && [self.delegate respondsToSelector:@selector(session:didLoadData:)]) {
-            [self.delegate session:self didLoadData:data];
-        }
-    });
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -141,9 +148,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
         _error = error;
         _isCompletion = YES;
         
-        @weakify(self);
+        @weakify(self, error);
         wtDispatch_in_main(^{
-            @strongify(self);
+            @strongify(self, error);
             if (self.delegate && [self.delegate respondsToSelector:@selector(session:didFaild:)]) {
                 [self.delegate session:self didFaild:error];
             }
@@ -174,9 +181,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 - (void)session:(NSURLSession *)session didRecieveResponse:(NSHTTPURLResponse *)response {
     _response = response;
     
-    @weakify(self);
+    @weakify(self, response);
     wtDispatch_in_main(^{
-        @strongify(self);
+        @strongify(self, response);
         if (self.delegate && [self.delegate respondsToSelector:@selector(session:didRecieveResponse:)]) {
             [self.delegate session:self didRecieveResponse:response];
         }
@@ -184,9 +191,10 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 }
 
 - (void)session:(NSURLSession *)session didLoadData:(NSData *)data {
-    @weakify(self);
+    data = [data copy];
+    @weakify(self, data);
     wtDispatch_in_main(^{
-        @strongify(self);
+        @strongify(self, data);
         if (self.delegate && [self.delegate respondsToSelector:@selector(session:didLoadData:)]) {
             [self.delegate session:self didLoadData:data];
         }
@@ -198,9 +206,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
         _error = error;
         _isCompletion = YES;
         
-        @weakify(self);
+        @weakify(self, error);
         wtDispatch_in_main(^{
-            @strongify(self);
+            @strongify(self, error);
             if (self.delegate && [self.delegate respondsToSelector:@selector(session:didFaild:)]) {
                 [self.delegate session:self didFaild:error];
             }
@@ -238,13 +246,16 @@ didReceiveResponse:(NSURLResponse *)response
     didReceiveData:(NSData *)data {
     if (!_responseData) {
         _responseData = [NSMutableData data];
+        _responseDataArray = @[].mutableCopy;
     }
     
-    if (data) {
+    data = [data copy];
+    if (data && data.length > 0) {
         [_responseData appendData:data];
+        [_responseDataArray addObject:data];
+        
+        [self session:session didLoadData:data];
     }
-
-    [self session:session didLoadData:data];
 }
 
 #pragma mark - NSURLSessionTaskDelegate

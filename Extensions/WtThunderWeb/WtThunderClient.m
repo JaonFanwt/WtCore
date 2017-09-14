@@ -28,6 +28,10 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
     return wrapRequest;
 }
 
+NSString *wtThunderSessionDelegateProxyID(WtDelegateProxy<WtThunderSessionDelegate> *proxy) {
+    return [NSString stringWithFormat:@"<WtThunderSessionDelegate-%p>", proxy];
+}
+
 @interface WtThunderClient ()
 <WtThunderSessionDelegate>
 @property (nonatomic, strong) NSRecursiveLock *lock;
@@ -35,6 +39,7 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
 @property (nonatomic, strong) NSMutableDictionary<NSString *, WtThunderSession *> *sessionMapping;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *proxyMapping;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, id> *urlStringWorkingMapping; // value: isConsumer
+@property (nonatomic, strong) NSMutableDictionary<id, NSMutableDictionary *> *proxyStatusMapping;
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, WtThunderSession *> *cacheSessionMapping;
 @end
@@ -62,6 +67,7 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
         _sessionMapping = @{}.mutableCopy;
         _proxyMapping = @{}.mutableCopy;
         _urlStringWorkingMapping = @{}.mutableCopy;
+        _proxyStatusMapping = @{}.mutableCopy;
         
         _cacheSessionMapping = @{}.mutableCopy;
         
@@ -100,19 +106,25 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
         WtThunderSession *session = _sessionMapping[sessionID];
         if (session) {
             // Block Mapping
-            if (proxy) [_proxyMapping[sessionID] addObject:proxy];
+            if (proxy) {
+                [_proxyMapping[sessionID] addObject:proxy];
+                
+                NSString *proxyID = wtThunderSessionDelegateProxyID(proxy);
+                _proxyStatusMapping[proxyID] = @{@"isDidRecieveResponseDone":@0,
+                                                 @"didLoadDataTime":@0}.mutableCopy;
+            }
         }else {
+            // Block Mapping
+            NSMutableArray *proxyArray = [[NSMutableArray alloc] init];
+            if (proxy) [proxyArray addObject:proxy];
+            _proxyMapping[sessionID] = proxyArray;
+            
             // Session
             session = [[WtThunderSession alloc] initWithURLString:urlString userIdentifier:userIdentifier];
             session.delegate = self;
             _sessionMapping[sessionID] = session;
             
             [session start];
-            
-            // Block Mapping
-            NSMutableArray *proxyArray = [[NSMutableArray alloc] init];
-            if (proxy) [proxyArray addObject:proxy];
-            _proxyMapping[sessionID] = proxyArray;
         }
     }
     
@@ -140,16 +152,38 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
     
     for (WtDelegateProxy<WtThunderSessionDelegate> *proxy in _proxyMapping[session.sessionID]) {
         [proxy session:session didRecieveResponse:response];
+        
+        NSString *proxyID = wtThunderSessionDelegateProxyID(proxy);
+        _proxyStatusMapping[proxyID][@"isDidRecieveResponseDone"] = @1;
     }
     
     [_lock unlock];
 }
 
-- (void)session:(WtThunderSession *)session didLoadData:(NSData *)date {
+- (void)session:(WtThunderSession *)session didLoadData:(NSData *)data {
     [_lock lock];
     
     for (WtDelegateProxy<WtThunderSessionDelegate> *proxy in _proxyMapping[session.sessionID]) {
-        [proxy session:session didLoadData:date];
+        // 补发
+        NSString *proxyID = wtThunderSessionDelegateProxyID(proxy);
+        if (_proxyStatusMapping[proxyID]) {
+            BOOL isDidRecieveResponseDone = [_proxyStatusMapping[proxyID][@"isDidRecieveResponseDone"] boolValue];
+            if (!isDidRecieveResponseDone) {
+                [proxy session:session didRecieveResponse:session.response];
+                _proxyStatusMapping[proxyID][@"isDidRecieveResponseDone"] = @1;
+            }
+            
+            NSInteger didLoadDataTime = [_proxyStatusMapping[proxyID][@"didLoadDataTime"] integerValue];
+            if (session.responseDataArray.count > 0) {
+                for (NSInteger i = didLoadDataTime; i < session.responseDataArray.count - 1; i++) {
+                    NSData *d = session.responseDataArray[i];
+                    [proxy session:session didLoadData:d];
+                }
+            }
+        }
+        
+        [proxy session:session didLoadData:data];
+        _proxyStatusMapping[proxyID][@"didLoadDataTime"] = @(session.responseDataArray.count);
     }
     
     [_lock unlock];
@@ -159,6 +193,22 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
     [_lock lock];
     
     for (WtDelegateProxy<WtThunderSessionDelegate> *proxy in _proxyMapping[session.sessionID]) {
+        // 补发
+        NSString *proxyID = wtThunderSessionDelegateProxyID(proxy);
+        if (_proxyStatusMapping[proxyID]) {
+            BOOL isDidRecieveResponseDone = [_proxyStatusMapping[proxyID][@"isDidRecieveResponseDone"] boolValue];
+            NSInteger didLoadDataTime = [_proxyStatusMapping[proxyID][@"didLoadDataTime"] integerValue];
+            if (!isDidRecieveResponseDone) {
+                [proxy session:session didRecieveResponse:session.response];
+            }
+            
+            if (didLoadDataTime == 0) {
+                [proxy session:session didLoadData:session.responseData];
+            }
+            
+            [_proxyStatusMapping removeObjectForKey:proxyID];
+        }
+        
         [proxy session:session didFaild:error];
     }
     [_proxyMapping[session.sessionID] removeAllObjects];
@@ -174,6 +224,22 @@ NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userId
     [_lock lock];
     
     for (WtDelegateProxy<WtThunderSessionDelegate> *proxy in _proxyMapping[session.sessionID]) {
+        // 补发
+        NSString *proxyID = wtThunderSessionDelegateProxyID(proxy);
+        if (_proxyStatusMapping[proxyID]) {
+            BOOL isDidRecieveResponseDone = [_proxyStatusMapping[proxyID][@"isDidRecieveResponseDone"] boolValue];
+            NSInteger didLoadDataTime = [_proxyStatusMapping[proxyID][@"didLoadDataTime"] integerValue];
+            if (!isDidRecieveResponseDone) {
+                [proxy session:session didRecieveResponse:session.response];
+            }
+            
+            if (didLoadDataTime == 0) {
+                [proxy session:session didLoadData:session.responseData];
+            }
+            
+            [_proxyStatusMapping removeObjectForKey:proxyID];
+        }
+        
         [proxy sessionDidFinish:session];
     }
     [_proxyMapping[session.sessionID] removeAllObjects];

@@ -88,21 +88,16 @@ didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     completionHandler(NSURLSessionResponseAllow);
     
-    wtDispatch_in_main(^{
-        WtURLSessionManagerTaskDelegate *delegate =[self delegateForTask:dataTask];
-        [delegate.sessionDataDelegate URLSession:session dataTask:dataTask didReceiveResponse:response
-           completionHandler:completionHandler];
-    });
+    WtURLSessionManagerTaskDelegate *delegate = [self delegateForTask:dataTask];
+    [delegate.sessionDataDelegate URLSession:session dataTask:dataTask didReceiveResponse:response
+                           completionHandler:completionHandler];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
-    @weakify(self);
-    wtDispatch_in_main(^{
-        @strongify(self);
-        WtURLSessionManagerTaskDelegate *delegate =[self delegateForTask:dataTask];
-        [delegate.sessionDataDelegate URLSession:session dataTask:dataTask didReceiveData:data];
-    });
+    data = [data copy];
+    WtURLSessionManagerTaskDelegate *delegate = [self delegateForTask:dataTask];
+    [delegate.sessionDataDelegate URLSession:session dataTask:dataTask didReceiveData:data];
 }
 
 #pragma mark - NSURLSessionTaskDelegate
@@ -113,11 +108,9 @@ didReceiveResponse:(NSURLResponse *)response
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didCompleteWithError:(nullable NSError *)error {
     
-    wtDispatch_in_main(^{
-        WtURLSessionManagerTaskDelegate *delegate =[self delegateForTask:task];
-        [delegate.sessionTaskDelegate URLSession:session task:task didCompleteWithError:error];
-        
-        [self removeDelegateForTask:task];
-    });
+    WtURLSessionManagerTaskDelegate *delegate = [self delegateForTask:task];
+    [delegate.sessionTaskDelegate URLSession:session task:task didCompleteWithError:error];
+    
+    [self removeDelegateForTask:task];
 }
 @end
