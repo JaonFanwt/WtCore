@@ -12,6 +12,7 @@
 + (NSDictionary *)wtParseQueryComponentsFromQueryString:(NSString *)queryStr includingDuplicateParamName:(BOOL)includingDuplicateParamName;
 - (NSDictionary *)wtQueryComponents;
 - (NSString *)wtQueryComponentNamed:(NSString *)name index:(NSInteger)index;
+- (NSURL *)wtSortedByCompareQueryComponents;
 - (NSURL *)wtRemoveParams:(NSArray<NSString *> *)keys;
 
 - (NSString *)withoutQueryString;

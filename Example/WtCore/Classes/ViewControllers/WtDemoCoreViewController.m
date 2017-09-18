@@ -54,6 +54,20 @@
             NSLog(@"[WtCore]URL after:%@", wrapURL);
         }];
     }
+    
+    {
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"NSURL扩展";
+        cellModel.subTitle = @"wtSortedByCompareQueryComponents";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            
+            NSURL *url = [NSURL URLWithString:@"https://www.google.co.jp/search?q=params&oQ=params&aqs=chrome..69i57j0l5.854j0j7&sourceid=chrome&iE=UTF-8"];
+            NSURL *wrapURL = [url wtSortedByCompareQueryComponents];
+            NSLog(@"[WtCore]URL before:%@", url);
+            NSLog(@"[WtCore]URL after:%@", wrapURL);
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource

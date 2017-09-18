@@ -68,6 +68,23 @@
     return result;
 }
 
+- (NSURL *)wtSortedByCompareQueryComponents {
+    NSDictionary *queryComponents = [self wtQueryComponents];
+    NSArray *allKeys = [queryComponents.allKeys sortedArrayUsingSelector:@selector(compare:)];
+    
+    NSMutableArray *params = @[].mutableCopy;
+    for (NSString *key in allKeys) {
+        [params addObject:[NSString stringWithFormat:@"%@=%@", key, queryComponents[key]]];
+    }
+    
+    NSString *query = [params componentsJoinedByString:@"&"];
+    
+    NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:NO];
+    components.path = self.path;
+    if (params.count > 0) components.query = query;
+    return components.URL;
+}
+
 - (NSURL *)wtRemoveParams:(NSArray<NSString *> *)keys {
     NSMutableDictionary *queryComponents = [self wtQueryComponents].mutableCopy;
     NSMutableDictionary *lowercaseQueryKeyMapping = @{}.mutableCopy;
@@ -96,7 +113,7 @@
     
     NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:NO];
     components.path = self.path;
-    components.query = query;
+    if (params.count > 0) components.query = query;
     return components.URL;
 }
 

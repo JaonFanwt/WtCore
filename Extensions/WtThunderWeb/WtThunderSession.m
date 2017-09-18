@@ -18,6 +18,11 @@
 #import "WtThunderURLSessionManager.h"
 
 NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
+    NSURL *url = [[NSURL URLWithString:urlString] wtSortedByCompareQueryComponents];
+    if (url) {
+        urlString = url.absoluteString;
+    }
+    
     if (userIdentifier && userIdentifier.length > 0) {
         return wtStringFromMD5([NSString stringWithFormat:@"%@_%@", urlString, userIdentifier]);
     }else {
