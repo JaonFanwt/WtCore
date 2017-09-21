@@ -34,7 +34,6 @@ static NSString *wtExtractStructName(NSString *typeEncodeString) {
 
 @interface WtDelegateProxy (){
     Protocol *_protocol;
-    NSObject *_nilObj;
 }
 @end
 
@@ -52,7 +51,6 @@ static NSString *wtExtractStructName(NSString *typeEncodeString) {
     class_addProtocol(self.class, protocol);
     
     _protocol = protocol;
-    _nilObj = [[NSObject alloc] init];
     
     return self;
 }
@@ -106,12 +104,7 @@ case _typeChar: { \
                 case '@': {
                     __unsafe_unretained id arg;
                     [invocation getArgument:&arg atIndex:i];
-                    if ([arg isKindOfClass:NSClassFromString(@"NSBlock")]) {
-                        __unsafe_unretained id wrapArg = arg ? [arg copy]: _nilObj;
-                        [blockInvocation setArgument:&wrapArg atIndex:i-1];
-                    } else {
-                        [blockInvocation setArgument:&arg atIndex:i-1];
-                    }
+                    [blockInvocation setArgument:&arg atIndex:i-1];
                     break;
                 }
                 case '{': {

@@ -10,30 +10,30 @@ PODS:
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
   - SnapKit (3.2.0)
-  - WtCore (0.4.0):
-    - WtCore/Core (= 0.4.0)
-    - WtCore/DebugTools (= 0.4.0)
-    - WtCore/Observer (= 0.4.0)
-    - WtCore/ThunderWeb (= 0.4.0)
-    - WtCore/UI (= 0.4.0)
-    - WtCore/UI-Swift (= 0.4.0)
-  - WtCore/Core (0.4.0):
+  - WtCore (0.4.1):
+    - WtCore/Core (= 0.4.1)
+    - WtCore/DebugTools (= 0.4.1)
+    - WtCore/Observer (= 0.4.1)
+    - WtCore/ThunderWeb (= 0.4.1)
+    - WtCore/UI (= 0.4.1)
+    - WtCore/UI-Swift (= 0.4.1)
+  - WtCore/Core (0.4.1):
     - ReactiveCocoa (~> 2.5)
-  - WtCore/DebugTools (0.4.0):
+  - WtCore/DebugTools (0.4.1):
     - FLEX
     - KMCGeigerCounter
     - Masonry
     - ReactiveCocoa (~> 2.5)
     - WtCore/UI
-  - WtCore/Observer (0.4.0):
+  - WtCore/Observer (0.4.1):
     - WtCore/Core
-  - WtCore/ThunderWeb (0.4.0):
+  - WtCore/ThunderWeb (0.4.1):
     - ReactiveCocoa (~> 2.5)
     - WtCore/Observer
     - WtCore/UI
-  - WtCore/UI (0.4.0):
+  - WtCore/UI (0.4.1):
     - WtCore/Core
-  - WtCore/UI-Swift (0.4.0):
+  - WtCore/UI-Swift (0.4.1):
     - SnapKit (~> 3.2.0)
 
 DEPENDENCIES:
@@ -49,7 +49,7 @@ SPEC CHECKSUMS:
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  WtCore: 73415185589e1a4071e5ff9ab6a39d9ada113ab1
+  WtCore: 27c0d300eba0030ab58b7b254594a52408f40602
 
 PODFILE CHECKSUM: 30fd700004e115284eceece21d7aedc77d815c37
 
