@@ -130,10 +130,14 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
             }
         }
     }else if (action == eWtThunderURLProtocolActionTypeDidFaild) {
-        NSError *error = params[kWtThunderProtocolDataKey];
-        [self.client URLProtocol:self didFailWithError:error];
+        if (_didFinishRecvResponse) {
+            NSError *error = params[kWtThunderProtocolDataKey];
+            [self.client URLProtocol:self didFailWithError:error];
+        }
     }else if (action == eWtThunderURLProtocolActionTypeDidFinish) {
-        [self.client URLProtocolDidFinishLoading:self];
+        if (_didFinishRecvResponse) {
+            [self.client URLProtocolDidFinishLoading:self];
+        }
     }else {}
 }
 @end
