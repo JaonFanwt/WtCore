@@ -101,6 +101,7 @@ NSString *wtThunderSessionDelegateProxyID(WtDelegateProxy<WtThunderSessionDelega
         [self session:cacheSession didLoadData:cacheSession.responseData];
         [self sessionDidFinish:cacheSession];
         
+        [_urlStringWorkingMapping removeObjectForKey:urlString];
         [_cacheSessionMapping removeObjectForKey:sessionID];
     }else {
         WtThunderSession *session = _sessionMapping[sessionID];
@@ -248,7 +249,9 @@ NSString *wtThunderSessionDelegateProxyID(WtDelegateProxy<WtThunderSessionDelega
     BOOL isConsumer = [_urlStringWorkingMapping[session.urlString] boolValue];
     if (!isConsumer) {
         [_cacheSessionMapping setObject:session forKey:session.sessionID];
-    }else {}
+    }else {
+        [_urlStringWorkingMapping removeObjectForKey:session.urlString];
+    }
     
     [_lock unlock];
     
