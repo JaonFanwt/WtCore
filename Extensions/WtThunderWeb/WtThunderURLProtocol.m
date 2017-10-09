@@ -76,29 +76,37 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
     @weakify(self, currentThread);
     [proxy selector:@selector(session:didRecieveResponse:) block:^(WtThunderSession *session, NSHTTPURLResponse *response){
         @strongify(self, currentThread);
-        NSDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidRecieveResponse),
-                                 kWtThunderProtocolDataKey: response};
+        NSMutableDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidRecieveResponse)}.mutableCopy;
+        if (response) {
+            [params setObject:response forKey:kWtThunderProtocolDataKey];
+        }
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
     }];
     
     [proxy selector:@selector(session:didLoadData:) block:^(WtThunderSession *session, NSData *data){
         @strongify(self, currentThread);
-        NSDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidLoadData),
-                                 kWtThunderProtocolDataKey: data};
+        NSMutableDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidLoadData)}.mutableCopy;
+        if (data) {
+            [params setObject:data forKey:kWtThunderProtocolDataKey];
+        }
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
     }];
     
     [proxy selector:@selector(session:didFaild:) block:^(WtThunderSession *session, NSError *error){
         @strongify(self, currentThread);
-        NSDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidFaild),
-                                 kWtThunderProtocolDataKey: error};
+        NSMutableDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidFaild)}.mutableCopy;
+        if (error) {
+            [params setObject:error forKey:kWtThunderProtocolDataKey];
+        }
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
     }];
     
     [proxy selector:@selector(sessionDidFinish:) block:^(WtThunderSession *session){
         @strongify(self, currentThread);
-        NSDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidFinish),
-                                 kWtThunderProtocolDataKey: session};
+        NSMutableDictionary *params = @{kWtThunderURLProtocolActionKey: @(eWtThunderURLProtocolActionTypeDidFinish)}.mutableCopy;
+        if (session) {
+            [params setObject:session forKey:kWtThunderProtocolDataKey];
+        }
         [self performSelector:@selector(handlerSessionDelegateWithParams:) onThread:currentThread withObject:params waitUntilDone:NO];
     }];
     
@@ -116,8 +124,8 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
 - (void)handlerSessionDelegateWithParams:(NSDictionary *)params {
     eWtThunderURLProtocolActionType action = [params[kWtThunderURLProtocolActionKey] integerValue];
     if (action == eWtThunderURLProtocolActionTypeDidRecieveResponse) {
-        if (!_didFinishRecvResponse) {
-            NSHTTPURLResponse *response = params[kWtThunderProtocolDataKey];
+        NSHTTPURLResponse *response = params[kWtThunderProtocolDataKey];
+        if (response && !_didFinishRecvResponse) {
             [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
             _didFinishRecvResponse = YES;
         }
@@ -130,14 +138,15 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
             }
         }
     }else if (action == eWtThunderURLProtocolActionTypeDidFaild) {
-        if (_didFinishRecvResponse) {
-            NSError *error = params[kWtThunderProtocolDataKey];
+        NSError *error = params[kWtThunderProtocolDataKey];
+        if (error) {
+            [self.client URLProtocol:self didFailWithError:error];
+        }else {
+            error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorUnknown userInfo:nil];
             [self.client URLProtocol:self didFailWithError:error];
         }
     }else if (action == eWtThunderURLProtocolActionTypeDidFinish) {
-        if (_didFinishRecvResponse) {
-            [self.client URLProtocolDidFinishLoading:self];
-        }
+        [self.client URLProtocolDidFinishLoading:self];
     }else {}
 }
 @end

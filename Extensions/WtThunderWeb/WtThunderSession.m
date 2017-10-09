@@ -55,6 +55,7 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
         _beginTime = [[NSDate date] timeIntervalSince1970];
         _urlString = urlString;
         _request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+        _request.timeoutInterval = 20.0;
         [_request setValue:WtThunderHeaderValueRemoteLoad forHTTPHeaderField:WtThunderHeaderKeyLoadType];
         _sessionID = wtThunderSessionID(urlString, userIdentifier);
         
@@ -149,19 +150,16 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    if (error) {
-        _error = error;
-        _isCompletion = YES;
-        
-        @weakify(self, error);
-        wtDispatch_in_main(^{
-            @strongify(self, error);
-            if (self.delegate && [self.delegate respondsToSelector:@selector(session:didFaild:)]) {
-                [self.delegate session:self didFaild:error];
-            }
-        });
-        
-    }else {}
+    _error = error;
+    _isCompletion = YES;
+    
+    @weakify(self, error);
+    wtDispatch_in_main(^{
+        @strongify(self, error);
+        if (self.delegate && [self.delegate respondsToSelector:@selector(session:didFaild:)]) {
+            [self.delegate session:self didFaild:error];
+        }
+    });
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
