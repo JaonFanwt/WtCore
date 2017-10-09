@@ -173,6 +173,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
     @weakify(self);
     wtDispatch_in_main(^{
         @strongify(self);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WtThunderTaskDidCompleteNotification object:self];
+        
         if (self.delegate && [self.delegate respondsToSelector:@selector(sessionDidFinish:)]) {
             [self.delegate sessionDidFinish:self];
         }

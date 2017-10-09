@@ -16,3 +16,5 @@
 #define WtThunderHeaderKeySessionUserIdentifier @"wtthunder-web-native-session-identifier"
 
 #define WtThunderHeaderKeyContainerInitTime @"wtthunder-web-container-inittime"
+
+#define WtThunderTaskDidCompleteNotification @"com.fanwt.www.thunderweb.task.complete"
