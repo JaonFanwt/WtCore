@@ -12,7 +12,7 @@
 @class WtThunderSession;
 @protocol WtThunderSessionDelegate <NSObject>
 - (void)session:(WtThunderSession *)session didRecieveResponse:(NSURLResponse *)response;
-- (void)session:(WtThunderSession *)session didLoadData:(NSData *)date;
+- (void)session:(WtThunderSession *)session didLoadData:(NSData *)data;
 - (void)session:(WtThunderSession *)session didFaild:(NSError *)error;
 - (void)sessionDidFinish:(WtThunderSession *)session;
 @end
