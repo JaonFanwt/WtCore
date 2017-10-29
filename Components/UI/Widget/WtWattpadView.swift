@@ -151,10 +151,12 @@ public class WtWattpadView: UIView {
     var flipMinOffset: CGFloat = 100.0
     var animationDuration: TimeInterval = 0.3
     
+    var tapGesture: UITapGestureRecognizer! = nil
     var panGesture: UIPanGestureRecognizer! = nil
     var beganPoint: CGPoint? = nil
     
     deinit {
+        self.removeGestureRecognizer(tapGesture)
         self.removeGestureRecognizer(panGesture)
     }
     
@@ -362,6 +364,9 @@ public class WtWattpadView: UIView {
     }
     
     func createAtions() -> Void {
+        tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(handlerTapGesture(tapGesture:)))
+        addGestureRecognizer(tapGesture)
+        
         panGesture = UIPanGestureRecognizer.init(target: self, action: #selector(handlerPanGesture(panGesture:)))
         addGestureRecognizer(panGesture)
     }
@@ -394,6 +399,51 @@ public class WtWattpadView: UIView {
         }
     }
     
+    func handlerTapGesture(tapGesture: UITapGestureRecognizer) {
+        guard orientation == .LeftRight else {
+            return
+        }
+        
+        let translatPoint = tapGesture.location(in: self)
+        
+        self.isUserInteractionEnabled = false
+        
+        if basemapStatus == .none {
+            hasBasemapView.current = contentView.basemap.current != nil
+            hasBasemapView.pre = contentView.basemap.pre != nil
+            
+            contentView.basemap.current?.removeFromSuperview()
+            contentView.basemap.pre?.removeFromSuperview()
+        }
+        contentIndex.dynamicPre = nil
+        contentIndex.dynamicNext = nil
+        
+        var moveToPoint = CGPoint.init(x: -flipMinOffset - 10, y: -flipMinOffset - 10)
+        if translatPoint.x < self.frame.size.width / 2.0 {
+            moveToPoint = CGPoint.init(x: flipMinOffset + 10, y: flipMinOffset + 10)
+        }
+        
+        // 判断是否有前后页，并做数据修正
+        fixDynamicContent(moveToPoint)
+        
+        // 判断是否能移动，不能移动强制中断
+        if canMove(moveToPoint) == false {
+            // 中断
+            tapGesture.isEnabled = false
+            tapGesture.isEnabled = true
+            
+            self.isUserInteractionEnabled = true
+            return
+        }
+        
+        UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseInOut, animations: {
+            self.flipMove(moveToPoint)
+            self.flipEnd(withTranslatPoint: moveToPoint)
+        }) { (finish) in
+            
+        }
+    }
+    
     func handlerPanGesture(panGesture: UIPanGestureRecognizer) {
         let translatPoint = panGesture.translation(in: self)
         
@@ -416,7 +466,10 @@ public class WtWattpadView: UIView {
             fixDynamicContent(translatPoint)
             
             // 判断是否能移动，不能移动强制中断
-            if canMove(panGesture) == false {
+            if canMove(translatPoint) == false {
+                // 中断
+                panGesture.isEnabled = false
+                panGesture.isEnabled = true
                 return
             }
             
@@ -428,7 +481,6 @@ public class WtWattpadView: UIView {
             
         default:
             flipToOriginal()
-            print("\(#function) - \(panGesture.state)")
         }
     }
     
@@ -483,8 +535,7 @@ public class WtWattpadView: UIView {
     }
     
     // MARK: 判断是否能移动，不能移动强制中断
-    func canMove(_ panGesture: UIPanGestureRecognizer) -> Bool {
-        let translatPoint = panGesture.translation(in: self)
+    func canMove(_ translatPoint: CGPoint) -> Bool {
         var offset = translatPoint.y
         if orientation == .LeftRight {
             offset = translatPoint.x
@@ -495,9 +546,6 @@ public class WtWattpadView: UIView {
                 if hasBasemapView.current {
                 }else {
                     if contentIndex.next == nil {
-                        // 中断
-                        panGesture.isEnabled = false
-                        panGesture.isEnabled = true
                         return false
                     }
                 }
@@ -505,9 +553,6 @@ public class WtWattpadView: UIView {
                 if hasBasemapView.pre {
                 }else {
                     if contentIndex.pre == nil {
-                        // 中断
-                        panGesture.isEnabled = false
-                        panGesture.isEnabled = true
                         return false
                     }
                 }
@@ -515,18 +560,13 @@ public class WtWattpadView: UIView {
         }else if self.basemapStatus == .up {
             if offset < 0 {
                 if contentIndex.next == nil {
-                    // 中断
-                    panGesture.isEnabled = false
-                    panGesture.isEnabled = true
+                    
                     return false
                 }
             }
         }else {
             if offset > 0 {
                 if contentIndex.pre == nil {
-                    // 中断
-                    panGesture.isEnabled = false
-                    panGesture.isEnabled = true
                     return false
                 }
             }
