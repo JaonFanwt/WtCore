@@ -10,10 +10,10 @@ import Foundation
 
 import SnapKit
 
-public protocol WtWattpadViewDelegate {
+public protocol WtWattpadViewDelegate: NSObjectProtocol {
 }
 
-public protocol WtWattpadViewDatasource {
+public protocol WtWattpadViewDatasource: NSObjectProtocol {
     func flipView(flipView: UIView, baseMapViewAtIndex: AnyObject?) -> UIView?
     func flipView(flipView: UIView, index: AnyObject?, offset: Int) -> AnyObject?
     func flipView(flipView: UIView, pageViewWithIndex index: AnyObject?) -> UIView?
@@ -57,11 +57,13 @@ public class WtWattpadView: UIView {
         didSet {
             isOrientationUpDown = orientation == .UpDown
             flipMinOffset = isOrientationUpDown ? 100 : 40
+            
+            layoutContainerViews()
         }
     }
     var isOrientationUpDown: Bool = true
-    public var delegate: WtWattpadViewDelegate! = nil
-    public var datasource: WtWattpadViewDatasource! = nil
+    public weak var delegate: WtWattpadViewDelegate! = nil
+    public weak var datasource: WtWattpadViewDatasource! = nil
     public var currentIndex: AnyObject? {
         get {
             return hCurrentIndex
@@ -156,6 +158,7 @@ public class WtWattpadView: UIView {
     var beganPoint: CGPoint? = nil
     
     deinit {
+        print("\(#file) - \(#function) - \(#line)")
         self.removeGestureRecognizer(tapGesture)
         self.removeGestureRecognizer(panGesture)
     }
@@ -197,9 +200,13 @@ public class WtWattpadView: UIView {
             if orientation == .UpDown {
                 containerView.current.frame.origin.y = -frame.size.height
                 containerView.next.frame.origin.y = frame.size.height
+                containerView.current.frame.origin.x = 0
+                containerView.next.frame.origin.x = 0
             }else {
                 containerView.current.frame.origin.x = -frame.size.width
                 containerView.next.frame.origin.x = frame.size.width
+                containerView.current.frame.origin.y = 0
+                containerView.next.frame.origin.y = 0
             }
         }else if basemapStatus == .down {
             // 状态为：
@@ -215,9 +222,13 @@ public class WtWattpadView: UIView {
             if orientation == .UpDown {
                 containerView.current.frame.origin.y = -frame.size.height
                 containerView.next.frame.origin.y = frame.size.height
+                containerView.current.frame.origin.x = 0
+                containerView.next.frame.origin.x = 0
             }else {
                 containerView.current.frame.origin.x = -frame.size.width
                 containerView.next.frame.origin.x = frame.size.width
+                containerView.current.frame.origin.y = 0
+                containerView.next.frame.origin.y = 0
             }
             
         }else {
@@ -229,31 +240,41 @@ public class WtWattpadView: UIView {
             if orientation == .UpDown {
                 if contentView.basemap.pre != nil {
                     containerView.pre.frame.origin.y = -2*frame.size.height
+                    containerView.pre.frame.origin.x = 0
                 }else {
                     containerView.pre.frame.origin.y = -frame.size.height
+                    containerView.pre.frame.origin.x = 0
                 }
                 
                 if contentView.basemap.current != nil {
                     containerView.next.frame.origin.y = 2*frame.size.height
+                    containerView.next.frame.origin.x = 0
                 }else {
                     containerView.next.frame.origin.y = frame.size.height
+                    containerView.next.frame.origin.x = 0
                 }
                 
                 containerView.current.frame.origin.y = 0
+                containerView.current.frame.origin.x = 0
             }else {
                 if contentView.basemap.pre != nil {
                     containerView.pre.frame.origin.x = -2*frame.size.width
+                    containerView.pre.frame.origin.y = 0
                 }else {
                     containerView.pre.frame.origin.x = -frame.size.width
+                    containerView.pre.frame.origin.y = 0
                 }
                 
                 if contentView.basemap.current != nil {
                     containerView.next.frame.origin.x = 2*frame.size.width
+                    containerView.next.frame.origin.y = 0
                 }else {
                     containerView.next.frame.origin.x = frame.size.width
+                    containerView.next.frame.origin.y = 0
                 }
                 
                 containerView.current.frame.origin.x = 0
+                containerView.current.frame.origin.y = 0
             }
         }
     }

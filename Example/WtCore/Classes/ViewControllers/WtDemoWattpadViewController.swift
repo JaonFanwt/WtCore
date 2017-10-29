@@ -13,6 +13,10 @@ import WtCore
 class WtDemoWattpadViewController: UIViewController, WtWattpadViewDelegate, WtWattpadViewDatasource{
     @IBOutlet weak var wattpadView: WtWattpadView!
     
+    deinit {
+        print("\(#file) - \(#function) - \(#line)")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -20,6 +24,22 @@ class WtDemoWattpadViewController: UIViewController, WtWattpadViewDelegate, WtWa
         wattpadView.delegate = self
         wattpadView.datasource = self
         wattpadView.orientation = .LeftRight
+        
+        let switchButton = UISwitch.init()
+        let buttonItem = UIBarButtonItem.init(customView: switchButton)
+        navigationItem.rightBarButtonItem = buttonItem
+        
+        switchButton.wtAction({ [weak wattpadView] (control, controlEvents) in
+            guard let switchButton = control as? UISwitch else {
+                return
+            }
+
+            if switchButton.isOn {
+                wattpadView?.orientation = .UpDown
+            }else {
+                wattpadView?.orientation = .LeftRight
+            }
+        }, for: .valueChanged)
     }
     
     override func didReceiveMemoryWarning() {
