@@ -8,12 +8,99 @@
 
 #import "WtDispatch.h"
 
-void wtDispatch_in_main(dispatch_block_t block) {
+#import "CTBlockDescription.h"
+
+#import "WtDelegateProxy.h"
+
+void wtDispatch_in_main(id block, ...) {
     if (!block) return;
     
+    CTBlockDescription *blockDescription = [[CTBlockDescription alloc] initWithBlock:block];
+    if (!blockDescription) return;
+    
+    NSMethodSignature *blockMethodSignature = blockDescription.blockSignature;
+    NSInvocation *blockInvocation = [NSInvocation invocationWithMethodSignature:blockMethodSignature];
+    
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
+    
+    for (NSInteger i = 1; i < blockInvocation.methodSignature.numberOfArguments; i++) {
+        const char *argumentType = [blockInvocation.methodSignature getArgumentTypeAtIndex:i];
+        switch (argumentType[0] == 'r' ? argumentType[1] : argumentType[0]) {
+#define WT_FF_ARG_CASE(_typeChar, _type) \
+    case _typeChar: { \
+        _type arg; \
+        arg = va_arg(arg_ptr, _type); \
+        [blockInvocation setArgument:&arg atIndex:i]; \
+        break; \
+    }
+                WT_FF_ARG_CASE('c', int)
+                WT_FF_ARG_CASE('C', int)
+                WT_FF_ARG_CASE('s', int)
+                WT_FF_ARG_CASE('S', int)
+                WT_FF_ARG_CASE('i', int)
+                WT_FF_ARG_CASE('I', unsigned int)
+                WT_FF_ARG_CASE('l', long)
+                WT_FF_ARG_CASE('L', unsigned long)
+                WT_FF_ARG_CASE('q', long long)
+                WT_FF_ARG_CASE('Q', unsigned long long)
+                WT_FF_ARG_CASE('f', double)
+                WT_FF_ARG_CASE('d', double)
+                WT_FF_ARG_CASE('B', int)
+            case '@': {
+                __unsafe_unretained id arg;
+                arg = va_arg(arg_ptr, __unsafe_unretained id);
+                [blockInvocation setArgument:&arg atIndex:i];
+                break;
+            }
+            case '{': {
+                NSString *typeString = wtExtractStructName([NSString stringWithUTF8String:argumentType]);
+#define WT_FF_ARG_STRUCT(_type, _transFunc) \
+    if ([typeString rangeOfString:@#_type].location != NSNotFound) { \
+        _type arg; \
+        arg = va_arg(arg_ptr, _type); \
+        [blockInvocation setArgument:&arg atIndex:i]; \
+        break; \
+    }
+                WT_FF_ARG_STRUCT(CGRect, valueWithRect)
+                WT_FF_ARG_STRUCT(CGPoint, valueWithPoint)
+                WT_FF_ARG_STRUCT(CGSize, valueWithSize)
+                WT_FF_ARG_STRUCT(NSRange, valueWithRange)
+                break;
+            }
+            case ':': {
+                SEL selector;
+                selector = va_arg(arg_ptr, SEL);
+                [blockInvocation setArgument:&selector atIndex:i];
+                break;
+            }
+            case '^':
+            case '*': {
+                void *arg;
+                arg = va_arg(arg_ptr, void*);
+                [blockInvocation setArgument:&arg atIndex:i];
+                break;
+            }
+            case '#': {
+                Class arg;
+                arg = va_arg(arg_ptr, Class);
+                [blockInvocation setArgument:&arg atIndex:i];
+                break;
+            }
+            default: {
+                NSLog(@"error type %s", argumentType);
+                break;
+            }
+        }
+    }
+
+    va_end(arg_ptr);
+    
     if ([NSThread isMainThread]) {
-        block();
+        [blockInvocation invokeWithTarget:blockDescription.block];
     }else {
-        dispatch_async(dispatch_get_main_queue(), block);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [blockInvocation invokeWithTarget:blockDescription.block];
+        });
     }
 }

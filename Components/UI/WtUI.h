@@ -13,3 +13,5 @@
 #import "UIControl+WtExtension.h"
 
 #import "WtTableViewCellModel.h"
+
+#import "UIViewController+WtWindowAlert.h"

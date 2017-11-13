@@ -8,4 +8,4 @@
 
 #import <Foundation/Foundation.h>
 
-void wtDispatch_in_main(dispatch_block_t block);
+void wtDispatch_in_main(id block, ...);

@@ -1,6 +1,8 @@
 use_frameworks!
 platform :ios, '8.0'
 
+install! 'cocoapods', :deterministic_uuids => false
+
 target 'WtCore_Example' do
   pod 'WtCore', :path => '../'
 

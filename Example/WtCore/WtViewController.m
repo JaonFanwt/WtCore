@@ -13,9 +13,9 @@
 #import <WtCore/WtCore.h>
 #import <WtCore/WtDebugTools.h>
 #import <WtCore/WtThunderWeb.h>
+#import <WtCore/WtUI.h>
 
 #import "WtDemoCellModel.h"
-
 
 @interface WtViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -254,6 +254,44 @@
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
             [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = WTClassFromString(@"WtDemoWattpadViewController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+    }
+    
+    {// WindowAlert
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"WtWindowAlert";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            Class cls = WTClassFromString(@"WtDemoWattpadViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
+            @weakify(toViewCtrl);
+            [toViewCtrl wt_showWithCompletion:^(BOOL finished){
+                @strongify(toViewCtrl);
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.frame = CGRectMake(0, 0, 40, 30);
+                button.backgroundColor = [UIColor clearColor];
+                button.titleLabel.font = [UIFont systemFontOfSize:16];
+                [button setTitle:@"关闭" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+                
+                @weakify(toViewCtrl);
+                [button wtAction:^(UIControl *control, UIControlEvents controlEvents) {
+                    @strongify(toViewCtrl);
+                    [toViewCtrl wt_closeWithCompletion:nil];
+                } forControlEvents:UIControlEventTouchUpInside];
+                
+                toViewCtrl.navigationItem.leftBarButtonItem = buttonItem;
+            } navigationBarHidden:NO];
         }];
         
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){

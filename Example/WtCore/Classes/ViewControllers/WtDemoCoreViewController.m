@@ -68,6 +68,38 @@
             NSLog(@"[WtCore]URL after:%@", wrapURL);
         }];
     }
+    
+    {
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"wtDispatch_in_main";
+        cellModel.subTitle = @"在主线程中执行block，不带参数";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            
+            wtDispatch_in_main(^(){
+                NSLog(@"[IsMainThread:%d]在主线程中执行block，不带参数", [NSThread isMainThread]);
+            });
+        }];
+    }
+    
+    {
+        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"wtDispatch_in_main";
+        cellModel.subTitle = @"在主线程中执行block，带参数（可变参数）";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            
+            wtDispatch_in_main(^(NSString *str, int num, char c, CGRect frame, void (^block)()){
+                NSLog(@"[IsMainThread:%d]在主线程中执行block，带参数（可变参数）", [NSThread isMainThread]);
+                NSLog(@"str:%@, num:%d, frame:%@, char:%c", str, num, NSStringFromCGRect(frame), c);
+                if (block) {
+                    block();
+                }
+            }, @"String", 100, 'c', CGRectMake(0, 0, 100, 200), ^{
+                NSLog(@"哈哈");
+            });
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource

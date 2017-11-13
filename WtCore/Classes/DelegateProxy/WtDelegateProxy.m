@@ -13,7 +13,7 @@
 
 #import "CTBlockDescription.h"
 
-static NSString *wtExtractStructName(NSString *typeEncodeString) {
+NSString *wtExtractStructName(NSString *typeEncodeString) {
     if (!typeEncodeString || ![typeEncodeString isKindOfClass:[NSString class]]) {
         return @"";
     }
