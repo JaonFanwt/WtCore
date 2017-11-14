@@ -1,5 +1,8 @@
 //
-// Created by wtfan on 2017/5/19.
+//  WtDebugTableViewCellSwitchNetwork
+//  WtDebugTools
+//
+//  Created by wtfan on 2017/5/19.
 //
 
 #import "WtDebugTableViewCellSwitchNetwork.h"

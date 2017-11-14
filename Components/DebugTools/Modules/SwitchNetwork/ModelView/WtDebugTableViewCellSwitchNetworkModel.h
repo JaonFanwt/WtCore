@@ -1,5 +1,8 @@
 //
-// Created by wtfan on 2017/5/22.
+//  WtDebugTableViewCellSwitchNetworkModel
+//  WtDebugTools
+//
+//  Created by wtfan on 2017/5/22.
 //
 
 #import <Foundation/Foundation.h>

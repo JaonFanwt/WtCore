@@ -274,7 +274,7 @@
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
             @weakify(toViewCtrl);
-            [toViewCtrl wt_showWithCompletion:^(BOOL finished){
+            [toViewCtrl wtShowWithCompletion:^(BOOL finished){
                 @strongify(toViewCtrl);
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 button.frame = CGRectMake(0, 0, 40, 30);
@@ -287,7 +287,7 @@
                 @weakify(toViewCtrl);
                 [button wtAction:^(UIControl *control, UIControlEvents controlEvents) {
                     @strongify(toViewCtrl);
-                    [toViewCtrl wt_closeWithCompletion:nil];
+                    [toViewCtrl wtCloseWithCompletion:nil];
                 } forControlEvents:UIControlEventTouchUpInside];
                 
                 toViewCtrl.navigationItem.leftBarButtonItem = buttonItem;

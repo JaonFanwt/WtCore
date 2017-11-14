@@ -1,6 +1,6 @@
 //
 //  NSString+WtEncrypt.m
-//  Pods
+//  WtCore
 //
 //  Created by wtfan on 2017/8/29.
 //

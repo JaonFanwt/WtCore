@@ -1,6 +1,6 @@
 //
 //  UIViewController+WtWindowAlert.m
-//  FDFullscreenPopGesture
+//  WtUI
 //
 //  Created by wtfan on 2017/11/13.
 //
@@ -14,7 +14,7 @@
 #import "WtWindowAlert.h"
 
 @implementation UIViewController (WtWindowAlert)
-- (WtWindowAlert *)wt_WindowAlert {
+- (WtWindowAlert *)wtWindowAlert {
     WtWindowAlert *wa = objc_getAssociatedObject(self, _cmd);
     if (!wa) {
         wa = [[WtWindowAlert alloc] init];
@@ -23,11 +23,11 @@
     return wa;
 }
 
-- (void)wt_showWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden {
+- (void)wtShowWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden {
     UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
     navCtrl.view.backgroundColor = [UIColor clearColor];
     self.fd_prefersNavigationBarHidden = hidden;
-    [self.wt_WindowAlert showViewController:navCtrl
+    [self.wtWindowAlert showViewController:navCtrl
                         animateWithDuration:kWtWindowAlertShowAnimationDurationTime
                             backgroundColor:[UIColor clearColor]
                            beforeAnimations:^{
@@ -45,8 +45,8 @@
                            }];
 }
 
-- (void)wt_closeWithCompletion:(void (^)(BOOL finished))completion {
-    [self.wt_WindowAlert closeAnimateWithDuration:kWtWindowAlertShowAnimationDurationTime
+- (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion {
+    [self.wtWindowAlert closeAnimateWithDuration:kWtWindowAlertShowAnimationDurationTime
                                        animations:^{
                                            CGRect f = self.navigationController.view.frame;
                                            self.navigationController.view.transform = CGAffineTransformMakeTranslation(0, f.size.height);

@@ -1,6 +1,6 @@
 //
 //  WtTableViewCellModel.m
-//  Pods
+//  WtUI
 //
 //  Created by wtfan on 2017/5/17.
 //

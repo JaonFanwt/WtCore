@@ -1,6 +1,6 @@
 //
 //  WtDelegateProxy.m
-//  WtDelegateProxy
+//  WtCore
 //
 //  Created by wtfan on 2017/7/29.
 //  Copyright © 2017年 wtfan(long). All rights reserved.

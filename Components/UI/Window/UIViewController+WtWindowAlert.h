@@ -1,6 +1,6 @@
 //
 //  UIViewController+WtWindowAlert.h
-//  FDFullscreenPopGesture
+//  WtUI
 //
 //  Created by wtfan on 2017/11/13.
 //
@@ -10,6 +10,6 @@
 static NSTimeInterval kWtWindowAlertShowAnimationDurationTime = 0.4;
 
 @interface UIViewController (WtWindowAlert)
-- (void)wt_showWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden;
-- (void)wt_closeWithCompletion:(void (^)(BOOL finished))completion;
+- (void)wtShowWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden;
+- (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion;
 @end

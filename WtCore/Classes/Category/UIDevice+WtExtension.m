@@ -1,6 +1,6 @@
 //
 //  UIDevice+WtExtension.m
-//  Pods
+//  WtCore
 //
 //  Created by wtfan on 2017/9/11.
 //

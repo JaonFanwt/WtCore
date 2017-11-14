@@ -1,6 +1,6 @@
 //
 //  WtThunderURLSessionManager.m
-//  FLEX
+//  WtThunderWeb
 //
 //  Created by wtfan on 2017/9/12.
 //

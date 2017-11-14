@@ -1,6 +1,6 @@
 //
 //  WtWattpadView.swift
-//  Pods
+//  WtUI-Swift
 //
 //  Created by wtfan on 2017/7/4.
 //

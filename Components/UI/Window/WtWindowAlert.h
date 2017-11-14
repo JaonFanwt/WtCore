@@ -1,6 +1,6 @@
 //
 //  WtWindowAlert.h
-//  KMCGeigerCounter
+//  WtUI
 //
 //  Created by wtfan on 2017/10/31.
 //
