@@ -12,3 +12,8 @@
 + (UIColor *)wtRandom;
 + (UIColor *)wtRandomWithAlpha:(CGFloat)alpha;
 @end
+
+@interface UIColor (WtHTML)
++ (UIColor *)wtColorWithHexString:(NSString *)hex;
++ (UIColor *)wtColorWithHTMLName:(NSString *)name;
+@end

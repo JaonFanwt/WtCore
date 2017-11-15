@@ -17,3 +17,8 @@ Class WTClassFromString(NSString *className);
 @interface NSString (WtExtension)
 
 @end
+
+// HTML
+@interface NSString (WtHTML)
+- (NSUInteger)wtIntegerValueFromHex;
+@end
