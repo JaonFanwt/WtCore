@@ -22,3 +22,12 @@ Class WTClassFromString(NSString *className) {
 @implementation NSString (WtExtension)
 
 @end
+
+// HTML
+@implementation NSString (WtHTML)
+- (NSUInteger)wtIntegerValueFromHex {
+    unsigned long result = 0;
+    sscanf([self UTF8String], "%lx", &result);
+    return (NSUInteger)result;
+}
+@end
