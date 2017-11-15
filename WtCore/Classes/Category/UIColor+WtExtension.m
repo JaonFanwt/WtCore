@@ -26,7 +26,7 @@
 @implementation UIColor (WtHTML)
 + (UIColor *)wtColorWithHexString:(NSString *)hex {
     if ([hex hasPrefix:@"#"]) hex = [hex substringFromIndex:1];
-    if ([hex length]!=6 || [hex length]!=3) return nil;
+    if ([hex length]!=6 && [hex length]!=3) return nil;
     
     NSUInteger digits = [hex length]/3.0;
     CGFloat maxValue = (digits==1)?15.0:255.0;
