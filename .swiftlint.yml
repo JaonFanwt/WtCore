@@ -1,0 +1,20 @@
+disabled_rules:
+  - multiple_closures_with_trailing_closure
+  - cyclomatic_complexity
+  - file_length
+  - nesting
+  - type_body_length
+  - function_body_length
+  - variable_name
+excluded: # 执行 linting 时忽略的路径。 优先级比 `included` 更高。
+  - Example/Pods
+
+line_length: 150
+
+identifier_name:
+  min_length: # 只有最小长度
+    warning: 1
+    error: 1
+  excluded: # 排除某些名字
+    - id
+    - URL
