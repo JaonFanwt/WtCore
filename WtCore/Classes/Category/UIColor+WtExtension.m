@@ -10,6 +10,14 @@
 
 #import "NSString+WtExtension.h"
 
+UIColor *wtRandomColor(CGFloat alpha) {
+    return [UIColor wtRandomWithAlpha:alpha];
+}
+
+UIColor *wtHTMLColor(NSString *name) {
+    return [UIColor wtColorWithHTMLName:name];
+}
+
 @implementation UIColor (WtExtension)
 + (UIColor *)wtRandom {
     return [self wtRandomWithAlpha:1.0];
