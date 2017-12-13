@@ -149,11 +149,98 @@ if ([typeString rangeOfString:@#_type].location != NSNotFound) { \
         }
         
         if (blockMethodSignature.methodReturnLength > 0) {
-            void *returnValue;
             [blockInvocation invokeWithTarget:blockDescription.block];
-            [blockInvocation getReturnValue:&returnValue];
-            
-            [invocation setReturnValue:&returnValue];
+
+            const char *returnType = [invocation.methodSignature methodReturnType];
+            const char *realReturnType = [blockInvocation.methodSignature methodReturnType];
+
+            switch (returnType[0] == 'r' ? returnType[1] : returnType[0]) {
+#define WT_FF_RET_SMART_CONVERT(_typeChar, _realType, _type) \
+case _typeChar: { \
+    _realType result;\
+    [blockInvocation getReturnValue:&result]; \
+    _type convertResult = (_type)result; \
+    [invocation setReturnValue:&convertResult]; \
+    break; \
+} \
+
+#define WT_FF_RET_CASE(_typeChar, _type) \
+case _typeChar: { \
+    switch (realReturnType[0] == 'r' ? realReturnType[1] : realReturnType[0]) { \
+        WT_FF_RET_SMART_CONVERT('c', char, _type) \
+        WT_FF_RET_SMART_CONVERT('C', unsigned char, _type)  \
+        WT_FF_RET_SMART_CONVERT('s', short, _type)  \
+        WT_FF_RET_SMART_CONVERT('S', unsigned short, _type)  \
+        WT_FF_RET_SMART_CONVERT('i', int, _type)  \
+        WT_FF_RET_SMART_CONVERT('I', unsigned int, _type)  \
+        WT_FF_RET_SMART_CONVERT('l', long, _type)  \
+        WT_FF_RET_SMART_CONVERT('L', unsigned long, _type)  \
+        WT_FF_RET_SMART_CONVERT('q', long long, _type)  \
+        WT_FF_RET_SMART_CONVERT('Q', unsigned long long, _type)  \
+        WT_FF_RET_SMART_CONVERT('f', float, _type)  \
+        WT_FF_RET_SMART_CONVERT('d', double, _type)  \
+        WT_FF_RET_SMART_CONVERT('B', BOOL, _type)  \
+    } \
+    break; \
+}
+                WT_FF_RET_CASE('c', char)
+                WT_FF_RET_CASE('C', unsigned char)
+                WT_FF_RET_CASE('s', short)
+                WT_FF_RET_CASE('S', unsigned short)
+                WT_FF_RET_CASE('i', int)
+                WT_FF_RET_CASE('I', unsigned int)
+                WT_FF_RET_CASE('l', long)
+                WT_FF_RET_CASE('L', unsigned long)
+                WT_FF_RET_CASE('q', long long)
+                WT_FF_RET_CASE('Q', unsigned long long)
+                WT_FF_RET_CASE('f', float)
+                WT_FF_RET_CASE('d', double)
+                WT_FF_RET_CASE('B', BOOL)
+                case '{': {
+                    NSString *typeString = wtExtractStructName([NSString stringWithUTF8String:returnType]);
+#define WT_FF_RET_STRUCT(_type, _methodName) \
+if ([typeString rangeOfString:@#_type].location != NSNotFound) {    \
+    _type result;   \
+    [blockInvocation getReturnValue:&result];    \
+    [invocation setReturnValue:&result]; \
+    break;  \
+}
+                    WT_FF_RET_STRUCT(CGRect, valueWithRect)
+                    WT_FF_RET_STRUCT(CGPoint, valueWithPoint)
+                    WT_FF_RET_STRUCT(CGSize, valueWithSize)
+                    WT_FF_RET_STRUCT(NSRange, valueWithRange)
+                    break;
+                }
+                case '@': {
+                    __unsafe_unretained id result;
+                    [blockInvocation getReturnValue:&result];
+                    [invocation setReturnValue:&result];
+                    break;
+                }
+                case ':': {
+                    SEL selector;
+                    [blockInvocation getReturnValue:&selector];
+                    [invocation setReturnValue:&selector];
+                    break;
+                }
+                case '*':
+                case '^': {
+                    void *result;
+                    [blockInvocation getReturnValue:&result];
+                    [invocation setReturnValue:&result];
+                    break;
+                }
+                case '#': {
+                    Class result;
+                    [blockInvocation getReturnValue:&result];
+                    [invocation setReturnValue:&result];
+                    break;
+                }
+                default: {
+                    NSLog(@"error type %s", returnType);
+                    break;
+                }
+            }
         }else {
             [blockInvocation invokeWithTarget:blockDescription.block];
         }
