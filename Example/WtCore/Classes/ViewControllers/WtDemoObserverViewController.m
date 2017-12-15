@@ -1,6 +1,6 @@
 //
 //  WtDemoObserverViewController.m
-//  WtCore
+//  WtCore_Example
 //
 //  Created by wtfan on 2017/9/1.
 //  Copyright © 2017年 JaonFanwt. All rights reserved.
@@ -13,7 +13,7 @@
 #import <WtCore/WtCore.h>
 #import <WtCore/WtObserver.h>
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 
 @interface WtDemoObserverViewController ()
 <UITableViewDelegate, UITableViewDataSource,
@@ -48,7 +48,7 @@ UIWebViewDelegate>
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"缓存BI数据";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -58,7 +58,7 @@ UIWebViewDelegate>
     }
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"导出BI数据";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){

@@ -1,6 +1,6 @@
 //
 //  WtDemoDelegateProxyViewController.m
-//  WtCore
+//  WtCore_Example
 //
 //  Created by wtfan on 2017/9/1.
 //  Copyright © 2017年 JaonFanwt. All rights reserved.
@@ -12,7 +12,7 @@
 
 #import <WtCore/WtCore.h>
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 
 @interface WtDemoDelegateProxyViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -42,7 +42,7 @@
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"参考：使用NSInvocation执行block";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -73,7 +73,7 @@
     }
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"DelegetaProxy举例";
         cellModel.subTitle = @"UITableViewDataSource";

@@ -1,6 +1,6 @@
 //
 //  WtDemoThunderWebViewController.m
-//  WtCore
+//  WtCore_Example
 //
 //  Created by wtfan on 2017/9/1.
 //  Copyright © 2017年 JaonFanwt. All rights reserved.
@@ -14,7 +14,7 @@
 #import <WtCore/WtObserver.h>
 #import <WtCore/WtThunderWeb.h>
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 #import "WtDemoWebViewController.h"
 
 @interface WtDemoThunderWebViewController ()
@@ -46,7 +46,7 @@
     
     @weakify(self);
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"Load without thunder";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -58,7 +58,7 @@
         }];
     }
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"Load with thunder";
         cellModel.subTitle = @"Pre-session request";

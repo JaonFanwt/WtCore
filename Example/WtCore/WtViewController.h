@@ -1,6 +1,6 @@
 //
 //  WtViewController.h
-//  WtCore
+//  WtCore_Example
 //
 //  Created by JaonFanwt on 08/16/2017.
 //  Copyright (c) 2017 JaonFanwt. All rights reserved.

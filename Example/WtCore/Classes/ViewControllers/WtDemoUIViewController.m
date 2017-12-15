@@ -1,6 +1,6 @@
 //
 //  WtDemoUIViewController.m
-//  WtCore
+//  WtCore_Example
 //
 //  Created by wtfan on 2017/9/8.
 //  Copyright © 2017年 JaonFanwt. All rights reserved.
@@ -13,7 +13,7 @@
 #import <WtCore/WtCore.h>
 #import <WtCore/WtUI.h>
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 
 @interface WtDemoUIViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -43,7 +43,7 @@
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"UIAlertView-WtExtension";
         cellModel.subTitle = @"Use the WtDelegateProxy proxy delegate.";
@@ -59,7 +59,7 @@
     }
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"UIButton";
         cellModel.subTitle = @"Use the WtDelegateProxy proxy delegate.";

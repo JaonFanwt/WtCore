@@ -1,16 +1,16 @@
 //
-//  WtDemoCellModel.m
-//  WtCore
+//  WtDemoCellGlue.m
+//  WtCore_Example
 //
 //  Created by wtfan on 2017/9/1.
 //  Copyright © 2017年 JaonFanwt. All rights reserved.
 //
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-@implementation WtDemoCellModel
+@implementation WtDemoCellGlue
 - (instancetype)init {
     if (self = [super init]) {
         [self createControl];

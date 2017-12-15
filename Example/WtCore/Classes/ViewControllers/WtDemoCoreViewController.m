@@ -1,6 +1,6 @@
 //
 //  WtDemoCoreViewController.m
-//  WtCore
+//  WtCore_Example
 //
 //  Created by wtfan on 2017/9/5.
 //  Copyright © 2017年 JaonFanwt. All rights reserved.
@@ -12,7 +12,7 @@
 
 #import <WtCore/WtCore.h>
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 
 @interface WtDemoCoreViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -42,7 +42,7 @@
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"NSURL扩展";
         cellModel.subTitle = @"wtRemoveParams:";
@@ -56,7 +56,7 @@
     }
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"NSURL扩展";
         cellModel.subTitle = @"wtSortedByCompareQueryComponents";
@@ -70,7 +70,7 @@
     }
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"wtDispatch_in_main";
         cellModel.subTitle = @"在主线程中执行block，不带参数";
@@ -83,7 +83,7 @@
     }
     
     {
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"wtDispatch_in_main";
         cellModel.subTitle = @"在主线程中执行block，带参数（可变参数）";

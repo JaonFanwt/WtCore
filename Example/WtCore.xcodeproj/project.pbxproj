@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BFD019A1FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFD01991FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift */; };
+		0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */; };
+		0BFD019E1FE3E09400BFE94A /* WtDemoViewGlueController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */; };
 		1F5EC48F8CEF60A4CCAB43BF /* Pods_WtCore_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C0DAB7E3A10EF54C860393 /* Pods_WtCore_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -24,7 +27,7 @@
 		6D545D31A1F215F2AEA0D469 /* Pods_WtCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7487ABAC0D62295FE57BDEF3 /* Pods_WtCore_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		B05A212A1F59026100FBB990 /* WtDemoCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21291F59026100FBB990 /* WtDemoCellModel.m */; };
+		B05A212A1F59026100FBB990 /* WtDemoCellGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21291F59026100FBB990 /* WtDemoCellGlue.m */; };
 		B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */; };
 		B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */; };
 		B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21361F59313900FBB990 /* WtDemoObserverViewController.m */; };
@@ -53,6 +56,9 @@
 
 /* Begin PBXFileReference section */
 		0B61677A5699DD22653A7411 /* WtCore.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WtCore.podspec; path = ../WtCore.podspec; sourceTree = "<group>"; };
+		0BFD01991FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WtDemoCellGlueSwift.swift; sourceTree = "<group>"; };
+		0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WtDemoViewGlueController.swift; sourceTree = "<group>"; };
+		0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoViewGlueController.xib; sourceTree = "<group>"; };
 		115A024F700DC453378A560E /* Pods-WtCore_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Example/Pods-WtCore_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1C601573115B055ACD7EA5F4 /* Pods-WtCore_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		1E2EF47D9C14C8A2185F99EB /* Pods-WtCore_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Example/Pods-WtCore_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -80,8 +86,8 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7487ABAC0D62295FE57BDEF3 /* Pods_WtCore_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WtCore_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B05A21281F59026100FBB990 /* WtDemoCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCellModel.h; sourceTree = "<group>"; };
-		B05A21291F59026100FBB990 /* WtDemoCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCellModel.m; sourceTree = "<group>"; };
+		B05A21281F59026100FBB990 /* WtDemoCellGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCellGlue.h; sourceTree = "<group>"; };
+		B05A21291F59026100FBB990 /* WtDemoCellGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCellGlue.m; sourceTree = "<group>"; };
 		B05A21301F5909AC00FBB990 /* WtDemoDelegateProxyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoDelegateProxyViewController.h; sourceTree = "<group>"; };
 		B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoDelegateProxyViewController.m; sourceTree = "<group>"; };
 		B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoDelegateProxyViewController.xib; sourceTree = "<group>"; };
@@ -236,8 +242,9 @@
 		B05A21271F59022700FBB990 /* DemoCellModels */ = {
 			isa = PBXGroup;
 			children = (
-				B05A21281F59026100FBB990 /* WtDemoCellModel.h */,
-				B05A21291F59026100FBB990 /* WtDemoCellModel.m */,
+				B05A21281F59026100FBB990 /* WtDemoCellGlue.h */,
+				B05A21291F59026100FBB990 /* WtDemoCellGlue.m */,
+				0BFD01991FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift */,
 			);
 			path = DemoCellModels;
 			sourceTree = "<group>";
@@ -265,6 +272,8 @@
 				B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */,
 				B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */,
 				B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */,
+				0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */,
+				0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */,
 				B0721D2A1F67ADC800F71E94 /* WtCore_Example-Bridging-Header.h */,
 			);
 			path = ViewControllers;
@@ -372,6 +381,7 @@
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				B0721D2E1F67AEA100F71E94 /* WtDemoWattpadViewController.xib in Resources */,
 				B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */,
+				0BFD019E1FE3E09400BFE94A /* WtDemoViewGlueController.xib in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */,
 				B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */,
@@ -513,13 +523,15 @@
 			files = (
 				B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */,
 				B05A21411F594B6D00FBB990 /* WtDemoWebViewController.m in Sources */,
+				0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */,
 				B0721D2C1F67ADC800F71E94 /* WtDemoWattpadViewController.swift in Sources */,
 				B05A213D1F594AD800FBB990 /* WtDemoThunderWebViewController.m in Sources */,
+				0BFD019A1FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift in Sources */,
 				6003F59E195388D20070C39A /* WtAppDelegate.m in Sources */,
 				B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* WtViewController.m in Sources */,
 				B05A21701F6270E800FBB990 /* WtDemoUIViewController.m in Sources */,
-				B05A212A1F59026100FBB990 /* WtDemoCellModel.m in Sources */,
+				B05A212A1F59026100FBB990 /* WtDemoCellGlue.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */,
 			);

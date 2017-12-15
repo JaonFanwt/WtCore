@@ -1,6 +1,6 @@
 //
 //  WtViewController.m
-//  WtCore
+//  WtCore_Example
 //
 //  Created by JaonFanwt on 08/16/2017.
 //  Copyright (c) 2017 JaonFanwt. All rights reserved.
@@ -15,7 +15,7 @@
 #import <WtCore/WtThunderWeb.h>
 #import <WtCore/WtUI.h>
 
-#import "WtDemoCellModel.h"
+#import "WtDemoCellGlue.h"
 
 @interface WtViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -54,7 +54,7 @@
     
     @weakify(self);
     {// DelegateProxy
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtDelegateProxy";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -75,7 +75,7 @@
     }
     
     {// Core
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtCore";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -96,7 +96,7 @@
     }
     
     {// UI
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtUI";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -117,7 +117,7 @@
     }
     
     {// DebugTools
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"DebugTools";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -203,7 +203,7 @@
     }
     
     {// Observer
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtObserver";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -224,7 +224,7 @@
     }
     
     {// ThunderWeb
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtThunderWeb";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -245,7 +245,7 @@
     }
     
     {// Wattpad
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtWattpadView";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -266,7 +266,7 @@
     }
     
     {// WindowAlert
-        WtDemoCellModel *cellModel = [[WtDemoCellModel alloc] init];
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
         cellModel.title = @"WtWindowAlert";
         [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
@@ -297,6 +297,27 @@
         [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoWattpadViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
+            return toViewCtrl;
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+    }
+    
+    {// ViewGlue on Swift
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"ViewGlue on Swift";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            Class cls = WTClassFromString(@"WtDemoViewGlueController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoViewGlueController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+        
+        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+            Class cls = WTClassFromString(@"WtDemoViewGlueController");
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoViewGlueController" bundle:nil];
             return toViewCtrl;
         }];
         
