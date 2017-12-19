@@ -12,6 +12,7 @@
 #import "UIActionSheet+WtExtension.h"
 #import "UIControl+WtExtension.h"
 
-#import "WtTableViewCellModel.h"
+#import "WtCellGlue.h"
+#import "WtViewGlue.h"
 
 #import "UIViewController+WtWindowAlert.h"

@@ -9,8 +9,8 @@
 
 #import "WtDebugSwitchNetworkItem.h"
 
-#import "WtTableViewCellModel.h"
+#import "WtCellGlue.h"
 
-@interface WtDebugTableViewCellSwitchNetworkModel : WtTableViewCellModel
+@interface WtDebugTableViewCellSwitchNetworkModel : WtCellGlue
 @property (nonatomic, strong) WtDebugSwitchNetworkItem *model;
 @end

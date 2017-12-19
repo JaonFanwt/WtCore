@@ -1,16 +1,17 @@
 //
-//  WtViewModel.m
+//  WtViewGlue.m
 //  WtUI
 //
 //  Created by wtfan on 2017/9/11.
 //
 //
 
-#import "WtViewModel.h"
+#import "WtViewGlue.h"
 
 #import <objc/runtime.h>
 
-@implementation WtViewModel
+@implementation WtViewGlue
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
 - (WtDelegateProxy<UIViewControllerPreviewingDelegate> *)previewingDelegate {
     WtDelegateProxy<UIViewControllerPreviewingDelegate> *proxy = objc_getAssociatedObject(self, _cmd);
     if (!proxy) {
@@ -20,4 +21,5 @@
     
     return proxy;
 }
+#endif
 @end

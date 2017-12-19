@@ -13,10 +13,10 @@
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-#import "WtTableViewCellModel.h"
+#import "WtCellGlue.h"
 
-#import "WtDebugTableViewCellBasicSwitchModel.h"
-#import "WtDebugTableViewCellRightDetailModel.h"
+#import "WtDebugTableViewCellBasicSwitchGlue.h"
+#import "WtDebugTableViewCellRightDetailGlue.h"
 #import "WtDebugSwitchNetworkViewController.h"
 #import "WtDebugTableViewCellBasicSwitch.h"
 
@@ -59,7 +59,7 @@
     NSMutableArray *models = @[].mutableCopy;
     
     {   // Switch network
-        WtDebugTableViewCellRightDetailModel *cellModel = [[WtDebugTableViewCellRightDetailModel alloc] init];
+        WtDebugTableViewCellRightDetailGlue *cellModel = [[WtDebugTableViewCellRightDetailGlue alloc] init];
         cellModel.name = @"切换网络";
         [models addObject:cellModel];
         @weakify(self);
@@ -72,7 +72,7 @@
     }
     
     {   // FLEX
-        WtDebugTableViewCellRightDetailModel *cellModel = [[WtDebugTableViewCellRightDetailModel alloc] init];
+        WtDebugTableViewCellRightDetailGlue *cellModel = [[WtDebugTableViewCellRightDetailGlue alloc] init];
         cellModel.name = @"FLEX";
         cellModel.detailDescription = @"辅助工具";
         
@@ -85,7 +85,7 @@
     }
     
     {   // FPS
-        WtDebugTableViewCellBasicSwitchModel *cellModel = [[WtDebugTableViewCellBasicSwitchModel alloc] init];
+        WtDebugTableViewCellBasicSwitchGlue *cellModel = [[WtDebugTableViewCellBasicSwitchGlue alloc] init];
         cellModel.name = @"FPS";
         cellModel.detailDescription = @"检测FPS，显示在状态栏当中";
         cellModel.on = [KMCGeigerCounter sharedGeigerCounter].enabled;
@@ -106,19 +106,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellModel = _datas[indexPath.row];
     return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellModel = _datas[indexPath.row];
     CGFloat height = [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
     return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellModel = _datas[indexPath.row];
     [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 @end

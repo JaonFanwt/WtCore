@@ -4,9 +4,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "WtTableViewCellModel.h"
+#import "WtCellGlue.h"
 
-@interface WtDebugTableViewCellRightDetailModel : WtTableViewCellModel
+@interface WtDebugTableViewCellBasicSwitchGlue : WtCellGlue
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *detailDescription;
+@property (nonatomic, assign) BOOL on;
 @end

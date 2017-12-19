@@ -15,8 +15,8 @@
 #import "WtDebugToolsViewController.h"
 #import "WtDebugTableViewCellBasicSwitch.h"
 #import "WtDebugTableViewCellRightDetail.h"
-#import "WtDebugTableViewCellBasicSwitchModel.h"
-#import "WtDebugTableViewCellRightDetailModel.h"
+#import "WtDebugTableViewCellBasicSwitchGlue.h"
+#import "WtDebugTableViewCellRightDetailGlue.h"
 
 // SwitchNetworkViewController
 #import "WtDebugSwitchNetworkManager.h"

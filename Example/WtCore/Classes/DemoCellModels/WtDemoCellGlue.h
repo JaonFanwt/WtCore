@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import <WtCore/WtTableViewCellModel.h>
+#import <WtCore/WtCellGlue.h>
 
-@interface WtDemoCellGlue : WtTableViewCellModel
+@interface WtDemoCellGlue : WtCellGlue
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subTitle;
 @end

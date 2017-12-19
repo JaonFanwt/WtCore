@@ -106,20 +106,20 @@ UIWebViewDelegate>
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellModel = _datas[indexPath.row];
     return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellModel = _datas[indexPath.row];
     return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    WtTableViewCellModel *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellModel = _datas[indexPath.row];
     [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 

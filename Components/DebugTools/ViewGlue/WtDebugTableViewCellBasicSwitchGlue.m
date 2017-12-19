@@ -2,7 +2,7 @@
 // Created by wtfan on 2017/5/19.
 //
 
-#import "WtDebugTableViewCellBasicSwitchModel.h"
+#import "WtDebugTableViewCellBasicSwitchGlue.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -10,10 +10,10 @@
 #import "UISwitch+RACSignalSupport.h"
 #import "UITableViewCell+RACSignalSupport.h"
 
-@interface WtDebugTableViewCellBasicSwitchModel ()
+@interface WtDebugTableViewCellBasicSwitchGlue ()
 @end
 
-@implementation WtDebugTableViewCellBasicSwitchModel
+@implementation WtDebugTableViewCellBasicSwitchGlue
 
 - (instancetype)init {
     if (self = [super init]) {

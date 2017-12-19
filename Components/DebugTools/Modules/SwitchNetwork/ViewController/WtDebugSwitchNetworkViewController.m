@@ -10,7 +10,7 @@
 #import <Masonry/Masonry.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-#import "WtTableViewCellModel.h"
+#import "WtCellGlue.h"
 
 #import "WtDebugSwitchNetworkManager.h"
 #import "WtDebugBundle.h"
@@ -100,7 +100,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtTableViewCellModel *cellModel = group.cellModels[indexPath.row];
+    WtCellGlue *cellModel = group.cellModels[indexPath.row];
     return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
@@ -138,7 +138,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtTableViewCellModel *cellModel = group.cellModels[indexPath.row];
+    WtCellGlue *cellModel = group.cellModels[indexPath.row];
     return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
@@ -152,7 +152,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtTableViewCellModel *cellModel = group.cellModels[indexPath.row];
+    WtCellGlue *cellModel = group.cellModels[indexPath.row];
     [cellModel.tableViewDelegate tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
 }
 @end

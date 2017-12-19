@@ -2,17 +2,17 @@
 // Created by wtfan on 2017/5/19.
 //
 
-#import "WtDebugTableViewCellRightDetailModel.h"
+#import "WtDebugTableViewCellRightDetailGlue.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "WtDebugTableViewCellRightDetail.h"
 #import "WtDebugSwitchNetworkViewController.h"
 
-@interface WtDebugTableViewCellRightDetailModel ()
+@interface WtDebugTableViewCellRightDetailGlue ()
 @end
 
-@implementation WtDebugTableViewCellRightDetailModel
+@implementation WtDebugTableViewCellRightDetailGlue
 
 - (instancetype)init {
     if (self = [super init]) {
