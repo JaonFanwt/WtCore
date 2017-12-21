@@ -102,6 +102,10 @@
     [self.window setHidden:NO];
     [self.window makeKeyAndVisible];
     
+    if (!_maskingColor) {
+        _maskingColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    }
+    
     if (beforeAnimations) {
         beforeAnimations();
     }
@@ -142,7 +146,7 @@
           initialSpringVelocity:1.0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+                         self.backgroundView.backgroundColor = self.maskingColor;
                          if (animations) {
                              animations();
                          }
@@ -167,13 +171,15 @@
     viewCtrl.view.userInteractionEnabled = NO;
     _window.userInteractionEnabled = NO;
     
+    UIColor *maskingColor = [self.maskingColor colorWithAlphaComponent:0];
+    
     [UIView animateWithDuration:duration
                           delay:0
          usingSpringWithDamping:1.0
           initialSpringVelocity:1.0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+                         self.backgroundView.backgroundColor = maskingColor;
                          if (animations) {
                              animations();
                          }

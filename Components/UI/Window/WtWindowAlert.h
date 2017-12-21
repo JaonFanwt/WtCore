@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 
 @interface WtWindowAlert : UIView
+@property (nonatomic, copy) UIColor *maskingColor; // Default black, alpha:0.3
+
 -(void)showViewController:(UIViewController*)viewCtrl
       animateWithDuration:(NSTimeInterval)duration
           backgroundColor:(UIColor *)backgroundColor

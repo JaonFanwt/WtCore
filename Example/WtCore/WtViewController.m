@@ -303,6 +303,41 @@
         [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
+    {// WindowAlert
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = @"WtWindowAlert";
+        cellModel.subTitle = @"Clear background color And custom animation.";
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            UIViewController *toViewCtrl = [[UIViewController alloc] init];
+            toViewCtrl.view.frame = self.view.frame;
+            [[toViewCtrl rac_willDeallocSignal] subscribeCompleted:^{
+                NSLog(@"%s [Line %d]", __PRETTY_FUNCTION__, __LINE__);
+            }];
+            
+            UIButton *subView = [UIButton buttonWithType:UIButtonTypeCustom];
+            subView.frame = CGRectMake(-50, (arc4random() % 300), 50, 80);
+            subView.backgroundColor = [UIColor redColor];
+            @weakify(toViewCtrl, subView);
+            [subView wtAction:^(UIControl *control, UIControlEvents controlEvents) {
+                @strongify(toViewCtrl, subView);
+                [UIView animateWithDuration:0.2 animations:^{
+                    subView.transform = CGAffineTransformIdentity;
+                } completion:^(BOOL finished) {
+                    [toViewCtrl wtCustomCloseWithCompletion:nil];
+                }];
+            } forControlEvents:UIControlEventTouchUpInside];
+            [toViewCtrl.view addSubview:subView];
+            
+            [toViewCtrl wtCustomShowWithCompletion:^(BOOL finished) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    subView.transform = CGAffineTransformMakeTranslation(50, 0);
+                }];
+            } navigationBarHidden:YES];
+        }];
+    }
+    
     {// ViewGlue on Swift
         WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellModel];
