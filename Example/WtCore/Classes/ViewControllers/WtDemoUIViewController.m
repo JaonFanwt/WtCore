@@ -43,11 +43,11 @@
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"UIAlertView-WtExtension";
-        cellModel.subTitle = @"Use the WtDelegateProxy proxy delegate.";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"UIAlertView-WtExtension";
+        cellGlue.subTitle = @"Use the WtDelegateProxy proxy delegate.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"UIAlertView-WtExtension" message:@"Use the WtDelegateProxy proxy delegate." delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
             [alertView.wtDelegateProxy selector:@selector(alertView:clickedButtonAtIndex:) block:^(UIAlertView *alertView, NSInteger index){
@@ -59,11 +59,11 @@
     }
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"UIButton";
-        cellModel.subTitle = @"Use the WtDelegateProxy proxy delegate.";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"UIButton";
+        cellGlue.subTitle = @"Use the WtDelegateProxy proxy delegate.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button wtAction:^(UIControl *control, UIControlEvents controlEvents) {
@@ -86,21 +86,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    [cellGlue.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 @end

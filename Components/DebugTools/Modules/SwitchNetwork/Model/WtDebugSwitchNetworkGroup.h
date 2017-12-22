@@ -19,5 +19,5 @@
 - (void)addModel:(WtDebugSwitchNetworkItem *)model;
 - (void)selectModel:(WtDebugSwitchNetworkItem *)model;
 - (NSArray <WtDebugSwitchNetworkItem *> *)models;
-- (NSArray <WtDebugTableViewCellSwitchNetworkModel *> *)cellModels;
+- (NSArray <WtDebugTableViewCellSwitchNetworkModel *> *)cellGlues;
 @end

@@ -42,10 +42,10 @@
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"参考：使用NSInvocation执行block";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"参考：使用NSInvocation执行block";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             CGAffineTransform (^block)(id x, int y, CGSize z) = ^(id x, int y, CGSize z){
                 CGAffineTransform t = { 1, 2, 3, 4, 5, 6 };
                 return t;
@@ -73,11 +73,11 @@
     }
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"DelegetaProxy举例";
-        cellModel.subTitle = @"UITableViewDataSource";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"DelegetaProxy举例";
+        cellGlue.subTitle = @"UITableViewDataSource";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             id block = ^(UITableView *tableView, NSIndexPath *indexPath) {
                 NSLog(@"%s - %@", __func__, indexPath);
@@ -123,21 +123,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    [cellGlue.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 @end

@@ -59,11 +59,11 @@
     NSMutableArray *models = @[].mutableCopy;
     
     {   // Switch network
-        WtDebugTableViewCellRightDetailGlue *cellModel = [[WtDebugTableViewCellRightDetailGlue alloc] init];
-        cellModel.name = @"切换网络";
-        [models addObject:cellModel];
+        WtDebugTableViewCellRightDetailGlue *cellGlue = [[WtDebugTableViewCellRightDetailGlue alloc] init];
+        cellGlue.name = @"切换网络";
+        [models addObject:cellGlue];
         @weakify(self);
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             WtDebugSwitchNetworkViewController *toViewCtrl = [[WtDebugSwitchNetworkViewController alloc] init];
@@ -72,29 +72,29 @@
     }
     
     {   // FLEX
-        WtDebugTableViewCellRightDetailGlue *cellModel = [[WtDebugTableViewCellRightDetailGlue alloc] init];
-        cellModel.name = @"FLEX";
-        cellModel.detailDescription = @"辅助工具";
+        WtDebugTableViewCellRightDetailGlue *cellGlue = [[WtDebugTableViewCellRightDetailGlue alloc] init];
+        cellGlue.name = @"FLEX";
+        cellGlue.detailDescription = @"辅助工具";
         
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [[FLEXManager sharedManager] showExplorer];
         }];
         
-        [models addObject:cellModel];
+        [models addObject:cellGlue];
     }
     
     {   // FPS
-        WtDebugTableViewCellBasicSwitchGlue *cellModel = [[WtDebugTableViewCellBasicSwitchGlue alloc] init];
-        cellModel.name = @"FPS";
-        cellModel.detailDescription = @"检测FPS，显示在状态栏当中";
-        cellModel.on = [KMCGeigerCounter sharedGeigerCounter].enabled;
+        WtDebugTableViewCellBasicSwitchGlue *cellGlue = [[WtDebugTableViewCellBasicSwitchGlue alloc] init];
+        cellGlue.name = @"FPS";
+        cellGlue.detailDescription = @"检测FPS，显示在状态栏当中";
+        cellGlue.on = [KMCGeigerCounter sharedGeigerCounter].enabled;
         
-        [[RACObserve(cellModel, on) takeUntil:[cellModel rac_willDeallocSignal]] subscribeNext:^(id x) {
+        [[RACObserve(cellGlue, on) takeUntil:[cellGlue rac_willDeallocSignal]] subscribeNext:^(id x) {
             [KMCGeigerCounter sharedGeigerCounter].enabled = [x boolValue];
         }];
         
-        [models addObject:cellModel];
+        [models addObject:cellGlue];
     }
 
     self.datas = models;
@@ -106,19 +106,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    CGFloat height = [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    CGFloat height = [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
     return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    [cellGlue.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 @end

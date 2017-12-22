@@ -54,10 +54,10 @@
     
     @weakify(self);
     {// DelegateProxy
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtDelegateProxy";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtDelegateProxy";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoDelegateProxyViewController");
             if (!cls) return;
@@ -65,20 +65,20 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoDelegateProxyViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoDelegateProxyViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// Core
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtCore";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtCore";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoCoreViewController");
             if (!cls) return;
@@ -86,20 +86,20 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoCoreViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoCoreViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// UI
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtUI";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtUI";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoUIViewController");
             if (!cls) return;
@@ -107,20 +107,20 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoUIViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUIViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// DebugTools
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"DebugTools";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"DebugTools";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDebugToolsViewController");
             if (!cls) return;
@@ -193,20 +193,20 @@
             return result;
         };
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDebugToolsViewController");
             UIViewController *toViewCtrl = [[cls alloc] init];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// Observer
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtObserver";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtObserver";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoObserverViewController");
             if (!cls) return;
@@ -214,20 +214,20 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoObserverViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoObserverViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// ThunderWeb
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtThunderWeb";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtThunderWeb";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoThunderWebViewController");
             if (!cls) return;
@@ -235,20 +235,20 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoThunderWebViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoThunderWebViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// Wattpad
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtWattpadView";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtWattpadView";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoWattpadViewController");
             if (!cls) return;
@@ -256,20 +256,20 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoWattpadViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// WindowAlert
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtWindowAlert";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtWindowAlert";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             Class cls = WTClassFromString(@"WtDemoWattpadViewController");
             if (!cls) return;
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
@@ -294,21 +294,21 @@
             } navigationBarHidden:NO];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoWattpadViewController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
     
     {// WindowAlert
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"WtWindowAlert";
-        cellModel.subTitle = @"Clear background color And custom animation.";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"WtWindowAlert";
+        cellGlue.subTitle = @"Clear background color And custom animation.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             UIViewController *toViewCtrl = [[UIViewController alloc] init];
             toViewCtrl.view.frame = self.view.frame;
@@ -339,10 +339,10 @@
     }
     
     {// ViewGlue on Swift
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"ViewGlue on Swift";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"ViewGlue on Swift";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDemoViewGlueController");
             if (!cls) return;
@@ -350,13 +350,13 @@
             [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id <UIViewControllerPreviewing> previewingContext, CGPoint location){
             Class cls = WTClassFromString(@"WtDemoViewGlueController");
             UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoViewGlueController" bundle:nil];
             return toViewCtrl;
         }];
         
-        [cellModel.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
+        [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
     }
 }
 
@@ -366,12 +366,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
     
-    UITableViewCell *cell = [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
     
     if ([[UIDevice currentDevice] wtEqualOrGreaterThan:9]) {
-        [self registerForPreviewingWithDelegate:cellModel.previewingDelegate sourceView:cell];
+        [self registerForPreviewingWithDelegate:cellGlue.previewingDelegate sourceView:cell];
     }
     
     return cell;
@@ -379,15 +379,15 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    WtCellGlue *cellModel = _datas[indexPath.row];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
     
-    [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    [cellGlue.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 @end

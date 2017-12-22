@@ -48,20 +48,20 @@ UIWebViewDelegate>
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"缓存BI数据";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"缓存BI数据";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             NSString *filePath = [[WtObserveDataGleaner shared] cacheToDisk];
             NSLog(@"[WtObserver]数据已缓存到磁盘:%@", filePath);
         }];
     }
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"导出BI数据";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"导出BI数据";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             NSString *filePath = [WtObserveDataWritter toCSV:[WtObserveDataGleaner shared].treasures.allValues];
             NSLog(@"[WtObserver]数据已导出到磁盘:%@", filePath);
         }];
@@ -106,21 +106,21 @@ UIWebViewDelegate>
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    [cellGlue.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UIWebViewDelegate

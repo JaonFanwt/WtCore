@@ -95,13 +95,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     WtDebugSwitchNetworkGroup *group = _datas[section];
-    return group.cellModels.count;
+    return group.cellGlues.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtCellGlue *cellModel = group.cellModels[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = group.cellGlues[indexPath.row];
+    return [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -138,21 +138,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtCellGlue *cellModel = group.cellModels[indexPath.row];
-    return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = group.cellGlues[indexPath.row];
+    return [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtDebugTableViewCellSwitchNetworkModel *cellModel = group.cellModels[indexPath.row];
-    [group selectModel:cellModel.model];
+    WtDebugTableViewCellSwitchNetworkModel *cellGlue = group.cellGlues[indexPath.row];
+    [group selectModel:cellGlue.model];
     [self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     WtDebugSwitchNetworkGroup *group = _datas[indexPath.section];
-    WtCellGlue *cellModel = group.cellModels[indexPath.row];
-    [cellModel.tableViewDelegate tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = group.cellGlues[indexPath.row];
+    [cellGlue.tableViewDelegate tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
 }
 @end

@@ -12,7 +12,7 @@
 
 @interface WtDebugSwitchNetworkGroup ()
 @property (nonatomic, strong, readonly) NSMutableArray<WtDebugSwitchNetworkItem *> *privateModels;
-@property (nonatomic, strong) NSArray *privateCellModels;
+@property (nonatomic, strong) NSArray *privateCellGlues;
 @end
 
 @implementation WtDebugSwitchNetworkGroup
@@ -41,7 +41,7 @@
 - (void)addModel:(WtDebugSwitchNetworkItem *)model {
     [_privateModels addObject:model];
 
-    _privateCellModels = nil;
+    _privateCellGlues = nil;
 }
 
 - (void)selectModel:(WtDebugSwitchNetworkItem *)model {
@@ -50,26 +50,26 @@
     }
     model.isSelected = YES;
 
-    _privateCellModels = nil;
+    _privateCellGlues = nil;
 }
 
 - (NSArray <WtDebugSwitchNetworkItem *>*)models {
     return _privateModels.copy;
 }
 
-- (NSArray <WtDebugTableViewCellSwitchNetworkModel *>*)cellModels {
-    if (_privateCellModels) return _privateCellModels;
+- (NSArray <WtDebugTableViewCellSwitchNetworkModel *>*)cellGlues {
+    if (_privateCellGlues) return _privateCellGlues;
 
     NSMutableArray *results = @[].mutableCopy;
     for (WtDebugSwitchNetworkItem *model in _privateModels) {
-        WtDebugTableViewCellSwitchNetworkModel *cellModel = [[WtDebugTableViewCellSwitchNetworkModel alloc] init];
-        cellModel.model = model;
-        [cellModel.tableViewDelegate selector:@selector(tableView:heightForRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDebugTableViewCellSwitchNetworkModel *cellGlue = [[WtDebugTableViewCellSwitchNetworkModel alloc] init];
+        cellGlue.model = model;
+        [cellGlue.tableViewDelegate selector:@selector(tableView:heightForRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             return UITableViewAutomaticDimension;
         }];
-        [results addObject:cellModel];
+        [results addObject:cellGlue];
     }
-    _privateCellModels = results;
-    return _privateCellModels;
+    _privateCellGlues = results;
+    return _privateCellGlues;
 }
 @end

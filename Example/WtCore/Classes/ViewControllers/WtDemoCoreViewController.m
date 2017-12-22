@@ -42,11 +42,11 @@
     _datas = @[].mutableCopy;
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"NSURL扩展";
-        cellModel.subTitle = @"wtRemoveParams:";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"NSURL扩展";
+        cellGlue.subTitle = @"wtRemoveParams:";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             NSURL *url = [NSURL URLWithString:@"https://www.google.co.jp/search?q=params&oQ=params&aqs=chrome..69i57j0l5.854j0j7&sourceid=chrome&iE=UTF-8"];
             NSURL *wrapURL = [url wtRemoveParams:@[@"Oq", @"sourceid"]];
@@ -56,11 +56,11 @@
     }
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"NSURL扩展";
-        cellModel.subTitle = @"wtSortedByCompareQueryComponents";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"NSURL扩展";
+        cellGlue.subTitle = @"wtSortedByCompareQueryComponents";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             NSURL *url = [NSURL URLWithString:@"https://www.google.co.jp/search?q=params&oQ=params&aqs=chrome..69i57j0l5.854j0j7&sourceid=chrome&iE=UTF-8"];
             NSURL *wrapURL = [url wtSortedByCompareQueryComponents];
@@ -70,11 +70,11 @@
     }
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"wtDispatch_in_main";
-        cellModel.subTitle = @"在主线程中执行block，不带参数";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"wtDispatch_in_main";
+        cellGlue.subTitle = @"在主线程中执行block，不带参数";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             wtDispatch_in_main(^(){
                 NSLog(@"[IsMainThread:%d]在主线程中执行block，不带参数", [NSThread isMainThread]);
@@ -83,11 +83,11 @@
     }
     
     {
-        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
-        [_datas addObject:cellModel];
-        cellModel.title = @"wtDispatch_in_main";
-        cellModel.subTitle = @"在主线程中执行block，带参数（可变参数）";
-        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"wtDispatch_in_main";
+        cellGlue.subTitle = @"在主线程中执行block，带参数（可变参数）";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
             wtDispatch_in_main(^(NSString *str, int num, char c, CGRect frame, void (^block)()){
                 NSLog(@"[IsMainThread:%d]在主线程中执行block，带参数（可变参数）", [NSThread isMainThread]);
@@ -108,21 +108,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    return [cellModel.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    return [cellGlue.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    WtCellGlue *cellModel = _datas[indexPath.row];
-    [cellModel.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    WtCellGlue *cellGlue = _datas[indexPath.row];
+    [cellGlue.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 @end
