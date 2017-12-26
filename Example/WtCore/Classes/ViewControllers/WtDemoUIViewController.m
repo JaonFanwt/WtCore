@@ -78,6 +78,25 @@
             [button sendActionsForControlEvents:UIControlEventTouchDragInside];
         }];
     }
+
+    {
+        WtDemoCellModel *cellGlue = [[WtDemoCellModel alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"Cutter";
+        @weakify(self);
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            __block CGPoint point;
+            NSTimeInterval consumingTime = wtDispatch_in_main_clock(^{
+                point = [self.tableView wt_findPureSeparateLinePointWithAnchor:CGPointMake(19, 120) direction:eWtFindPureSeparateLinePointDirectionDown];
+            });
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 200, 20)];
+            view.backgroundColor = [UIColor wtRandom];
+            [self.tableView addSubview:view];
+            
+            NSLog(@"%s - consumingTime: %.2f, CGPoint:%@", __func__, consumingTime, NSStringFromCGPoint(point));
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource

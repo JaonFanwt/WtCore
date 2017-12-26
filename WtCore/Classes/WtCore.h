@@ -14,6 +14,7 @@
 #import "UIDevice+WtExtension.h"
 #import "UIView+WtExtension.h"
 #import "NSObject+WtKVO.h"
+#import "UIColor+WtExtension.h"
 
 #import "WtSwizzle.h"
 #import "WtDispatch.h"

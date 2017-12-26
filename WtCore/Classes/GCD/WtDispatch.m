@@ -12,41 +12,39 @@
 
 #import "WtDelegateProxy.h"
 
-void wtDispatch_in_main(id block, ...) {
+#pragma mark private
+void __wtDispatch_in_main(id block, va_list arg_ptr) {
     if (!block) return;
-    
+
     CTBlockDescription *blockDescription = [[CTBlockDescription alloc] initWithBlock:block];
     if (!blockDescription) return;
-    
+
     NSMethodSignature *blockMethodSignature = blockDescription.blockSignature;
     NSInvocation *blockInvocation = [NSInvocation invocationWithMethodSignature:blockMethodSignature];
-    
-    va_list arg_ptr; // 可变参数指针
-    va_start(arg_ptr, block);
-    
+
     for (NSInteger i = 1; i < blockInvocation.methodSignature.numberOfArguments; i++) {
         const char *argumentType = [blockInvocation.methodSignature getArgumentTypeAtIndex:i];
         switch (argumentType[0] == 'r' ? argumentType[1] : argumentType[0]) {
-#define WT_FF_ARG_CASE(_typeChar, _type) \
-    case _typeChar: { \
-        _type arg; \
-        arg = va_arg(arg_ptr, _type); \
-        [blockInvocation setArgument:&arg atIndex:i]; \
-        break; \
-    }
-                WT_FF_ARG_CASE('c', int)
-                WT_FF_ARG_CASE('C', int)
-                WT_FF_ARG_CASE('s', int)
-                WT_FF_ARG_CASE('S', int)
-                WT_FF_ARG_CASE('i', int)
-                WT_FF_ARG_CASE('I', unsigned int)
-                WT_FF_ARG_CASE('l', long)
-                WT_FF_ARG_CASE('L', unsigned long)
-                WT_FF_ARG_CASE('q', long long)
-                WT_FF_ARG_CASE('Q', unsigned long long)
-                WT_FF_ARG_CASE('f', double)
-                WT_FF_ARG_CASE('d', double)
-                WT_FF_ARG_CASE('B', int)
+#define WT_DIS_ARG_CASE(_typeChar, _type) \
+case _typeChar: { \
+_type arg; \
+arg = va_arg(arg_ptr, _type); \
+[blockInvocation setArgument:&arg atIndex:i]; \
+break; \
+}
+                WT_DIS_ARG_CASE('c', int)
+                WT_DIS_ARG_CASE('C', int)
+                WT_DIS_ARG_CASE('s', int)
+                WT_DIS_ARG_CASE('S', int)
+                WT_DIS_ARG_CASE('i', int)
+                WT_DIS_ARG_CASE('I', unsigned int)
+                WT_DIS_ARG_CASE('l', long)
+                WT_DIS_ARG_CASE('L', unsigned long)
+                WT_DIS_ARG_CASE('q', long long)
+                WT_DIS_ARG_CASE('Q', unsigned long long)
+                WT_DIS_ARG_CASE('f', double)
+                WT_DIS_ARG_CASE('d', double)
+                WT_DIS_ARG_CASE('B', int)
             case '@': {
                 __unsafe_unretained id arg;
                 arg = va_arg(arg_ptr, __unsafe_unretained id);
@@ -55,17 +53,18 @@ void wtDispatch_in_main(id block, ...) {
             }
             case '{': {
                 NSString *typeString = wtExtractStructName([NSString stringWithUTF8String:argumentType]);
-#define WT_FF_ARG_STRUCT(_type, _transFunc) \
-    if ([typeString rangeOfString:@#_type].location != NSNotFound) { \
-        _type arg; \
-        arg = va_arg(arg_ptr, _type); \
-        [blockInvocation setArgument:&arg atIndex:i]; \
-        break; \
-    }
-                WT_FF_ARG_STRUCT(CGRect, valueWithRect)
-                WT_FF_ARG_STRUCT(CGPoint, valueWithPoint)
-                WT_FF_ARG_STRUCT(CGSize, valueWithSize)
-                WT_FF_ARG_STRUCT(NSRange, valueWithRange)
+#define WT_DIS_ARG_STRUCT(_type) \
+if ([typeString rangeOfString:@#_type].location != NSNotFound) { \
+_type arg; \
+arg = va_arg(arg_ptr, _type); \
+[blockInvocation setArgument:&arg atIndex:i]; \
+break; \
+}
+                WT_DIS_ARG_STRUCT(CGRect)
+                WT_DIS_ARG_STRUCT(CGPoint)
+                WT_DIS_ARG_STRUCT(CGSize)
+                WT_DIS_ARG_STRUCT(NSRange)
+                WT_DIS_ARG_STRUCT(UIEdgeInsets)
                 break;
             }
             case ':': {
@@ -94,8 +93,6 @@ void wtDispatch_in_main(id block, ...) {
         }
     }
 
-    va_end(arg_ptr);
-    
     if ([NSThread isMainThread]) {
         [blockInvocation invokeWithTarget:blockDescription.block];
     }else {
@@ -103,4 +100,32 @@ void wtDispatch_in_main(id block, ...) {
             [blockInvocation invokeWithTarget:blockDescription.block];
         });
     }
+}
+
+#pragma mark public
+void wtDispatch_in_main(id block, ...) {
+    if (!block) return;
+
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
+
+    __wtDispatch_in_main(block, arg_ptr);
+
+    va_end(arg_ptr);
+}
+
+NSTimeInterval wtDispatch_in_main_clock(id block, ...) {
+    if (!block) return 0.0;
+
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
+
+    NSDate *beginDate = [NSDate date];
+
+    __wtDispatch_in_main(block, arg_ptr);
+
+    NSDate *endDate = [NSDate date];
+
+    va_end(arg_ptr);
+    return [endDate timeIntervalSince1970] - [beginDate timeIntervalSince1970];
 }

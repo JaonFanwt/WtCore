@@ -11,6 +11,7 @@
 #import "UIAlertView+WtExtension.h"
 #import "UIActionSheet+WtExtension.h"
 #import "UIControl+WtExtension.h"
+#import "UIView+WtCutter.h"
 
 #import "WtTableViewCellModel.h"
 
