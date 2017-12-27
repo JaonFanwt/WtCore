@@ -119,7 +119,7 @@
     {// DebugTools
         WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellGlue];
-        cellGlue.title = @"DebugTools";
+        cellGlue.title = @"WtDebugTools";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             @strongify(self);
             Class cls = WTClassFromString(@"WtDebugToolsViewController");

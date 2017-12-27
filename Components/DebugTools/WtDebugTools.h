@@ -25,3 +25,6 @@
 #import "WtDebugTableViewCellSwitchNetwork.h"
 #import "WtDebugSwitchNetworkViewController.h"
 
+// Category
+#import "UIFont+WtDebugTools.h"
+

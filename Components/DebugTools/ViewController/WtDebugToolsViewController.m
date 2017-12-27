@@ -19,6 +19,7 @@
 #import "WtDebugTableViewCellRightDetailGlue.h"
 #import "WtDebugSwitchNetworkViewController.h"
 #import "WtDebugTableViewCellBasicSwitch.h"
+#import "WtDebugShowFontsViewController.h"
 
 @interface WtDebugToolsViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -95,6 +96,23 @@
         }];
         
         [models addObject:cellGlue];
+    }
+    
+    {
+        // Fonts
+        WtDebugTableViewCellRightDetailGlue *cellModel = [[WtDebugTableViewCellRightDetailGlue alloc] init];
+        cellModel.name = @"Fonts";
+        cellModel.detailDescription = @"展示所有字体";
+        
+        @weakify(self);
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            @strongify(self);
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            WtDebugShowFontsViewController *toViewCtrl = [[WtDebugShowFontsViewController alloc] init];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+        
+        [models addObject:cellModel];
     }
 
     self.datas = models;
