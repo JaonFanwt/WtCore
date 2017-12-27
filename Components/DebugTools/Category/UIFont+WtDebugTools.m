@@ -10,7 +10,7 @@
 @implementation UIFont (WtDebugTools)
 + (void)wtPrintAll {
     NSLog(@"================= All Fonts ============================");
-    for (NSString *familyName in [UIFont familyNames]) {
+    for (NSString *familyName in [[UIFont familyNames] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
         NSLog(@" --------- FamilyName: %@ --------- ", familyName);
         NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
         for (NSString *fontName in fontNames) {

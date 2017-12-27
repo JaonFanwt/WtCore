@@ -52,18 +52,22 @@
         @strongify(self);
         NSMutableArray *models = @[].mutableCopy;
         
-        for (NSString *familyName in [UIFont familyNames]) {
+        NSLog(@"================= All Fonts ============================");
+        for (NSString *familyName in [[UIFont familyNames] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
+            NSLog(@" --------- FamilyName: %@ --------- ", familyName);
             NSMutableArray *subModels = @[].mutableCopy;
             [models addObject:subModels];
             
             NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
             for (NSString *fontName in fontNames) {
+                NSLog(@"FontName: %@", fontName);
                 WtDebugShowFontsCellGlue *glue = [[WtDebugShowFontsCellGlue alloc] init];
                 glue.model.familyName = familyName;
                 glue.model.fontName = fontName;
                 [subModels addObject:glue];
             }
         }
+        NSLog(@"================= All Fonts ============================");
         
         self.datas = models;
         
