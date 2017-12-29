@@ -16,6 +16,7 @@
 @interface WtDebugShowFontsViewController ()
 <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, weak) UIActivityIndicatorView *loadingView;
 
 @property (nonatomic, strong) NSArray *datas;
 @end
@@ -24,6 +25,8 @@
 
 - (void)loadView {
     [super loadView];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] init];
     [self.view addSubview:tableView];
@@ -35,6 +38,22 @@
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.bottom.right.equalTo(self.view);
     }];
+    
+    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.loadingView = loadingView;
+    [self.view addSubview:loadingView];
+    [loadingView startAnimating];
+    [loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.centerY.equalTo(self.view);
+    }];
+    
+    @weakify(self);
+    [[RACObserve(tableView, hidden) takeUntil:[tableView rac_willDeallocSignal]] subscribeNext:^(id x) {
+        @strongify(self);
+        self.loadingView.hidden = ![x boolValue];
+    }];
+    
+    self.tableView.hidden = YES;
 }
 
 - (void)viewDidLoad {
@@ -74,6 +93,7 @@
         @weakify(self);
         wtDispatch_in_main(^{
             @strongify(self);
+            self.tableView.hidden = NO;
             [self.tableView reloadData];
         });
     });
