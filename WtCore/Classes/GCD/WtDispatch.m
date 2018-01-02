@@ -62,11 +62,18 @@ void wtDispatch_in_main(id block, ...) {
         [blockInvocation setArgument:&arg atIndex:i]; \
         break; \
     }
-                WT_DIS_ARG_STRUCT(CGRect)
-                WT_DIS_ARG_STRUCT(CGPoint)
-                WT_DIS_ARG_STRUCT(CGSize)
                 WT_DIS_ARG_STRUCT(NSRange)
+                WT_DIS_ARG_STRUCT(CGPoint)
+                WT_DIS_ARG_STRUCT(CGVector)
+                WT_DIS_ARG_STRUCT(CGSize)
+                WT_DIS_ARG_STRUCT(CGRect)
+                WT_DIS_ARG_STRUCT(CGAffineTransform)
                 WT_DIS_ARG_STRUCT(UIEdgeInsets)
+                WT_DIS_ARG_STRUCT(UIOffset)
+                if (@available(iOS 11.0, *)) {
+                    WT_DIS_ARG_STRUCT(NSDirectionalEdgeInsets)
+                }
+
                 break;
             }
             case ':': {

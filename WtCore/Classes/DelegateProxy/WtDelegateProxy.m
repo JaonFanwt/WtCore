@@ -12,6 +12,7 @@
 #import <objc/message.h>
 
 #import "CTBlockDescription.h"
+#import "UIDevice+WtExtension.h"
 
 NSString *wtExtractStructName(NSString *typeEncodeString) {
     if (!typeEncodeString || ![typeEncodeString isKindOfClass:[NSString class]]) {
@@ -116,11 +117,18 @@ if ([typeString rangeOfString:@#_type].location != NSNotFound) { \
     [blockInvocation setArgument:&arg atIndex:i-1]; \
     break; \
 }
-                    WT_FF_ARG_STRUCT(CGRect)
-                    WT_FF_ARG_STRUCT(CGPoint)
-                    WT_FF_ARG_STRUCT(CGSize)
                     WT_FF_ARG_STRUCT(NSRange)
+                    WT_FF_ARG_STRUCT(CGPoint)
+                    WT_FF_ARG_STRUCT(CGVector)
+                    WT_FF_ARG_STRUCT(CGSize)
+                    WT_FF_ARG_STRUCT(CGRect)
+                    WT_FF_ARG_STRUCT(CGAffineTransform)
                     WT_FF_ARG_STRUCT(UIEdgeInsets)
+                    WT_FF_ARG_STRUCT(UIOffset)
+                    if (@available(iOS 11.0, *)) {
+                        WT_FF_ARG_STRUCT(NSDirectionalEdgeInsets)
+                    }
+
                     break;
                 }
                 case ':': {
@@ -206,11 +214,18 @@ if ([typeString rangeOfString:@#_type].location != NSNotFound) {    \
     [invocation setReturnValue:&result]; \
     break;  \
 }
-                    WT_FF_RET_STRUCT(CGRect)
-                    WT_FF_RET_STRUCT(CGPoint)
-                    WT_FF_RET_STRUCT(CGSize)
                     WT_FF_RET_STRUCT(NSRange)
+                    WT_FF_RET_STRUCT(CGPoint)
+                    WT_FF_RET_STRUCT(CGVector)
+                    WT_FF_RET_STRUCT(CGSize)
+                    WT_FF_RET_STRUCT(CGRect)
+                    WT_FF_RET_STRUCT(CGAffineTransform)
                     WT_FF_RET_STRUCT(UIEdgeInsets)
+                    WT_FF_RET_STRUCT(UIOffset)
+                    if (@available(iOS 11.0, *)) {
+                        WT_FF_RET_STRUCT(NSDirectionalEdgeInsets)
+                    }
+
                     break;
                 }
                 case '@': {
