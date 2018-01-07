@@ -1,16 +1,16 @@
 //
-//  UIActionSheet+WtExtension.m
+//  UIActionSheet+WtUI.m
 //  WtUI
 //
 //  Created by wtfan on 2017/9/8.
 //
 //
 
-#import "UIActionSheet+WtExtension.h"
+#import "UIActionSheet+WtUI.h"
 
 #import <objc/runtime.h>
 
-@implementation UIActionSheet (WtExtension)
+@implementation UIActionSheet (WtUI)
 - (WtDelegateProxy<UIActionSheetDelegate> *)wtDelegateProxy {
     WtDelegateProxy<UIActionSheetDelegate> *__delegateProxy = objc_getAssociatedObject(self, _cmd);
     

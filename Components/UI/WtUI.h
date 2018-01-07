@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "UIAlertView+WtExtension.h"
-#import "UIActionSheet+WtExtension.h"
-#import "UIControl+WtExtension.h"
+#import "UIAlertView+WtUI.h"
+#import "UIActionSheet+WtUI.h"
+#import "UIControl+WtUI.h"
+#import "UIGestureRecognizer+WtUI.h"
+#import "UIView+WtUI.h"
 
 #import "WtCellGlue.h"
 #import "WtViewGlue.h"

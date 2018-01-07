@@ -24,6 +24,8 @@
 #import "NSURL+WtExtension.h"
 #import "UIDevice+WtExtension.h"
 #import "UIView+WtExtension.h"
+#import "UIColor+WtExtension.h"
+#import "UIViewController+WtExtension.h"
 
 #import "WtSwizzle.h"
 #import "WtDispatch.h"

@@ -1,16 +1,16 @@
 //
-//  UIControl+WtExtension.m
+//  UIControl+WtUI.m
 //  WtUI
 //
 //  Created by wtfan on 2017/9/8.
 //
 //
 
-#import "UIControl+WtExtension.h"
+#import "UIControl+WtUI.h"
 
 #import <objc/runtime.h>
 
-@implementation UIControl (WtExtension)
+@implementation UIControl (WtUI)
 
 - (WtDelegateProxy<WtControlProtocol> *)wtDelegateProxy {
     WtDelegateProxy<WtControlProtocol> *__delegateProxy = objc_getAssociatedObject(self, _cmd);

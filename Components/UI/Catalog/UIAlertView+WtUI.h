@@ -1,5 +1,5 @@
 //
-//  UIAlertView+WtExtension.h
+//  UIAlertView+WtUI.h
 //  WtUI
 //
 //  Created by wtfan on 2017/9/8.
@@ -10,6 +10,6 @@
 
 #import "WtDelegateProxy.h"
 
-@interface UIAlertView (WtExtension)
+@interface UIAlertView (WtUI)
 @property (nonatomic, strong, readonly) WtDelegateProxy<UIAlertViewDelegate> *wtDelegateProxy;
 @end

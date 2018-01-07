@@ -1,5 +1,5 @@
 //
-//  UIControl+WtExtension.h
+//  UIControl+WtUI.h
 //  WtUI
 //
 //  Created by wtfan on 2017/9/8.
@@ -14,6 +14,6 @@
 - (void)wtAction:(UIControl *)control controlEvents:(UIControlEvents)controlEvents;
 @end
 
-@interface UIControl (WtExtension)
+@interface UIControl (WtUI)
 - (void)wtAction:(void (^)(UIControl *control, UIControlEvents controlEvents))block forControlEvents:(UIControlEvents)event;
 @end

@@ -1,5 +1,5 @@
 //
-//  UIActionSheet+WtExtension.h
+//  UIActionSheet+WtUI.h
 //  WtUI
 //
 //  Created by wtfan on 2017/9/8.
@@ -10,6 +10,6 @@
 
 #import "WtDelegateProxy.h"
 
-@interface UIActionSheet (WtExtension)
+@interface UIActionSheet (WtUI)
 @property (nonatomic, strong, readonly) WtDelegateProxy<UIActionSheetDelegate> *wtDelegateProxy;
 @end

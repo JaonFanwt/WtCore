@@ -1,16 +1,16 @@
 //
-//  UIAlertView+WtExtension.m
+//  UIAlertView+WtUI.m
 //  WtUI
 //
 //  Created by wtfan on 2017/9/8.
 //
 //
 
-#import "UIAlertView+WtExtension.h"
+#import "UIAlertView+WtUI.h"
 
 #import <objc/runtime.h>
 
-@implementation UIAlertView (WtExtension)
+@implementation UIAlertView (WtUI)
 - (WtDelegateProxy<UIAlertViewDelegate> *)wtDelegateProxy {
     WtDelegateProxy<UIAlertViewDelegate> *__delegateProxy = objc_getAssociatedObject(self, _cmd);
     

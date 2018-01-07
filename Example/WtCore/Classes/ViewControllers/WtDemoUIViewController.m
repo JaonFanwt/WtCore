@@ -9,6 +9,7 @@
 #import "WtDemoUIViewController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import <Masonry/Masonry.h>
 
 #import <WtCore/WtCore.h>
 #import <WtCore/WtUI.h>
@@ -76,6 +77,46 @@
             
             [button sendActionsForControlEvents:UIControlEventTouchUpInside];
             [button sendActionsForControlEvents:UIControlEventTouchDragInside];
+        }];
+    }
+
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"UIView+WtUI";
+        cellGlue.subTitle = @"UITapGestureRecognizer.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+
+            UIViewController *toViewCtrl = [[UIViewController alloc] init];
+            toViewCtrl.title = cellGlue.title;
+            UIView *view = [[UIView alloc] init];
+            [toViewCtrl.view addSubview:view];
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(0);
+                if (@available(iOS 11.0, *)) {
+                    make.top.mas_equalTo(0 + self.view.safeAreaInsets.top);
+                } else {
+                    make.top.mas_equalTo(0);
+                }
+                make.width.height.mas_equalTo(100);
+            }];
+            view.backgroundColor = [UIColor wtRandom];
+            toViewCtrl.view.backgroundColor = [UIColor whiteColor];
+
+            @weakify(view);
+            [view wtWhenTapped:^{
+                @strongify(view);
+                [view mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(arc4random()%300);
+                    if (@available(iOS 11.0, *)) {
+                        make.top.mas_equalTo(arc4random()%200 + self.view.safeAreaInsets.top);
+                    } else {
+                        make.top.mas_equalTo(arc4random()%200);
+                    }
+                }];
+            }];
+
+            [tableView.wtFirstViewController.navigationController pushViewController:toViewCtrl animated:YES];
         }];
     }
 }
