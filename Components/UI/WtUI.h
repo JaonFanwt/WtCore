@@ -13,6 +13,7 @@
 #import "UIControl+WtUI.h"
 #import "UIGestureRecognizer+WtUI.h"
 #import "UIView+WtUI.h"
+#import "UIView+WtCutter.h"
 
 #import "WtCellGlue.h"
 #import "WtViewGlue.h"

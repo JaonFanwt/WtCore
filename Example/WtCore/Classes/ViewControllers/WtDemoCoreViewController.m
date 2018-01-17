@@ -100,6 +100,25 @@
             });
         }];
     }
+    
+    {
+        __block NSUInteger count = 1;
+        WtDemoCellGlue *cellModel = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellModel];
+        cellModel.title = [NSString stringWithFormat:@"WtKVOObserver %zd", count];
+        cellModel.subTitle = @"在主线程中执行block，带参数（可变参数）";
+        
+        @weakify(self);
+        [cellModel wtObserveValueForKeyPath:@"title" valueChangedBlock:^(id newValue) {
+            @strongify(self);
+            [self.tableView reloadData];
+        }];
+        
+        [cellModel.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            count++;
+            cellModel.title = [NSString stringWithFormat:@"WtKVOObserver %zd", count];
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource
