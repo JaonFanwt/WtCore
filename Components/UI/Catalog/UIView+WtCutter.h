@@ -13,5 +13,12 @@ typedef enum {
 }eWtFindPureSeparateLinePointDirection;
 
 @interface UIView (WtCutter)
-- (CGPoint)wt_findPureSeparateLinePointWithAnchor:(CGPoint)point direction:(eWtFindPureSeparateLinePointDirection)direction;
+- (CGPoint)wt_findPureColorLineWithBeginAnchor:(CGPoint)point
+                                         width:(CGFloat)width
+                                      sliceNum:(int)sliceNum
+                                     direction:(eWtFindPureSeparateLinePointDirection)direction;
+- (CGPoint)wt_trimPureColorLineWithBeginAnchor:(CGPoint)point
+                                         width:(CGFloat)width
+                                      sliceNum:(int)sliceNum
+                                     direction:(eWtFindPureSeparateLinePointDirection)direction;
 @end

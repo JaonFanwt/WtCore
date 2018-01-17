@@ -119,6 +119,58 @@
             [tableView.wtFirstViewController.navigationController pushViewController:toViewCtrl animated:YES];
         }];
     }
+    
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"Cutter";
+        cellGlue.subTitle = @"Find the solid color split line from top to bottom.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
+            v.backgroundColor = [UIColor wtRandom];
+            [tableView addSubview:v];
+        }];
+    }
+    
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"Cutter";
+        cellGlue.subTitle = @"Find the solid color split line from bottom to top.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x + 200, point.y - 19, 180, 20)];
+            v.backgroundColor = [UIColor wtRandom];
+            [tableView addSubview:v];
+        }];
+    }
+    
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"Cutter";
+        cellGlue.subTitle = @"Trim the solid color split line from top to bottom.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            CGPoint point = [tableView wt_trimPureColorLineWithBeginAnchor:CGPointMake(19, 0) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
+            v.backgroundColor = [UIColor wtRandom];
+            [tableView addSubview:v];
+        }];
+    }
+    
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"Cutter";
+        cellGlue.subTitle = @"Trim the solid color split line from bottom to top.";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            CGPoint point = [tableView wt_trimPureColorLineWithBeginAnchor:CGPointMake(19, 140) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
+            v.backgroundColor = [UIColor wtRandom];
+            [tableView addSubview:v];
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource

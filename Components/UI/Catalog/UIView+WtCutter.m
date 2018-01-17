@@ -7,81 +7,445 @@
 
 #import "UIView+WtCutter.h"
 
-
-
 @implementation UIView (WtCutter)
-
-- (CGPoint)wt_findPureSeparateLinePointWithAnchor:(CGPoint)point direction:(eWtFindPureSeparateLinePointDirection)direction {
-    int preR = -1, preG = -1, preB = -1, preA = -1;
-
+- (CGPoint)wt_upfindPureColorLineWithBeginAnchor:(CGPoint)point
+                                             width:(CGFloat)width
+                                          sliceNum:(int)sliceNum {
+    if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
+    
     size_t pixelsWidth = CGRectGetWidth(self.frame);
-    size_t pixelsHeight = CGRectGetHeight(self.frame);
+    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    
+    CGFloat scale = 1;
+    CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    CGFloat originY = point.y;
+    int sliceIndex = sliceNum - 1;
+    BOOL found = NO;
+    int i = -1;
+    
     int x = point.x;
     int y = point.y;
-
-    CGFloat scale = 1;
-    CGSize size = CGSizeMake(self.frame.size.width*scale, self.frame.size.height*scale) ;
-    int bitPerRow = size.width * 4;
-    int bitCount = bitPerRow * size.height;
-    UInt8 *bitdata = malloc(bitCount);
-    if (bitdata == NULL) {
-        return CGPointMake(-1, INT_MAX);
+    
+    while ((sliceIndex > 0) && (y >= 0) && (y < sliceIndex * sliceHeight)) {
+        sliceIndex--;
     }
-
-    CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
-    if (deviceRGB == NULL) {
-        return CGPointMake(-1, INT_MAX);
-    }
-
-    CGContextRef contex = CGBitmapContextCreate(bitdata, size.width, size.height, 8, bitPerRow, deviceRGB, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    if (contex == NULL) {
-        CFRelease(deviceRGB);
-        return CGPointMake(-1, INT_MAX);
-    }
-
-    CFRelease(deviceRGB);
-
-    CGContextTranslateCTM(contex, 0, size.height);
-    CGContextScaleCTM(contex, scale, -scale);
-
-    [self.layer renderInContext:contex];
-
-    int i = (direction==eWtFindPureSeparateLinePointDirectionDown)?1:-1;
-    while (true) {
-        if (y >= pixelsHeight || y < 0) {
-            x = -1;
-            y = INT_MAX;
-            break;
-        }
-
-        if (x >= pixelsWidth) {
-            x = point.x;
-            break;
-        }
-
-        int offset = 4*((pixelsWidth*round(y))+round(x));
-        if (preR == -1) {
-            preR = bitdata[offset];
-            preG = bitdata[offset+1];
-            preB = bitdata[offset+2];
-            preA = bitdata[offset+3];
+    
+    NSUInteger beginSliceIndex = sliceIndex;
+    
+    do {
+        int preR = -1, preG = -1, preB = -1, preA = -1;
+        
+        originY = sliceIndex * sliceHeight;
+        CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        if (sliceIndex == beginSliceIndex) {
+            y = point.y;
         }else {
-            if (preR != bitdata[offset] ||
-                preG != bitdata[offset+1] ||
-                preB != bitdata[offset+2] ||
-                preA != bitdata[offset+3]) {
-
+            y = maxPixelsHeight;
+        }
+        x = point.x;
+        
+        CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
+        int bitPerRow = size.width * 4;
+        int bitCount = bitPerRow * size.height;
+        UInt8 *bitdata = malloc(bitCount);
+        if (bitdata == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
+        if (deviceRGB == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGContextRef contex = CGBitmapContextCreate(bitdata, size.width, size.height, 8, bitPerRow, deviceRGB, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        if (contex == NULL) {
+            CFRelease(deviceRGB);
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CFRelease(deviceRGB);
+        
+        CGContextTranslateCTM(contex, 0, size.height + originY);
+        CGContextScaleCTM(contex, scale, -scale);
+        
+        [self.layer renderInContext:contex];
+        
+        while (true) {
+            if (y < originY) {
+                x = -1;
+                y = INT_MAX;
+                break;
+            }
+            
+            if (x >= pixelsWidth) { // found
                 x = point.x;
-                y += i;
-                preR = -1; preG = -1; preB = -1; preA = -1;
+                found = YES;
+                break;
+            }
+            
+            int offset = 4*((pixelsWidth*round(y - originY))+round(x));
+            if (preR == -1) {
+                preR = bitdata[offset];
+                preG = bitdata[offset+1];
+                preB = bitdata[offset+2];
+                preA = bitdata[offset+3];
             }else {
-                x++;
+                if (preR != bitdata[offset] ||
+                    preG != bitdata[offset+1] ||
+                    preB != bitdata[offset+2] ||
+                    preA != bitdata[offset+3]) {
+                    
+                    x = point.x;
+                    y += i;
+                    preR = -1; preG = -1; preB = -1; preA = -1;
+                }else {
+                    x++;
+                }
             }
         }
-    }
-    CGContextRelease(contex);
-    free(bitdata);
+        CGContextRelease(contex);
+        free(bitdata);
+        sliceIndex--;
+    } while (sliceIndex >= 0 && !found);
+    
     return CGPointMake(x, y);
 }
 
+- (CGPoint)wt_downfindPureColorLineWithBeginAnchor:(CGPoint)point
+                                         width:(CGFloat)width
+                                      sliceNum:(int)sliceNum {
+    if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
+    
+    size_t pixelsWidth = CGRectGetWidth(self.frame);
+    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    
+    size_t pixelsHeight = CGRectGetHeight(self.frame);
+    
+    CGFloat scale = 1;
+    CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    CGFloat originY = point.y;
+    int sliceIndex = 0;
+    BOOL found = NO;
+    int i = 1;
+    
+    int x = point.x;
+    int y = point.y;
+    
+    while ((y < pixelsHeight) && (y > (sliceIndex + 1) * sliceHeight)) {
+        sliceIndex++;
+    }
+    
+    NSUInteger beginSliceIndex = sliceIndex;
+    
+    do {
+        int preR = -1, preG = -1, preB = -1, preA = -1;
+        
+        originY = sliceIndex * sliceHeight;
+        if (sliceIndex == beginSliceIndex) {
+            y = point.y;
+        }else {
+            y = originY;
+        }
+        x = point.x;
+        
+        CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
+        int bitPerRow = size.width * 4;
+        int bitCount = bitPerRow * size.height;
+        UInt8 *bitdata = malloc(bitCount);
+        if (bitdata == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
+        if (deviceRGB == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGContextRef contex = CGBitmapContextCreate(bitdata, size.width, size.height, 8, bitPerRow, deviceRGB, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        if (contex == NULL) {
+            CFRelease(deviceRGB);
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CFRelease(deviceRGB);
+        
+        CGContextTranslateCTM(contex, 0, size.height + originY);
+        CGContextScaleCTM(contex, scale, -scale);
+        
+        [self.layer renderInContext:contex];
+        
+        while (true) {
+            if (y >= maxPixelsHeight || y < 0) {
+                x = -1;
+                y = INT_MAX;
+                break;
+            }
+            
+            if (x >= pixelsWidth) { // found
+                x = point.x;
+                found = YES;
+                break;
+            }
+            
+            int offset = 4*((pixelsWidth*round(y - originY))+round(x));
+            if (preR == -1) {
+                preR = bitdata[offset];
+                preG = bitdata[offset+1];
+                preB = bitdata[offset+2];
+                preA = bitdata[offset+3];
+            }else {
+                if (preR != bitdata[offset] ||
+                    preG != bitdata[offset+1] ||
+                    preB != bitdata[offset+2] ||
+                    preA != bitdata[offset+3]) {
+                    
+                    x = point.x;
+                    y += i;
+                    preR = -1; preG = -1; preB = -1; preA = -1;
+                }else {
+                    x++;
+                }
+            }
+        }
+        CGContextRelease(contex);
+        free(bitdata);
+        
+        sliceIndex++;
+    } while (sliceIndex < sliceNum && !found);
+    
+    return CGPointMake(x, y);
+}
+
+- (CGPoint)wt_upTrimHeadPureColorLineWithBeginAnchor:(CGPoint)point
+                                               width:(CGFloat)width
+                                            sliceNum:(int)sliceNum {
+    if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
+    
+    size_t pixelsWidth = CGRectGetWidth(self.frame);
+    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    
+    CGFloat scale = 1;
+    CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    CGFloat originY = point.y;
+    int sliceIndex = sliceNum - 1;
+    BOOL found = NO;
+    int i = -1;
+    
+    int x = point.x;
+    int y = point.y;
+    
+    while ((sliceIndex > 0) && (y >= 0) && (y < sliceIndex * sliceHeight)) {
+        sliceIndex--;
+    }
+    
+    NSUInteger beginSliceIndex = sliceIndex;
+    
+    do {
+        int preR = -1, preG = -1, preB = -1, preA = -1;
+        
+        originY = sliceIndex * sliceHeight;
+        CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        if (sliceIndex == beginSliceIndex) {
+            y = point.y;
+        }else {
+            y = maxPixelsHeight;
+        }
+        x = point.x;
+        
+        CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
+        int bitPerRow = size.width * 4;
+        int bitCount = bitPerRow * size.height;
+        UInt8 *bitdata = malloc(bitCount);
+        if (bitdata == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
+        if (deviceRGB == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGContextRef contex = CGBitmapContextCreate(bitdata, size.width, size.height, 8, bitPerRow, deviceRGB, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        if (contex == NULL) {
+            CFRelease(deviceRGB);
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CFRelease(deviceRGB);
+        
+        CGContextTranslateCTM(contex, 0, size.height + originY);
+        CGContextScaleCTM(contex, scale, -scale);
+        
+        [self.layer renderInContext:contex];
+        
+        while (true) {
+            if (y < originY) {
+                x = -1;
+                y = INT_MAX;
+                break;
+            }
+            
+            if (x >= pixelsWidth) {
+                x = point.x;
+                y += i;
+                preR = -1; preG = -1; preB = -1; preA = -1;
+            }
+            
+            int offset = 4*((pixelsWidth*round(y - originY))+round(x));
+            if (preR == -1) {
+                preR = bitdata[offset];
+                preG = bitdata[offset+1];
+                preB = bitdata[offset+2];
+                preA = bitdata[offset+3];
+            }else {
+                if (preR != bitdata[offset] ||
+                    preG != bitdata[offset+1] ||
+                    preB != bitdata[offset+2] ||
+                    preA != bitdata[offset+3]) {
+                    
+                    x = point.x;
+                    found = YES;
+                    break;
+                }else {
+                    x++;
+                }
+            }
+        }
+        CGContextRelease(contex);
+        free(bitdata);
+        sliceIndex--;
+    } while (sliceIndex >= 0 && !found);
+    
+    return CGPointMake(x, y);
+}
+
+- (CGPoint)wt_downTrimHeadPureColorLineWithBeginAnchor:(CGPoint)point
+                                                 width:(CGFloat)width
+                                              sliceNum:(int)sliceNum {
+    if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
+    
+    size_t pixelsWidth = CGRectGetWidth(self.frame);
+    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    
+    size_t pixelsHeight = CGRectGetHeight(self.frame);
+    
+    CGFloat scale = 1;
+    CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    CGFloat originY = point.y;
+    int sliceIndex = 0;
+    BOOL found = NO;
+    int i = 1;
+    
+    int x = point.x;
+    int y = point.y;
+    
+    while ((y < pixelsHeight) && (y > (sliceIndex + 1) * sliceHeight)) {
+        sliceIndex++;
+    }
+    
+    NSUInteger beginSliceIndex = sliceIndex;
+    
+    do {
+        int preR = -1, preG = -1, preB = -1, preA = -1;
+        
+        originY = sliceIndex * sliceHeight;
+        if (sliceIndex == beginSliceIndex) {
+            y = point.y;
+        }else {
+            y = originY;
+        }
+        x = point.x;
+        
+        CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
+        int bitPerRow = size.width * 4;
+        int bitCount = bitPerRow * size.height;
+        UInt8 *bitdata = malloc(bitCount);
+        if (bitdata == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
+        if (deviceRGB == NULL) {
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CGContextRef contex = CGBitmapContextCreate(bitdata, size.width, size.height, 8, bitPerRow, deviceRGB, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        if (contex == NULL) {
+            CFRelease(deviceRGB);
+            return CGPointMake(-1, INT_MAX);
+        }
+        
+        CFRelease(deviceRGB);
+        
+        CGContextTranslateCTM(contex, 0, size.height + originY);
+        CGContextScaleCTM(contex, scale, -scale);
+        
+        [self.layer renderInContext:contex];
+        
+        while (true) {
+            if (y >= maxPixelsHeight || y < 0) {
+                x = -1;
+                y = INT_MAX;
+                break;
+            }
+            
+            if (x >= pixelsWidth) {
+                x = point.x;
+                y += i;
+                preR = -1; preG = -1; preB = -1; preA = -1;
+            }
+            
+            int offset = 4*((pixelsWidth*round(y - originY))+round(x));
+            if (preR == -1) {
+                preR = bitdata[offset];
+                preG = bitdata[offset+1];
+                preB = bitdata[offset+2];
+                preA = bitdata[offset+3];
+            }else {
+                if (preR != bitdata[offset] ||
+                    preG != bitdata[offset+1] ||
+                    preB != bitdata[offset+2] ||
+                    preA != bitdata[offset+3]) { // found
+                    
+                    x = point.x;
+                    found = YES;
+                    break;
+                }else {
+                    x++;
+                }
+            }
+        }
+        CGContextRelease(contex);
+        free(bitdata);
+        
+        sliceIndex++;
+    } while (sliceIndex < sliceNum && !found);
+    
+    return CGPointMake(x, y);
+}
+
+#pragma mark public
+- (CGPoint)wt_findPureColorLineWithBeginAnchor:(CGPoint)point
+                                         width:(CGFloat)width
+                                      sliceNum:(int)sliceNum
+                                     direction:(eWtFindPureSeparateLinePointDirection)direction {
+    if (direction == eWtFindPureSeparateLinePointDirectionDown) {
+        return [self wt_downfindPureColorLineWithBeginAnchor:point width:width sliceNum:sliceNum];
+    }else {
+        return [self wt_upfindPureColorLineWithBeginAnchor:point width:width sliceNum:sliceNum];
+    }
+}
+
+- (CGPoint)wt_trimPureColorLineWithBeginAnchor:(CGPoint)point
+                                         width:(CGFloat)width
+                                      sliceNum:(int)sliceNum
+                                     direction:(eWtFindPureSeparateLinePointDirection)direction {
+    if (direction == eWtFindPureSeparateLinePointDirectionDown) {
+        return [self wt_downTrimHeadPureColorLineWithBeginAnchor:point width:width sliceNum:sliceNum];
+    }else {
+        return [self wt_upTrimHeadPureColorLineWithBeginAnchor:point width:width sliceNum:sliceNum];
+    }
+}
 @end
