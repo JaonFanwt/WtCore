@@ -12,12 +12,14 @@
                                              width:(CGFloat)width
                                           sliceNum:(int)sliceNum {
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
+    if (point.y > CGRectGetHeight(self.frame)) point.y = CGRectGetHeight(self.frame);
     
     size_t pixelsWidth = CGRectGetWidth(self.frame);
-    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    if (width < 0 || width > pixelsWidth ) width = pixelsWidth;
     
     CGFloat scale = 1;
     CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
     CGFloat originY = point.y;
     int sliceIndex = sliceNum - 1;
     BOOL found = NO;
@@ -44,7 +46,6 @@
         }
         x = point.x;
         
-        CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
         int bitPerRow = size.width * 4;
         int bitCount = bitPerRow * size.height;
         UInt8 *bitdata = malloc(bitCount);
@@ -71,13 +72,20 @@
         [self.layer renderInContext:contex];
         
         while (true) {
-            if (y < originY) {
+            if (y < 0) {
                 x = -1;
                 y = INT_MAX;
                 break;
             }
             
-            if (x >= pixelsWidth) { // found
+            if (y < originY) {
+                x = point.x;
+                y += i;
+                sliceIndex--;
+                break;
+            }
+            
+            if (x >= width) { // found
                 x = point.x;
                 found = YES;
                 break;
@@ -117,7 +125,7 @@
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
     
     size_t pixelsWidth = CGRectGetWidth(self.frame);
-    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    if (width < 0 || width > pixelsWidth ) width = pixelsWidth;
     
     size_t pixelsHeight = CGRectGetHeight(self.frame);
     
@@ -182,7 +190,7 @@
                 break;
             }
             
-            if (x >= pixelsWidth) { // found
+            if (x >= width) { // found
                 x = point.x;
                 found = YES;
                 break;
@@ -223,7 +231,7 @@
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
     
     size_t pixelsWidth = CGRectGetWidth(self.frame);
-    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    if (width < 0 || width > pixelsWidth ) width = pixelsWidth;
     
     CGFloat scale = 1;
     CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
@@ -286,7 +294,7 @@
                 break;
             }
             
-            if (x >= pixelsWidth) {
+            if (x >= width) {
                 x = point.x;
                 y += i;
                 preR = -1; preG = -1; preB = -1; preA = -1;
@@ -326,7 +334,7 @@
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
     
     size_t pixelsWidth = CGRectGetWidth(self.frame);
-    if (width > 0 && pixelsWidth > width ) pixelsWidth = width;
+    if (width < 0 || width > pixelsWidth ) width = pixelsWidth;
     
     size_t pixelsHeight = CGRectGetHeight(self.frame);
     
@@ -391,7 +399,7 @@
                 break;
             }
             
-            if (x >= pixelsWidth) {
+            if (x >= width) {
                 x = point.x;
                 y += i;
                 preR = -1; preG = -1; preB = -1; preA = -1;
