@@ -9,8 +9,8 @@
 
 @implementation UIView (WtCutter)
 - (CGPoint)wt_upfindPureColorLineWithBeginAnchor:(CGPoint)point
-                                             width:(CGFloat)width
-                                          sliceNum:(int)sliceNum {
+                                           width:(CGFloat)width
+                                        sliceNum:(int)sliceNum {
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
     if (point.y > CGRectGetHeight(self.frame)) point.y = CGRectGetHeight(self.frame);
     
@@ -37,12 +37,12 @@
     do {
         int preR = -1, preG = -1, preB = -1, preA = -1;
         
-        originY = sliceIndex * sliceHeight;
-        CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        originY = sliceIndex * sliceHeight; // 起始Y
+        CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight; // 该段最大Y
         if (sliceIndex == beginSliceIndex) {
             y = point.y;
         }else {
-            y = maxPixelsHeight;
+            y = maxPixelsHeight - 1;
         }
         x = point.x;
         
@@ -81,7 +81,6 @@
             if (y < originY) {
                 x = point.x;
                 y += i;
-                sliceIndex--;
                 break;
             }
             
@@ -120,8 +119,8 @@
 }
 
 - (CGPoint)wt_downfindPureColorLineWithBeginAnchor:(CGPoint)point
-                                         width:(CGFloat)width
-                                      sliceNum:(int)sliceNum {
+                                             width:(CGFloat)width
+                                          sliceNum:(int)sliceNum {
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
     
     size_t pixelsWidth = CGRectGetWidth(self.frame);
@@ -257,7 +256,7 @@
         if (sliceIndex == beginSliceIndex) {
             y = point.y;
         }else {
-            y = maxPixelsHeight;
+            y = maxPixelsHeight-1;
         }
         x = point.x;
         
