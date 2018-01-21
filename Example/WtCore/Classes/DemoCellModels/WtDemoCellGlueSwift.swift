@@ -13,7 +13,7 @@ class WtDemoCellGlueSwift: NSObject {
     var tableViewDatasource: (WtDelegateProxy & UITableViewDataSource)!
     
     override init() {
-        tableViewDelegate = WtDelegateProxy.init(with: UITableViewDelegate.self) as! (WtDelegateProxy & UITableViewDelegate)
-        tableViewDatasource = WtDelegateProxy.init(with: UITableViewDataSource.self) as! (WtDelegateProxy & UITableViewDataSource)
+        tableViewDelegate = (WtDelegateProxy.init(with: UITableViewDelegate.self) as? (WtDelegateProxy & UITableViewDelegate))!
+        tableViewDatasource = (WtDelegateProxy.init(with: UITableViewDataSource.self) as? (WtDelegateProxy & UITableViewDataSource))!
     }
 }

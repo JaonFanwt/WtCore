@@ -21,4 +21,8 @@
 @property (nonatomic, assign) CGFloat wtWidth;
 @property (nonatomic, assign) CGFloat wtHeight;
 - (void)wtWhenTapped:(void (^)(void))block;
+/**
+ *  The return value (UInt8 *) requires the user to release after use.
+ */
+- (UInt8 *)bitdataWithFrame:(CGRect)frame scale:(CGFloat)scale;
 @end

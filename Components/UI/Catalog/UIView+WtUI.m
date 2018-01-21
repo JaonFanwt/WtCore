@@ -78,6 +78,7 @@
     self.frame = rect;
 }
 
+#pragma mark - public
 - (void)wtWhenTapped:(void (^)(void))block {
     self.userInteractionEnabled = YES;
 
@@ -91,5 +92,39 @@
     }];
     objc_setAssociatedObject(self, _cmd, tapGesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self addGestureRecognizer:tapGesture];
+}
+
+- (UInt8 *)bitdataWithFrame:(CGRect)frame scale:(CGFloat)scale {
+    CGSize size = CGSizeMake(frame.size.width*scale, frame.size.height*scale) ;
+
+    int bitPerRow = size.width * 4;
+    int bitCount = bitPerRow * size.height;
+    UInt8 *bitdata = malloc(bitCount);
+    if (bitdata == NULL) {
+        return nil;
+    }
+
+    CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
+    if (deviceRGB == NULL) {
+        return nil;
+    }
+
+    CGContextRef context = CGBitmapContextCreate(bitdata, size.width, size.height, 8, bitPerRow, deviceRGB, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    if (context == NULL) {
+        CFRelease(deviceRGB);
+        return nil;
+    }
+
+    CFRelease(deviceRGB);
+
+    CGContextTranslateCTM(context, -frame.origin.x, size.height + frame.origin.y);
+    CGContextScaleCTM(context, scale, -scale);
+
+    [self.layer renderInContext:context];
+
+    CGContextRelease(context);
+    free(bitdata);
+
+    return bitdata;
 }
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BFC9FED2014751D0060F565 /* WtDemoAdditionalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC9FEC2014751D0060F565 /* WtDemoAdditionalView.m */; };
+		0BFC9FEF201477DC0060F565 /* WtDemoAdditionalViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFC9FEE201477DC0060F565 /* WtDemoAdditionalViewCell.xib */; };
+		0BFC9FF5201478650060F565 /* WtDemoAdditionalViewGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC9FF4201478650060F565 /* WtDemoAdditionalViewGlue.m */; };
 		0BFD019A1FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFD01991FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift */; };
 		0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */; };
 		0BFD019E1FE3E09400BFE94A /* WtDemoViewGlueController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */; };
@@ -38,10 +41,13 @@
 		B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */; };
 		B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */; };
 		B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */; };
-		B05A21701F6270E800FBB990 /* WtDemoUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A216E1F6270E800FBB990 /* WtDemoUIViewController.m */; };
-		B05A21711F6270E800FBB990 /* WtDemoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */; };
 		B0721D2C1F67ADC800F71E94 /* WtDemoWattpadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */; };
 		B0721D2E1F67AEA100F71E94 /* WtDemoWattpadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */; };
+		B093C9972010F17300EFB719 /* WtDemoUICutterGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C9962010F17300EFB719 /* WtDemoUICutterGlue.m */; };
+		B093C99F2014317300EFB719 /* WtDemoUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C9992014317300EFB719 /* WtDemoUIViewController.m */; };
+		B093C9A02014317300EFB719 /* WtDemoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99B2014317300EFB719 /* WtDemoUIViewController.xib */; };
+		B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */; };
+		B093C9A22014317300EFB719 /* WtDemoUICutterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +62,11 @@
 
 /* Begin PBXFileReference section */
 		0B61677A5699DD22653A7411 /* WtCore.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WtCore.podspec; path = ../WtCore.podspec; sourceTree = "<group>"; };
+		0BFC9FEB2014751D0060F565 /* WtDemoAdditionalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoAdditionalView.h; sourceTree = "<group>"; };
+		0BFC9FEC2014751D0060F565 /* WtDemoAdditionalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoAdditionalView.m; sourceTree = "<group>"; };
+		0BFC9FEE201477DC0060F565 /* WtDemoAdditionalViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WtDemoAdditionalViewCell.xib; sourceTree = "<group>"; };
+		0BFC9FF3201478650060F565 /* WtDemoAdditionalViewGlue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoAdditionalViewGlue.h; sourceTree = "<group>"; };
+		0BFC9FF4201478650060F565 /* WtDemoAdditionalViewGlue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoAdditionalViewGlue.m; sourceTree = "<group>"; };
 		0BFD01991FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WtDemoCellGlueSwift.swift; sourceTree = "<group>"; };
 		0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WtDemoViewGlueController.swift; sourceTree = "<group>"; };
 		0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoViewGlueController.xib; sourceTree = "<group>"; };
@@ -103,12 +114,17 @@
 		B05A21441F5E8CE400FBB990 /* WtDemoCoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCoreViewController.h; sourceTree = "<group>"; };
 		B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCoreViewController.m; sourceTree = "<group>"; };
 		B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoCoreViewController.xib; sourceTree = "<group>"; };
-		B05A216D1F6270E800FBB990 /* WtDemoUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoUIViewController.h; sourceTree = "<group>"; };
-		B05A216E1F6270E800FBB990 /* WtDemoUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUIViewController.m; sourceTree = "<group>"; };
-		B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoUIViewController.xib; sourceTree = "<group>"; };
 		B0721D2A1F67ADC800F71E94 /* WtCore_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WtCore_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WtDemoWattpadViewController.swift; sourceTree = "<group>"; };
 		B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoWattpadViewController.xib; sourceTree = "<group>"; };
+		B093C9952010F17300EFB719 /* WtDemoUICutterGlue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoUICutterGlue.h; sourceTree = "<group>"; };
+		B093C9962010F17300EFB719 /* WtDemoUICutterGlue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoUICutterGlue.m; sourceTree = "<group>"; };
+		B093C9992014317300EFB719 /* WtDemoUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUIViewController.m; sourceTree = "<group>"; };
+		B093C99A2014317300EFB719 /* WtDemoUICutterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoUICutterViewController.h; sourceTree = "<group>"; };
+		B093C99B2014317300EFB719 /* WtDemoUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoUIViewController.xib; sourceTree = "<group>"; };
+		B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUICutterViewController.m; sourceTree = "<group>"; };
+		B093C99D2014317300EFB719 /* WtDemoUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoUIViewController.h; sourceTree = "<group>"; };
+		B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoUICutterViewController.xib; sourceTree = "<group>"; };
 		F0F2F4244F4B8DFAE6074F8E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F8F45F305DAF92D6A023524A /* Pods-WtCore_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,6 +261,8 @@
 				B05A21281F59026100FBB990 /* WtDemoCellGlue.h */,
 				B05A21291F59026100FBB990 /* WtDemoCellGlue.m */,
 				0BFD01991FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift */,
+				B093C9952010F17300EFB719 /* WtDemoUICutterGlue.h */,
+				B093C9962010F17300EFB719 /* WtDemoUICutterGlue.m */,
 			);
 			path = DemoCellModels;
 			sourceTree = "<group>";
@@ -252,6 +270,7 @@
 		B05A212F1F59098200FBB990 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B093C9982014317300EFB719 /* UI */,
 				B05A21441F5E8CE400FBB990 /* WtDemoCoreViewController.h */,
 				B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */,
 				B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */,
@@ -267,9 +286,6 @@
 				B05A213F1F594B6D00FBB990 /* WtDemoWebViewController.h */,
 				B05A21401F594B6D00FBB990 /* WtDemoWebViewController.m */,
 				B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */,
-				B05A216D1F6270E800FBB990 /* WtDemoUIViewController.h */,
-				B05A216E1F6270E800FBB990 /* WtDemoUIViewController.m */,
-				B05A216F1F6270E800FBB990 /* WtDemoUIViewController.xib */,
 				B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */,
 				B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */,
 				0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */,
@@ -277,6 +293,24 @@
 				B0721D2A1F67ADC800F71E94 /* WtCore_Example-Bridging-Header.h */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B093C9982014317300EFB719 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B093C99A2014317300EFB719 /* WtDemoUICutterViewController.h */,
+				B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */,
+				B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */,
+				B093C99D2014317300EFB719 /* WtDemoUIViewController.h */,
+				B093C9992014317300EFB719 /* WtDemoUIViewController.m */,
+				B093C99B2014317300EFB719 /* WtDemoUIViewController.xib */,
+				0BFC9FEB2014751D0060F565 /* WtDemoAdditionalView.h */,
+				0BFC9FEC2014751D0060F565 /* WtDemoAdditionalView.m */,
+				0BFC9FF3201478650060F565 /* WtDemoAdditionalViewGlue.h */,
+				0BFC9FF4201478650060F565 /* WtDemoAdditionalViewGlue.m */,
+				0BFC9FEE201477DC0060F565 /* WtDemoAdditionalViewCell.xib */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		D626093B707FCAE02FD112D0 /* Pods */ = {
@@ -378,7 +412,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05A21711F6270E800FBB990 /* WtDemoUIViewController.xib in Resources */,
+				B093C9A02014317300EFB719 /* WtDemoUIViewController.xib in Resources */,
+				0BFC9FEF201477DC0060F565 /* WtDemoAdditionalViewCell.xib in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				B0721D2E1F67AEA100F71E94 /* WtDemoWattpadViewController.xib in Resources */,
 				B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */,
@@ -387,6 +422,7 @@
 				B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */,
 				B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */,
 				B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */,
+				B093C9A22014317300EFB719 /* WtDemoUICutterViewController.xib in Resources */,
 				B05A213E1F594AD800FBB990 /* WtDemoThunderWebViewController.xib in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -535,16 +571,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B093C99F2014317300EFB719 /* WtDemoUIViewController.m in Sources */,
 				B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */,
 				B05A21411F594B6D00FBB990 /* WtDemoWebViewController.m in Sources */,
+				0BFC9FF5201478650060F565 /* WtDemoAdditionalViewGlue.m in Sources */,
 				0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */,
 				B0721D2C1F67ADC800F71E94 /* WtDemoWattpadViewController.swift in Sources */,
+				B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */,
 				B05A213D1F594AD800FBB990 /* WtDemoThunderWebViewController.m in Sources */,
 				0BFD019A1FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift in Sources */,
 				6003F59E195388D20070C39A /* WtAppDelegate.m in Sources */,
 				B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */,
+				B093C9972010F17300EFB719 /* WtDemoUICutterGlue.m in Sources */,
+				0BFC9FED2014751D0060F565 /* WtDemoAdditionalView.m in Sources */,
 				6003F5A7195388D20070C39A /* WtViewController.m in Sources */,
-				B05A21701F6270E800FBB990 /* WtDemoUIViewController.m in Sources */,
 				B05A212A1F59026100FBB990 /* WtDemoCellGlue.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */,

@@ -24,8 +24,7 @@
 
 @implementation WtDemoUIViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -34,8 +33,7 @@
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -124,12 +122,14 @@
         WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellGlue];
         cellGlue.title = @"Cutter";
-        cellGlue.subTitle = @"Find the solid color split line from top to bottom.";
+        cellGlue.subTitle = @"Find the solid color split line from bottom to top.";
+        @weakify(self);
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
-            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
-            v.backgroundColor = [UIColor wtRandom];
-            [tableView addSubview:v];
+            @strongify(self);
+            Class cls = WTClassFromString(@"WtDemoUICutterViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoUICutterViewController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
         }];
     }
     
@@ -137,10 +137,10 @@
         WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellGlue];
         cellGlue.title = @"Cutter";
-        cellGlue.subTitle = @"Find the solid color split line from bottom to top.";
+        cellGlue.subTitle = @"Find the solid color split line from top to bottom.";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
-            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x + 200, point.y - 19, 180, 20)];
+            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
             v.backgroundColor = [UIColor wtRandom];
             [tableView addSubview:v];
         }];

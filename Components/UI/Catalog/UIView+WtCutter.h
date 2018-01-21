@@ -12,6 +12,15 @@ typedef enum {
     eWtFindPureSeparateLinePointDirectionUp
 }eWtFindPureSeparateLinePointDirection;
 
+@interface WtFindPureColorPoint : NSObject
+@property (nonatomic, assign) CGFloat beginX;
+@property (nonatomic, assign) CGFloat endX;
+@end
+
+@protocol WtViewCutterProtocol
+@property (nonatomic, readonly) WtFindPureColorPoint *findPureColorPoint;
+@end
+
 @interface UIView (WtCutter)
 - (CGPoint)wt_findPureColorLineWithBeginAnchor:(CGPoint)point
                                          width:(CGFloat)width

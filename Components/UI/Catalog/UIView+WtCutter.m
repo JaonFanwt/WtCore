@@ -7,18 +7,26 @@
 
 #import "UIView+WtCutter.h"
 
+#import "UIView+WtUI.h"
+
+@implementation WtFindPureColorPoint
+@end
+
 @implementation UIView (WtCutter)
 - (CGPoint)wt_upfindPureColorLineWithBeginAnchor:(CGPoint)point
                                            width:(CGFloat)width
                                         sliceNum:(int)sliceNum {
     if (sliceNum == 0 || sliceNum > 10) sliceNum = 5;
-    if (point.y > CGRectGetHeight(self.frame)) point.y = CGRectGetHeight(self.frame);
+    if (point.y > CGRectGetHeight(self.frame)) point.y = CGRectGetHeight(self.frame) - 1;
     
     size_t pixelsWidth = CGRectGetWidth(self.frame);
     if (width < 0 || width > pixelsWidth ) width = pixelsWidth;
     
     CGFloat scale = 1;
     CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    if (sliceHeight < self.wtHeight) { // 余下的小数位增一页
+        ++sliceNum;
+    }
     CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
     CGFloat originY = point.y;
     int sliceIndex = sliceNum - 1;
@@ -39,6 +47,9 @@
         
         originY = sliceIndex * sliceHeight; // 起始Y
         CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight; // 该段最大Y
+        if (maxPixelsHeight > self.wtHeight) {
+            maxPixelsHeight = self.wtHeight;
+        }
         if (sliceIndex == beginSliceIndex) {
             y = point.y;
         }else {
@@ -71,6 +82,11 @@
         
         [self.layer renderInContext:contex];
         
+        //        CGImageRef imageRef = CGBitmapContextCreateImage(contex);
+        //        UIImage *__image = [UIImage imageWithCGImage:imageRef];
+        //
+        //        NSLog(@"%s - %@", __func__, __image);
+        
         while (true) {
             if (y < 0) {
                 x = -1;
@@ -96,16 +112,21 @@
                 preG = bitdata[offset+1];
                 preB = bitdata[offset+2];
                 preA = bitdata[offset+3];
+                
+                //                NSLog(@"%s - [起始色值] - [x:%d, y:%d] - [r:%d, g:%d, b:%d, a:%d]", __func__, x, y, bitdata[offset], bitdata[offset+1], bitdata[offset+2], bitdata[offset+3]);
             }else {
                 if (preR != bitdata[offset] ||
                     preG != bitdata[offset+1] ||
                     preB != bitdata[offset+2] ||
                     preA != bitdata[offset+3]) {
                     
+                    //                    NSLog(@"%s - [色值不一致] - [x:%d, y:%d] - [r:%d, g:%d, b:%d, a:%d]", __func__, x, y, bitdata[offset], bitdata[offset+1], bitdata[offset+2], bitdata[offset+3]);
+                    
                     x = point.x;
                     y += i;
                     preR = -1; preG = -1; preB = -1; preA = -1;
                 }else {
+                    //                    NSLog(@"%s - [色值一致] - [x:%d, y:%d] - [r:%d, g:%d, b:%d, a:%d]", __func__, x, y, bitdata[offset], bitdata[offset+1], bitdata[offset+2], bitdata[offset+3]);
                     x++;
                 }
             }
@@ -130,6 +151,9 @@
     
     CGFloat scale = 1;
     CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    if (sliceHeight < self.wtHeight) { // 余下的小数位增一页
+        ++sliceNum;
+    }
     CGFloat originY = point.y;
     int sliceIndex = 0;
     BOOL found = NO;
@@ -156,6 +180,9 @@
         x = point.x;
         
         CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        if (maxPixelsHeight > self.wtHeight) {
+            maxPixelsHeight = self.wtHeight;
+        }
         CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
         int bitPerRow = size.width * 4;
         int bitCount = bitPerRow * size.height;
@@ -234,6 +261,9 @@
     
     CGFloat scale = 1;
     CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    if (sliceHeight < self.wtHeight) { // 余下的小数位增一页
+        ++sliceNum;
+    }
     CGFloat originY = point.y;
     int sliceIndex = sliceNum - 1;
     BOOL found = NO;
@@ -253,6 +283,9 @@
         
         originY = sliceIndex * sliceHeight;
         CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        if (maxPixelsHeight > self.wtHeight) {
+            maxPixelsHeight = self.wtHeight;
+        }
         if (sliceIndex == beginSliceIndex) {
             y = point.y;
         }else {
@@ -339,6 +372,9 @@
     
     CGFloat scale = 1;
     CGFloat sliceHeight = floor(self.frame.size.height*scale / sliceNum);
+    if (sliceHeight < self.wtHeight) { // 余下的小数位增一页
+        ++sliceNum;
+    }
     CGFloat originY = point.y;
     int sliceIndex = 0;
     BOOL found = NO;
@@ -365,6 +401,9 @@
         x = point.x;
         
         CGFloat maxPixelsHeight = (sliceIndex + 1) * sliceHeight;
+        if (maxPixelsHeight > self.wtHeight) {
+            maxPixelsHeight = self.wtHeight;
+        }
         CGSize size = CGSizeMake(self.frame.size.width*scale, sliceHeight) ;
         int bitPerRow = size.width * 4;
         int bitCount = bitPerRow * size.height;
