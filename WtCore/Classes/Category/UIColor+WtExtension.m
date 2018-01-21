@@ -34,6 +34,16 @@ UIColor *wtHTMLColor(NSString *name) {
 @implementation UIColor (WtHTML)
 + (UIColor *)wtColorWithHexString:(NSString *)hex {
     if ([hex hasPrefix:@"#"]) hex = [hex substringFromIndex:1];
+    
+    NSArray *hexArray = [hex componentsSeparatedByString:@" "];
+    CGFloat alpha = 1.0;
+    if (hexArray.count == 2) {
+        hex = hexArray[0];
+        CGFloat _alpha = [hexArray[1] floatValue];
+        if (_alpha >= 0 && _alpha <= 1.0) {
+            alpha = _alpha;
+        }
+    }
     if ([hex length]!=6 && [hex length]!=3) return nil;
     
     NSUInteger digits = [hex length]/3.0;
@@ -43,7 +53,7 @@ UIColor *wtHTMLColor(NSString *name) {
     CGFloat green = [[hex substringWithRange:NSMakeRange(digits, digits)] wtIntegerValueFromHex]/maxValue;
     CGFloat blue = [[hex substringWithRange:NSMakeRange(2*digits, digits)] wtIntegerValueFromHex]/maxValue;
     
-    return [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
 + (UIColor *)wtColorWithHTMLName:(NSString *)name {

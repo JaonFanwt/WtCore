@@ -17,6 +17,9 @@ UIColor *wtHTMLColor(NSString *name);
 @end
 
 @interface UIColor (WtHTML)
+/**
+ *  Support #RRGGBB; #RRGGBB alpha, e.g: #333333 0.5
+ */
 + (UIColor *)wtColorWithHexString:(NSString *)hex;
 + (UIColor *)wtColorWithHTMLName:(NSString *)name;
 @end
