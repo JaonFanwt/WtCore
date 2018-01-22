@@ -24,5 +24,5 @@
 /**
  *  The return value (UInt8 *) requires the user to release after use.
  */
-- (UInt8 *)bitdataWithFrame:(CGRect)frame scale:(CGFloat)scale;
+- (UInt8 *)wtBitdataWithFrame:(CGRect)frame scale:(CGFloat)scale;
 @end

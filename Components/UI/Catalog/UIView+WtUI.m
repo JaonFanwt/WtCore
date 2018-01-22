@@ -94,7 +94,7 @@
     [self addGestureRecognizer:tapGesture];
 }
 
-- (UInt8 *)bitdataWithFrame:(CGRect)frame scale:(CGFloat)scale {
+- (UInt8 *)wtBitdataWithFrame:(CGRect)frame scale:(CGFloat)scale {
     CGSize size = CGSizeMake(frame.size.width*scale, frame.size.height*scale) ;
 
     int bitPerRow = size.width * 4;
@@ -123,7 +123,6 @@
     [self.layer renderInContext:context];
 
     CGContextRelease(context);
-    free(bitdata);
 
     return bitdata;
 }
