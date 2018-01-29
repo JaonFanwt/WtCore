@@ -77,6 +77,9 @@
         
         CFRelease(deviceRGB);
         
+        CGContextSetRGBFillColor(contex, 255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f, 1.0f);
+        CGContextFillRect(contex, CGRectMake(0, 0, size.width, size.height));
+        
         CGContextTranslateCTM(contex, 0, size.height + originY);
         CGContextScaleCTM(contex, scale, -scale);
         
@@ -112,21 +115,15 @@
                 preG = bitdata[offset+1];
                 preB = bitdata[offset+2];
                 preA = bitdata[offset+3];
-                
-                //                NSLog(@"%s - [起始色值] - [x:%d, y:%d] - [r:%d, g:%d, b:%d, a:%d]", __func__, x, y, bitdata[offset], bitdata[offset+1], bitdata[offset+2], bitdata[offset+3]);
             }else {
                 if (preR != bitdata[offset] ||
                     preG != bitdata[offset+1] ||
                     preB != bitdata[offset+2] ||
                     preA != bitdata[offset+3]) {
-                    
-                    //                    NSLog(@"%s - [色值不一致] - [x:%d, y:%d] - [r:%d, g:%d, b:%d, a:%d]", __func__, x, y, bitdata[offset], bitdata[offset+1], bitdata[offset+2], bitdata[offset+3]);
-                    
                     x = point.x;
                     y += i;
                     preR = -1; preG = -1; preB = -1; preA = -1;
                 }else {
-                    //                    NSLog(@"%s - [色值一致] - [x:%d, y:%d] - [r:%d, g:%d, b:%d, a:%d]", __func__, x, y, bitdata[offset], bitdata[offset+1], bitdata[offset+2], bitdata[offset+3]);
                     x++;
                 }
             }
@@ -203,6 +200,9 @@
         }
         
         CFRelease(deviceRGB);
+        
+        CGContextSetRGBFillColor(contex, 255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f, 1.0f);
+        CGContextFillRect(contex, CGRectMake(0, 0, size.width, size.height));
         
         CGContextTranslateCTM(contex, 0, size.height + originY);
         CGContextScaleCTM(contex, scale, -scale);
@@ -314,6 +314,9 @@
         
         CFRelease(deviceRGB);
         
+        CGContextSetRGBFillColor(contex, 255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f, 1.0f);
+        CGContextFillRect(contex, CGRectMake(0, 0, size.width, size.height));
+        
         CGContextTranslateCTM(contex, 0, size.height + originY);
         CGContextScaleCTM(contex, scale, -scale);
         
@@ -424,6 +427,9 @@
         }
         
         CFRelease(deviceRGB);
+        
+        CGContextSetRGBFillColor(contex, 255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f, 1.0f);
+        CGContextFillRect(contex, CGRectMake(0, 0, size.width, size.height));
         
         CGContextTranslateCTM(contex, 0, size.height + originY);
         CGContextScaleCTM(contex, scale, -scale);

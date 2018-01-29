@@ -110,58 +110,61 @@
     NSMutableArray *glues = @[].mutableCopy;
     NSMutableArray *toYs = @[].mutableCopy;
     
-    CGFloat beginY = 0;
-    int index = 0;
-    while (YES) {
-        CGFloat toY = 0;
-        if (!isRandom) {
-            if (!(index < self.toYs.count)) break;
-            toY = [self.toYs[index] doubleValue];
-        }else {
-            toY = beginY + arc4random() % 50 + 50;
+    __block CGFloat beginY = 0;
+    __block int index = 0;
+    NSTimeInterval t = wtDispatch_in_main_clock(^{
+        while (YES) {
+            CGFloat toY = 0;
+            if (!isRandom) {
+                if (!(index < self.toYs.count)) break;
+                toY = [self.toYs[index] doubleValue];
+            }else {
+                toY = beginY + arc4random() % 50 + 50;
+            }
+            [toYs addObject:@(toY)];
+            
+            WtDemoAdditionalViewCellGlue *adViewGlue = [[WtDemoAdditionalViewCellGlue alloc] init];
+            adViewGlue.model.content = @"并且在此前的公告中，大家也都知道电池老化之后供电不均衡容易造成自动关机，这也是苹果调整这一功能的动机。库克称，想象以下用户在打电话、处理工作和拍摄重要影像的时候突然关机，这种用户体验是不可能被允许的，所以苹果觉得最好做一些什么来防止这些事情的发生。据库克介绍，其实在 iOS 10.2.1第一次引进电源管理功能时，苹果已经在更新日志上进行了解释和介绍了，只是当时关注这个信息的人不多而已。但是在最近的这段争议之后，他们也认为当初应该说得更加清楚明白一些。";
+            
+            WtDemoAdttionalMoreViewCellGlue *adMoreViewGlue = [[WtDemoAdttionalMoreViewCellGlue alloc] init];
+            
+            if (toY > self.additionalView.wtHeight) {
+                toY = floor(self.additionalView.wtHeight);
+            }
+            
+            WtDemoAdditionalView *view = [[WtDemoAdditionalView alloc] initWithCellGlues:@[adViewGlue, adMoreViewGlue]];
+            view.wtHeight = self.additionalView.wtHeight;
+            WtFindPureColorPoint *pureColorPoint = [WtDemoAdditionalView pureColorPoint];
+            
+            CGPoint point = CGPointMake(pureColorPoint.beginX, toY);
+            if ((int)toY != (int)self.additionalView.wtHeight) {
+                point = [self.additionalView wt_findPureColorLineWithBeginAnchor:CGPointMake(pureColorPoint.beginX, toY) width:pureColorPoint.endX sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
+            }
+            view.wtY = -beginY;
+            CGFloat viewHeight = point.y - beginY;
+            
+            beginY += viewHeight;
+            
+            if (beginY > self.additionalView.wtHeight ||
+                ((int)self.additionalView.wtHeight == (int)point.y && viewHeight == 0)) {
+                break;
+            }
+            
+            UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.wtWidth, viewHeight)];
+            [containerView addSubview:view];
+            containerView.clipsToBounds = YES;
+            
+            WtDemoCutterAdditionGlue *cellGlue = [[WtDemoCutterAdditionGlue alloc] init];
+            cellGlue.additionalView = containerView;
+            [glues addObject:cellGlue];
+            
+            
+            NSLog(@"%s AdditionalViewHeight:%.2f, Index:%d, toY:%.2f, cutterPoint:%@, containerView:%@", __func__, self.additionalView.wtHeight, index, toY, NSStringFromCGPoint(point),containerView);
+            
+            index++;
         }
-        [toYs addObject:@(toY)];
-        
-        WtDemoAdditionalViewCellGlue *adViewGlue = [[WtDemoAdditionalViewCellGlue alloc] init];
-        adViewGlue.model.content = @"并且在此前的公告中，大家也都知道电池老化之后供电不均衡容易造成自动关机，这也是苹果调整这一功能的动机。库克称，想象以下用户在打电话、处理工作和拍摄重要影像的时候突然关机，这种用户体验是不可能被允许的，所以苹果觉得最好做一些什么来防止这些事情的发生。据库克介绍，其实在 iOS 10.2.1第一次引进电源管理功能时，苹果已经在更新日志上进行了解释和介绍了，只是当时关注这个信息的人不多而已。但是在最近的这段争议之后，他们也认为当初应该说得更加清楚明白一些。";
-        
-        WtDemoAdttionalMoreViewCellGlue *adMoreViewGlue = [[WtDemoAdttionalMoreViewCellGlue alloc] init];
-        
-        if (toY > self.additionalView.wtHeight) {
-            toY = floor(self.additionalView.wtHeight);
-        }
-        
-        WtDemoAdditionalView *view = [[WtDemoAdditionalView alloc] initWithCellGlues:@[adViewGlue, adMoreViewGlue]];
-        view.wtHeight = self.additionalView.wtHeight;
-        WtFindPureColorPoint *pureColorPoint = [WtDemoAdditionalView pureColorPoint];
-        
-        CGPoint point = CGPointMake(pureColorPoint.beginX, toY);
-        if ((int)toY != (int)self.additionalView.wtHeight) {
-            point = [self.additionalView wt_findPureColorLineWithBeginAnchor:CGPointMake(pureColorPoint.beginX, toY) width:pureColorPoint.endX sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
-        }
-        view.wtY = -beginY;
-        CGFloat viewHeight = point.y - beginY;
-        
-        beginY += viewHeight;
-        
-        if (beginY > self.additionalView.wtHeight ||
-            ((int)self.additionalView.wtHeight == (int)point.y && viewHeight == 0)) {
-            break;
-        }
-        
-        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.wtWidth, viewHeight)];
-        [containerView addSubview:view];
-        containerView.clipsToBounds = YES;
-        
-        WtDemoCutterAdditionGlue *cellGlue = [[WtDemoCutterAdditionGlue alloc] init];
-        cellGlue.additionalView = containerView;
-        [glues addObject:cellGlue];
-        
-        
-        NSLog(@"%s AdditionalViewHeight:%.2f, Index:%d, toY:%.2f, cutterPoint:%@, containerView:%@", __func__, self.additionalView.wtHeight, index, toY, NSStringFromCGPoint(point),containerView);
-        
-        index++;
-    }
+    });
+    NSLog(@"Cutter view time-consuming:%.2f", t);
     self.toYs = toYs;
     self.glues = glues;
     [self.tableView reloadData];

@@ -12,7 +12,8 @@
 
 #import "WtDelegateProxy.h"
 
-void wtDispatch_in_main(id block, ...) {
+#pragma mark private
+void __wtDispatch_in_main(id block, va_list arg_ptr) {
     if (!block) return;
     
     CTBlockDescription *blockDescription = [[CTBlockDescription alloc] initWithBlock:block];
@@ -20,9 +21,6 @@ void wtDispatch_in_main(id block, ...) {
     
     NSMethodSignature *blockMethodSignature = blockDescription.blockSignature;
     NSInvocation *blockInvocation = [NSInvocation invocationWithMethodSignature:blockMethodSignature];
-    
-    va_list arg_ptr; // 可变参数指针
-    va_start(arg_ptr, block);
     
     for (NSInteger i = 1; i < blockInvocation.methodSignature.numberOfArguments; i++) {
         const char *argumentType = [blockInvocation.methodSignature getArgumentTypeAtIndex:i];
@@ -101,8 +99,6 @@ void wtDispatch_in_main(id block, ...) {
             }
         }
     }
-
-    va_end(arg_ptr);
     
     if ([NSThread isMainThread]) {
         [blockInvocation invokeWithTarget:blockDescription.block];
@@ -111,4 +107,32 @@ void wtDispatch_in_main(id block, ...) {
             [blockInvocation invokeWithTarget:blockDescription.block];
         });
     }
+}
+
+#pragma mark public
+void wtDispatch_in_main(id block, ...) {
+    if (!block) return;
+    
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
+    
+    __wtDispatch_in_main(block, arg_ptr);
+    
+    va_end(arg_ptr);
+}
+
+NSTimeInterval wtDispatch_in_main_clock(id block, ...) {
+    if (!block) return 0.0;
+    
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
+    
+    NSDate *beginDate = [NSDate date];
+    
+    __wtDispatch_in_main(block, arg_ptr);
+    
+    NSDate *endDate = [NSDate date];
+    
+    va_end(arg_ptr);
+    return [endDate timeIntervalSince1970] - [beginDate timeIntervalSince1970];
 }
