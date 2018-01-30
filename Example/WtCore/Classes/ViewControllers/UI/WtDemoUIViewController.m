@@ -139,7 +139,7 @@
         cellGlue.title = @"Cutter";
         cellGlue.subTitle = @"Find the solid color split line from top to bottom.";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
+            CGPoint point = [tableView wt_findPureColorLineWithBeginAnchor:CGPointMake(19, 420) length:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
             UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
             v.backgroundColor = [UIColor wtRandom];
             [tableView addSubview:v];
@@ -152,7 +152,7 @@
         cellGlue.title = @"Cutter";
         cellGlue.subTitle = @"Trim the solid color split line from top to bottom.";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            CGPoint point = [tableView wt_trimPureColorLineWithBeginAnchor:CGPointMake(19, 0) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
+            CGPoint point = [tableView wt_trimPureColorLineWithBeginAnchor:CGPointMake(19, 0) length:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionDown];
             UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
             v.backgroundColor = [UIColor wtRandom];
             [tableView addSubview:v];
@@ -165,7 +165,7 @@
         cellGlue.title = @"Cutter";
         cellGlue.subTitle = @"Trim the solid color split line from bottom to top.";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            CGPoint point = [tableView wt_trimPureColorLineWithBeginAnchor:CGPointMake(19, 140) width:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
+            CGPoint point = [tableView wt_trimPureColorLineWithBeginAnchor:CGPointMake(19, 140) length:CGRectGetWidth(tableView.frame) sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
             UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
             v.backgroundColor = [UIColor wtRandom];
             [tableView addSubview:v];

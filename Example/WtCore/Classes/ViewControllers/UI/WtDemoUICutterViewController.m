@@ -59,6 +59,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.toYs = @[@60,
+                  @132,
+                  @189.6666666666667,
+                  @251.3333333333333,
+                  @298,
+                  @360,
+                  @399];
+    
     [self createAdditionalView];
 }
 
@@ -104,6 +112,10 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rItem];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:lItem];
     self.navigationItem.rightBarButtonItems = @[rightItem, leftItem];
+    
+//    [[[RACSignal interval:1 onScheduler:[RACScheduler mainThreadScheduler]] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
+//        [rItem sendActionsForControlEvents:UIControlEventTouchUpInside];
+//    }];
 }
 
 - (void)randomCutter:(BOOL)isRandom {
@@ -138,7 +150,7 @@
             
             CGPoint point = CGPointMake(pureColorPoint.beginX, toY);
             if ((int)toY != (int)self.additionalView.wtHeight) {
-                point = [self.additionalView wt_findPureColorLineWithBeginAnchor:CGPointMake(pureColorPoint.beginX, toY) width:pureColorPoint.endX sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
+                point = [self.additionalView wt_findPureColorLineWithBeginAnchor:CGPointMake(pureColorPoint.beginX, toY) length:pureColorPoint.endX sliceNum:5 direction:eWtFindPureSeparateLinePointDirectionUp];
             }
             view.wtY = -beginY;
             CGFloat viewHeight = point.y - beginY;
@@ -154,17 +166,34 @@
             [containerView addSubview:view];
             containerView.clipsToBounds = YES;
             
-            WtDemoCutterAdditionGlue *cellGlue = [[WtDemoCutterAdditionGlue alloc] init];
-            cellGlue.additionalView = containerView;
-            [glues addObject:cellGlue];
+//            // trim
+//            {
+//                CGPoint point = [containerView wt_trimPureColorLineWithBeginAnchor:CGPointMake(pureColorPoint.beginX, 0) length:pureColorPoint.endX sliceNum:2 direction:eWtFindPureSeparateLinePointDirectionDown];
+//                if (!(point.x == -1 && point.y == NSNotFound)) {
+//                    containerView.wtHeight -= point.y;
+//                    view.wtY -= point.y;
+//                }else {
+//                    continue;
+//                }
+//
+//                point = [containerView wt_trimPureColorLineWithBeginAnchor:CGPointMake(pureColorPoint.beginX, containerView.wtMaxY) length:pureColorPoint.endX sliceNum:2 direction:eWtFindPureSeparateLinePointDirectionUp];
+//                if (!(point.x == -1 && point.y == NSNotFound)) {
+//                    containerView.wtHeight -= containerView.wtMaxY - point.y;
+//                }
+//            }
+//            //
             
-            
+            if (containerView.wtHeight > 0) {
+                WtDemoCutterAdditionGlue *cellGlue = [[WtDemoCutterAdditionGlue alloc] init];
+                cellGlue.additionalView = containerView;
+                [glues addObject:cellGlue];
+            }
             NSLog(@"%s AdditionalViewHeight:%.2f, Index:%d, toY:%.2f, cutterPoint:%@, containerView:%@", __func__, self.additionalView.wtHeight, index, toY, NSStringFromCGPoint(point),containerView);
             
             index++;
         }
     });
-    NSLog(@"Cutter view time-consuming:%.2f", t);
+    NSLog(@"Cutter view time-consuming:%.0fms", t*1000);
     self.toYs = toYs;
     self.glues = glues;
     [self.tableView reloadData];
