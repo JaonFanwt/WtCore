@@ -100,18 +100,6 @@
         int rgbaIdx = 0; // 0:r, 1:g, 2:b, 3:a
         NSArray *rgbaArray = nil;
         while (true) {
-            if (y < 0) {
-                x = -1;
-                y = NSNotFound;
-                break;
-            }
-            
-            if (y < originY) {
-                x = point.x;
-                y += i;
-                break;
-            }
-            
             if (x >= length) {
                 /*
                  * 为了优化RGBA比较算法，减少比较次数，由相邻色块的RGBA比较改为一行按照R、G、B、A依次来比较，rgbaIdx为记录是当前比较R、G、B、A中哪一个的下标。
@@ -132,6 +120,18 @@
                     rgbaIdx++;
                     x = point.x;
                 }
+            }
+            
+            if (y < 0) {
+                x = -1;
+                y = NSNotFound;
+                break;
+            }
+            
+            if (y < originY) {
+                x = point.x;
+                y += i;
+                break;
             }
             
             int offset = 4*((pixelsWidth*round(y - originY))+round(x));
@@ -245,12 +245,6 @@
         int rgbaIdx = 0; // 0:r, 1:g, 2:b, 3:a
         NSArray *rgbaArray = nil;
         while (true) {
-            if (y >= maxPixelsHeight || y < 0) {
-                x = -1;
-                y = NSNotFound;
-                break;
-            }
-            
             if (x >= length) { // found
                 if (rgbaIdx == 3) {
                     pureLineNum++;
@@ -268,6 +262,12 @@
                     rgbaIdx++;
                     x = point.x;
                 }
+            }
+            
+            if (y >= maxPixelsHeight || y < 0) {
+                x = -1;
+                y = NSNotFound;
+                break;
             }
             
             int offset = 4*((pixelsWidth*round(y - originY))+round(x));
