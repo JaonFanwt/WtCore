@@ -14,6 +14,7 @@
 #import "UIGestureRecognizer+WtUI.h"
 #import "UIView+WtUI.h"
 #import "UIView+WtCutter.h"
+#import "NSObject+WtWindow.h"
 
 #import "WtCellGlue.h"
 #import "WtViewGlue.h"
