@@ -1,6 +1,6 @@
 //
 //  NSObject+WtWindow.h
-//  Pods
+//  WtCore
 //
 //  Created by fanwt on 06/02/2018.
 //

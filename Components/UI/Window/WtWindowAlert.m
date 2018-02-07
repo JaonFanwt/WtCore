@@ -11,6 +11,7 @@
 
 #import "WtWindow.h"
 #import "WtWindowRootViewController.h"
+#import "UIWindow+WtWindow.h"
 
 @interface WtWindowAlert ()
 @property (nonatomic, strong) WtWindow *window;
@@ -110,10 +111,10 @@
         beforeAnimations();
     }
     
-    UIViewController* rootViewCtrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if ([rootViewCtrl isKindOfClass:[UITabBarController class]]) {
-        rootViewCtrl = [(UITabBarController*)rootViewCtrl selectedViewController];
-        [self viewController:rootViewCtrl viewWillDisAppear:YES];
+    UIWindow *window = [self.window wtPreWindow];
+    UIViewController* preViewCtrl = [window wtTopViewController];
+    if (preViewCtrl) {
+        [self viewController:preViewCtrl viewWillDisAppear:YES];
     }
     
     // 添加背景色
@@ -162,9 +163,10 @@
 -(void)closeAnimateWithDuration:(NSTimeInterval)duration
                      animations:(void (^)(void))animations
                      completion:(void (^)(BOOL finished))completion {
-    UIViewController* viewCtrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    if ([viewCtrl isKindOfClass:[UITabBarController class]]) {
-        viewCtrl = [(UITabBarController*)viewCtrl selectedViewController];
+    UIWindow *window = [self.window wtPreWindow];
+    UIViewController* viewCtrl = [window wtTopViewController];
+    
+    if (viewCtrl) {
         [self viewController:viewCtrl viewWillAppear:YES];
     }
     
