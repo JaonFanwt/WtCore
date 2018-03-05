@@ -13,6 +13,8 @@
 #import "WtWindowRootViewController.h"
 #import "UIWindow+WtWindow.h"
 
+static UIWindowLevel wtHUDWindowLevel = 1000;
+
 @interface WtWindowAlert ()
 @property (nonatomic, strong) WtWindow *window;
 @property (nonatomic, weak) UIView *containerView;
@@ -37,11 +39,11 @@
         UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
         _containerView = containerView;
         containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-        UIViewAutoresizingFlexibleWidth |
-        UIViewAutoresizingFlexibleRightMargin |
-        UIViewAutoresizingFlexibleTopMargin |
-        UIViewAutoresizingFlexibleHeight |
-        UIViewAutoresizingFlexibleBottomMargin;
+                                            UIViewAutoresizingFlexibleWidth |
+                                            UIViewAutoresizingFlexibleRightMargin |
+                                            UIViewAutoresizingFlexibleTopMargin |
+                                            UIViewAutoresizingFlexibleHeight |
+                                            UIViewAutoresizingFlexibleBottomMargin;
         containerView.backgroundColor = [UIColor clearColor];
         [self addSubview:containerView];
         containerView.center = window.center;
@@ -54,7 +56,15 @@
     return self;
 }
 
+- (void)setIsHUD:(BOOL)isHUD {
+    _isHUD = isHUD;
+    
+    self.window.windowLevel = _isHUD?wtHUDWindowLevel++:UIWindowLevelNormal;
+    self.window.userInteractionEnabled = !isHUD;
+}
+
 - (void)viewController:(UIViewController *)viewCtrl viewWillAppear:(BOOL)animation {
+    if (_isHUD) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewWillAppear:animation];
     }else {
@@ -63,6 +73,7 @@
 }
 
 - (void)viewController:(UIViewController *)viewCtrl viewDidAppear:(BOOL)animation {
+    if (_isHUD) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewDidAppear:animation];
     }else {
@@ -71,6 +82,7 @@
 }
 
 - (void)viewController:(UIViewController *)viewCtrl viewWillDisAppear:(BOOL)animation {
+    if (_isHUD) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewWillDisappear:animation];
     }else {
@@ -79,6 +91,7 @@
 }
 
 - (void)viewController:(UIViewController *)viewCtrl viewDidDisAppear:(BOOL)animation {
+    if (_isHUD) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewDidDisappear:animation];
     }else {
@@ -93,7 +106,7 @@
                animations:(void (^)(void))animations
                completion:(void (^)(BOOL finished))completion {
     if (!viewCtrl) return;
-    if (![viewCtrl isKindOfClass:[UINavigationController class]] && !viewCtrl.navigationController) {
+    if (!_isHUD && ![viewCtrl isKindOfClass:[UINavigationController class]] && !viewCtrl.navigationController) {
         UINavigationController* navCtrl = [[UINavigationController alloc] initWithRootViewController:viewCtrl];
         viewCtrl.fd_prefersNavigationBarHidden = YES;
         self.window.rootViewController = navCtrl;
@@ -101,7 +114,7 @@
         self.window.rootViewController = viewCtrl;
     }
     [self.window setHidden:NO];
-    [self.window makeKeyAndVisible];
+    if (!_isHUD) [self.window makeKeyAndVisible];
     
     if (!_maskingColor) {
         _maskingColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
@@ -111,34 +124,36 @@
         beforeAnimations();
     }
     
-    UIWindow *window = [self.window wtPreWindow];
-    UIViewController* preViewCtrl = [window wtTopViewController];
-    if (preViewCtrl) {
-        [self viewController:preViewCtrl viewWillDisAppear:YES];
+    if (!_isHUD) {
+        UIWindow *window = [self.window wtPreWindow];
+        UIViewController* preViewCtrl = [window wtTopViewController];
+        if (preViewCtrl) {
+            [self viewController:preViewCtrl viewWillDisAppear:YES];
+        }
+        
+        // 添加背景色
+        UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+        backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+        [viewCtrl.view insertSubview:backgroundView atIndex:0];
+        backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+        [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeWidth
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:viewCtrl.view
+                                                                  attribute:NSLayoutAttributeWidth multiplier:3 constant:0]];
+        [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeHeight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:viewCtrl.view
+                                                                  attribute:NSLayoutAttributeHeight multiplier:3 constant:0]];
+        [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeCenterX
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:viewCtrl.view
+                                                                  attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+        [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeCenterY
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:viewCtrl.view
+                                                                  attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+        _backgroundView = backgroundView;
     }
-    
-    // 添加背景色
-    UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
-    backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    [viewCtrl.view insertSubview:backgroundView atIndex:0];
-    backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-    [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeWidth
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:viewCtrl.view
-                                                              attribute:NSLayoutAttributeWidth multiplier:3 constant:0]];
-    [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeHeight
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:viewCtrl.view
-                                                              attribute:NSLayoutAttributeHeight multiplier:3 constant:0]];
-    [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeCenterX
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:viewCtrl.view
-                                                              attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    [viewCtrl.view addConstraint:[NSLayoutConstraint constraintWithItem:backgroundView attribute:NSLayoutAttributeCenterY
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:viewCtrl.view
-                                                              attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    _backgroundView = backgroundView;
     
     viewCtrl.view.userInteractionEnabled = NO;
     [UIView animateWithDuration:duration
@@ -163,15 +178,18 @@
 -(void)closeAnimateWithDuration:(NSTimeInterval)duration
                      animations:(void (^)(void))animations
                      completion:(void (^)(BOOL finished))completion {
-    UIWindow *window = [self.window wtPreWindow];
-    UIViewController* viewCtrl = [window wtTopViewController];
-    
-    if (viewCtrl) {
-        [self viewController:viewCtrl viewWillAppear:YES];
+    UIViewController *viewCtrl = nil;
+    if (!_isHUD) {
+        UIWindow *window = [self.window wtPreWindow];
+        viewCtrl = [window wtTopViewController];
+        
+        if (viewCtrl) {
+            [self viewController:viewCtrl viewWillAppear:YES];
+        }
+        
+        viewCtrl.view.userInteractionEnabled = NO;
+        _window.userInteractionEnabled = NO;
     }
-    
-    viewCtrl.view.userInteractionEnabled = NO;
-    _window.userInteractionEnabled = NO;
     
     UIColor *maskingColor = [self.maskingColor colorWithAlphaComponent:0];
     

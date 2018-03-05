@@ -7,9 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "WtWindowAlert.h"
+
 static NSTimeInterval kWtWindowAlertShowAnimationDurationTime = 0.4;
 
 @interface UIViewController (WtWindowAlert)
+@property (nonatomic, readonly) WtWindowAlert *wtWindowAlert;
+
 - (void)wtShowWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden;
 - (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion;
 

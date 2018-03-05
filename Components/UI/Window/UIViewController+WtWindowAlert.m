@@ -11,8 +11,6 @@
 
 #import <FDFullscreenPopGesture/UINavigationController+FDFullscreenPopGesture.h>
 
-#import "WtWindowAlert.h"
-
 @implementation UIViewController (WtWindowAlert)
 - (WtWindowAlert *)wtWindowAlert {
     WtWindowAlert *wa = objc_getAssociatedObject(self, _cmd);

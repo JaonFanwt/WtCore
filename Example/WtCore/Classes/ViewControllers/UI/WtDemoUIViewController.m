@@ -15,6 +15,7 @@
 #import <WtCore/WtUI.h>
 
 #import "WtDemoCellGlue.h"
+#import "WtDemoHUDViewController.h"
 
 @interface WtDemoUIViewController ()
 <UITableViewDelegate, UITableViewDataSource>
@@ -169,6 +170,36 @@
             UIView *v = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y, 180, 20)];
             v.backgroundColor = [UIColor wtRandom];
             [tableView addSubview:v];
+        }];
+    }
+    
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"Toast";
+        cellGlue.subTitle = @"WtHUDAlert";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            WtDemoHUDViewController *viewCtrl = [[WtDemoHUDViewController alloc] initWithNibName:@"WtDemoHUDViewController" bundle:nil];
+            viewCtrl.view.alpha = 0.0;
+            viewCtrl.wtWindowAlert.isHUD = YES;
+            [viewCtrl.wtWindowAlert showViewController:viewCtrl
+                                   animateWithDuration:0.45
+                                       backgroundColor:[UIColor clearColor]
+                                      beforeAnimations:^{
+                                          viewCtrl.view.alpha = 0;
+                                      } animations:^{
+                                          viewCtrl.view.alpha = 1;
+                                      } completion:^(BOOL finished) {
+                                        
+                                      }];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [viewCtrl.wtWindowAlert closeAnimateWithDuration:0.45 animations:^{
+                    viewCtrl.view.alpha = 0;
+                } completion:^(BOOL finished) {
+                    
+                }];
+            });
         }];
     }
 }

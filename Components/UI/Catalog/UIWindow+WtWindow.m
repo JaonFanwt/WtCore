@@ -14,8 +14,9 @@
 + (UIWindow *)wtTopWindow {
     NSArray *windows = [UIApplication sharedApplication].windows;
     for(UIWindow *window in [windows reverseObjectEnumerator]) {
-        if ([window isMemberOfClass:[WtWindow class]] && !window.isHidden){
-            return window;
+        if ([window isMemberOfClass:[WtWindow class]] && !window.isHidden) {
+            BOOL isHUD = ((WtWindow *)window).windowAlert.isHUD;
+            if (!isHUD) return window;
         }
     }
     
@@ -40,7 +41,8 @@
     for (int i=(int)(idx - 1); i>= 0; i--) {
         UIWindow *window = windows[i];
         if ([window isMemberOfClass:[WtWindow class]] && !window.isHidden){
-            return window;
+            BOOL isHUD = ((WtWindow *)window).windowAlert.isHUD;
+            if (!isHUD) return window;
         }
     }
     

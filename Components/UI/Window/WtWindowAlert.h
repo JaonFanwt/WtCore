@@ -9,6 +9,7 @@
 
 @interface WtWindowAlert : UIView
 @property (nonatomic, copy) UIColor *maskingColor; // Default black, alpha:0.3
+@property (nonatomic, assign) BOOL isHUD;
 
 -(void)showViewController:(UIViewController*)viewCtrl
       animateWithDuration:(NSTimeInterval)duration

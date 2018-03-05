@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B814AD3204D2F3F009641C7 /* WtDemoHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B814AD1204D2F3F009641C7 /* WtDemoHUDViewController.m */; };
+		0B814AD4204D2F3F009641C7 /* WtDemoHUDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B814AD2204D2F3F009641C7 /* WtDemoHUDViewController.xib */; };
 		0BFC9FED2014751D0060F565 /* WtDemoAdditionalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC9FEC2014751D0060F565 /* WtDemoAdditionalView.m */; };
 		0BFC9FEF201477DC0060F565 /* WtDemoAdditionalViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFC9FEE201477DC0060F565 /* WtDemoAdditionalViewCell.xib */; };
 		0BFC9FF5201478650060F565 /* WtDemoAdditionalViewGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC9FF4201478650060F565 /* WtDemoAdditionalViewGlue.m */; };
@@ -62,6 +64,9 @@
 
 /* Begin PBXFileReference section */
 		0B61677A5699DD22653A7411 /* WtCore.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WtCore.podspec; path = ../WtCore.podspec; sourceTree = "<group>"; };
+		0B814AD0204D2F3F009641C7 /* WtDemoHUDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoHUDViewController.h; sourceTree = "<group>"; };
+		0B814AD1204D2F3F009641C7 /* WtDemoHUDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoHUDViewController.m; sourceTree = "<group>"; };
+		0B814AD2204D2F3F009641C7 /* WtDemoHUDViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WtDemoHUDViewController.xib; sourceTree = "<group>"; };
 		0BFC9FEB2014751D0060F565 /* WtDemoAdditionalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoAdditionalView.h; sourceTree = "<group>"; };
 		0BFC9FEC2014751D0060F565 /* WtDemoAdditionalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoAdditionalView.m; sourceTree = "<group>"; };
 		0BFC9FEE201477DC0060F565 /* WtDemoAdditionalViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WtDemoAdditionalViewCell.xib; sourceTree = "<group>"; };
@@ -309,6 +314,9 @@
 				0BFC9FF3201478650060F565 /* WtDemoAdditionalViewGlue.h */,
 				0BFC9FF4201478650060F565 /* WtDemoAdditionalViewGlue.m */,
 				0BFC9FEE201477DC0060F565 /* WtDemoAdditionalViewCell.xib */,
+				0B814AD0204D2F3F009641C7 /* WtDemoHUDViewController.h */,
+				0B814AD1204D2F3F009641C7 /* WtDemoHUDViewController.m */,
+				0B814AD2204D2F3F009641C7 /* WtDemoHUDViewController.xib */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -421,6 +429,7 @@
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */,
 				B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */,
+				0B814AD4204D2F3F009641C7 /* WtDemoHUDViewController.xib in Resources */,
 				B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */,
 				B093C9A22014317300EFB719 /* WtDemoUICutterViewController.xib in Resources */,
 				B05A213E1F594AD800FBB990 /* WtDemoThunderWebViewController.xib in Resources */,
@@ -575,6 +584,7 @@
 				B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */,
 				B05A21411F594B6D00FBB990 /* WtDemoWebViewController.m in Sources */,
 				0BFC9FF5201478650060F565 /* WtDemoAdditionalViewGlue.m in Sources */,
+				0B814AD3204D2F3F009641C7 /* WtDemoHUDViewController.m in Sources */,
 				0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */,
 				B0721D2C1F67ADC800F71E94 /* WtDemoWattpadViewController.swift in Sources */,
 				B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */,

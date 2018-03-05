@@ -10,5 +10,5 @@
 #import "WtWindowAlert.h"
 
 @interface WtWindowRootViewController : UIViewController
-@property (nonatomic, weak) WtWindowAlert *wrapView;
+@property (nonatomic, weak) UIView *wrapView;
 @end
