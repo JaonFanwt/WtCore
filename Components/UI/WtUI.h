@@ -19,4 +19,5 @@
 #import "WtCellGlue.h"
 #import "WtViewGlue.h"
 
+#import "UIWindow+WtMask.h"
 #import "UIViewController+WtWindowAlert.h"
