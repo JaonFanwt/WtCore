@@ -74,7 +74,7 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
     WtMaskView *statusBarMask = [self WTStatusBarMask];
     
     UIView *statusBar = [self wtAppleStatusBar];
-    CGFloat statusBarHeight = statusBar.isHidden?0:statusBar.frame.size.height;
+    CGFloat statusBarHeight = statusBar.frame.size.height;
     [windowMask mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(statusBarHeight);
     }];
