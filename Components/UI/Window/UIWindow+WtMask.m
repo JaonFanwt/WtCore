@@ -53,18 +53,6 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
                     make.left.right.bottom.equalTo(self);
                     make.top.equalTo(self.mas_top).offset(statusBar.frame.size.height);
                 }];
-                
-                @weakify(mask, statusBar);
-                [[RACObserve(statusBar, alpha) takeUntil:[v rac_willDeallocSignal]] subscribeNext:^(id x) {
-                    @strongify(mask, statusBar);
-                    CGFloat statusBarHeight = statusBar.hidden?0:statusBar.frame.size.height;
-                    [mask mas_updateConstraints:^(MASConstraintMaker *make) {
-                        make.top.equalTo(self.mas_top).offset(statusBarHeight);
-                    }];
-                    [self setNeedsUpdateConstraints];
-                    [self layoutIfNeeded];
-                }];
-                
                 break;
             }else if ([v isKindOfClass:[WtMaskView class]]){
                 mask = (WtMaskView *)v;
@@ -165,7 +153,7 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
             if (!v) {
                 mask = [[WtMaskView alloc] init];
                 mask.tag = tag;
-                [statusBar addSubview:mask];
+                [statusBar.superview addSubview:mask];
                 [mask mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.top.right.bottom.equalTo(statusBar);
                 }];

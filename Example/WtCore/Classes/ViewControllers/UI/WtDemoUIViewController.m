@@ -21,7 +21,6 @@
 <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *datas;
-@property (nonatomic, assign) BOOL showStatusBar;
 @end
 
 @implementation WtDemoUIViewController
@@ -30,7 +29,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.showStatusBar = YES;
     self.title = @"WtUI Library";
     [self createDatas];
     [self.tableView reloadData];
@@ -226,16 +224,13 @@
         }];
     }
     
-    @weakify(self);
     {
         WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
         [_datas addObject:cellGlue];
         cellGlue.title = @"WindowMask";
         cellGlue.subTitle = @"ShowStatusBar";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            @strongify(self);
-            self.showStatusBar = YES;
-            [tableView.wtFirstViewController setNeedsStatusBarAppearanceUpdate];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         }];
     }
     
@@ -245,15 +240,9 @@
         cellGlue.title = @"WindowMask";
         cellGlue.subTitle = @"HideStatusBar";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
-            @strongify(self);
-            self.showStatusBar = NO;
-            [tableView.wtFirstViewController setNeedsStatusBarAppearanceUpdate];
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
         }];
     }
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return _showStatusBar;
 }
 
 #pragma mark - UITableViewDataSource
