@@ -55,6 +55,7 @@ blablabla private~
     ss.ios.source_files = "Components/UI/**/*.{h,m}"
     ss.ios.public_header_files = "Components/UI/**/*.h"
     ss.dependency 'WtCore/Core'
+    ss.dependency 'Masonry'
     ss.dependency 'FDFullscreenPopGesture'
   end
 
