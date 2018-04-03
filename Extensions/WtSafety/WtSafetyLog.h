@@ -1,0 +1,10 @@
+//
+//  WtSafetyLog.h
+//  WtSafety
+//
+//  Created by fanwt on 03/04/2018.
+//
+
+#import <Foundation/Foundation.h>
+
+void wtWarningCallStackSymbols(void);

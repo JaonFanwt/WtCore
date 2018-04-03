@@ -15,6 +15,7 @@ PODS:
     - WtCore/Core (= 0.4.3)
     - WtCore/DebugTools (= 0.4.3)
     - WtCore/Observer (= 0.4.3)
+    - WtCore/Safety (= 0.4.3)
     - WtCore/ThunderWeb (= 0.4.3)
     - WtCore/UI (= 0.4.3)
     - WtCore/UI-Swift (= 0.4.3)
@@ -28,12 +29,15 @@ PODS:
     - WtCore/UI
   - WtCore/Observer (0.4.3):
     - WtCore/Core
+  - WtCore/Safety (0.4.3):
+    - WtCore/Core
   - WtCore/ThunderWeb (0.4.3):
     - ReactiveCocoa (~> 2.5)
     - WtCore/Observer
     - WtCore/UI
   - WtCore/UI (0.4.3):
     - FDFullscreenPopGesture
+    - Masonry
     - WtCore/Core
   - WtCore/UI-Swift (0.4.3):
     - SnapKit (~> 3.2.0)
@@ -52,7 +56,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  WtCore: 082107511277f5ee0fe262c125e0bb2e6474a8fb
+  WtCore: d5edfcee65de2252e952d7090f5b9e0635500929
 
 PODFILE CHECKSUM: daf5b8d59f496f60757fa9eeb2ccc4e884d70d7a
 

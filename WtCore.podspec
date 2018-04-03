@@ -82,4 +82,9 @@ blablabla private~
     ss.dependency 'WtCore/Observer'
   end
 
+  s.subspec "Safety" do |ss|
+    ss.ios.source_files = "Extensions/WtSafety/**/*.{h,m}"
+    ss.ios.public_header_files = "Extensions/WtSafety/**/*.h"
+    ss.dependency 'WtCore/Core'
+  end
 end
