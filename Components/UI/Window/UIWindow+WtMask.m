@@ -116,7 +116,6 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
         } completion:^(BOOL finished) {
             windowMask.hidden = YES;
             statusBarMask.hidden = YES;
-            self.window.userInteractionEnabled = YES;
         }];
     }
 }
