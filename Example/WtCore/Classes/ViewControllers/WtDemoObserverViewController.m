@@ -35,7 +35,7 @@ UIWebViewDelegate>
     [self createActions];
     [self.tableView reloadData];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.qidian.com/"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://github.com/"]]];
 }
 
 - (void)didReceiveMemoryWarning

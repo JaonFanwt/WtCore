@@ -31,10 +31,10 @@
     
     NSMutableURLRequest *request = nil;
     if (_useThunder) {
-        request = [wtThunderConsumeWebRequest([NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]], @"1") mutableCopy];
+        request = [wtThunderConsumeWebRequest([NSURLRequest requestWithURL:[NSURL URLWithString:@"https://github.com/"]], @"1") mutableCopy];
         [request setValue:[NSString stringWithFormat:@"%.0f", self.startInitTime * 1000] forHTTPHeaderField:WtThunderHeaderKeyContainerInitTime];
     }else {
-        request = [[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.qidian.com/"]] mutableCopy];
+        request = [[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://github.com/"]] mutableCopy];
     }
     
     [self.webView loadRequest:request];
