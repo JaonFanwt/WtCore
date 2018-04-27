@@ -171,16 +171,6 @@ public class WtWattpadView: UIView {
         hCurrentIndex = nil
     }
 
-    func swapValue<T>(_ a: inout T, _ b: inout T) {
-        let temp = a
-        a = b
-        b = temp
-    }
-
-    func modifying<T>(_ value: inout T, _ function: (inout T) -> Void) {
-        function(&value)
-    }
-
     public func layoutContainerViews() {
         if basemapStatus == .up {
             // 状态为：
@@ -317,7 +307,7 @@ public class WtWattpadView: UIView {
         contentView.next = datasource.flipView(flipView: self, pageViewWithIndex: contentIndex.next) ?? UIView.init()
         containerView.next.addSubview(contentView.next)
 
-        modifying(&contentView.basemap) { basemap in swapValue(&basemap.current, &basemap.pre) }
+        (contentView.basemap.current, contentView.basemap.pre) = (contentView.basemap.pre, contentView.basemap.current)
 
         contentView.basemap.current?.removeFromSuperview()
         contentView.basemap.current = datasource.flipView(flipView: self, baseMapViewAtIndex: contentIndex.current)
@@ -336,7 +326,7 @@ public class WtWattpadView: UIView {
         contentView.pre = datasource.flipView(flipView: self, pageViewWithIndex: contentIndex.pre) ?? UIView.init()
         containerView.pre.addSubview(contentView.pre)
 
-        modifying(&contentView.basemap) { basemap in swapValue(&basemap.current, &basemap.pre) }
+        (contentView.basemap.current, contentView.basemap.pre) = (contentView.basemap.pre, contentView.basemap.current)
 
         contentView.basemap.pre?.removeFromSuperview()
         contentView.basemap.pre = datasource.flipView(flipView: self, baseMapViewAtIndex: contentIndex.pre)
@@ -345,25 +335,25 @@ public class WtWattpadView: UIView {
     }
 
     func swapCurrentToNext() {
-        modifying(&containerView) { containerView in swapValue(&containerView.current, &containerView.next) }
-        modifying(&contentIndex) { contentIndex in swapValue(&contentIndex.current, &contentIndex.next) }
-        modifying(&contentView) { contentView in swapValue(&contentView.current, &contentView.next) }
+        (containerView.current, containerView.next) = (containerView.next, containerView.current)
+        (contentIndex.current, contentIndex.next) = (contentIndex.next, contentIndex.current)
+        (contentView.current, contentView.next) = (contentView.next, contentView.current)
 
-        modifying(&containerView) { containerView in swapValue(&containerView.next, &containerView.pre) }
-        modifying(&contentView) { contentView in swapValue(&contentView.next, &contentView.pre) }
-        modifying(&contentIndex) { contentIndex in swapValue(&contentIndex.next, &contentIndex.pre) }
+        (containerView.next, containerView.pre) = (containerView.pre, containerView.next)
+        (contentView.next, contentView.pre) = (contentView.pre, contentView.next)
+        (contentIndex.next, contentIndex.pre) = (contentIndex.pre, contentIndex.next)
 
         hCurrentIndex = contentIndex.current
     }
 
     func swapCurrentToPre() {
-        modifying(&containerView) { containerView in swapValue(&containerView.current, &containerView.pre) }
-        modifying(&contentIndex) { contentIndex in swapValue(&contentIndex.current, &contentIndex.pre) }
-        modifying(&contentView) { contentView in swapValue(&contentView.current, &contentView.pre) }
+        (containerView.current, containerView.pre) = (containerView.pre, containerView.current)
+        (contentIndex.current, contentIndex.pre) = (contentIndex.pre, contentIndex.current)
+        (contentView.current, contentView.pre) = (contentView.pre, contentView.current)
 
-        modifying(&containerView) { containerView in swapValue(&containerView.pre, &containerView.next) }
-        modifying(&contentIndex) { contentIndex in swapValue(&contentIndex.pre, &contentIndex.next) }
-        modifying(&contentView) { contentView in swapValue(&contentView.pre, &contentView.next) }
+        (containerView.pre, containerView.next) = (containerView.next, containerView.pre)
+        (contentIndex.pre, contentIndex.next) = (contentIndex.next, contentIndex.pre)
+        (contentView.pre, contentView.next) = (contentView.next, contentView.pre)
 
         hCurrentIndex = contentIndex.current
     }
@@ -422,7 +412,7 @@ public class WtWattpadView: UIView {
         }
     }
 
-    func handlerTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handlerTapGesture(tapGesture: UITapGestureRecognizer) {
         guard orientation == .leftRight else {
             return
         }
@@ -467,7 +457,7 @@ public class WtWattpadView: UIView {
         }
     }
 
-    func handlerPanGesture(panGesture: UIPanGestureRecognizer) {
+    @objc func handlerPanGesture(panGesture: UIPanGestureRecognizer) {
         let translatPoint = panGesture.translation(in: self)
 
         switch panGesture.state {
