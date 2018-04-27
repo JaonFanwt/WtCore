@@ -10,37 +10,37 @@ PODS:
   - ReactiveCocoa/no-arc (2.5)
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
-  - SnapKit (4.0.0)
-  - WtCore (0.4.3):
-    - WtCore/Core (= 0.4.3)
-    - WtCore/DebugTools (= 0.4.3)
-    - WtCore/Observer (= 0.4.3)
-    - WtCore/Safety (= 0.4.3)
-    - WtCore/ThunderWeb (= 0.4.3)
-    - WtCore/UI (= 0.4.3)
-    - WtCore/UI-Swift (= 0.4.3)
-  - WtCore/Core (0.4.3):
+  - SnapKit (3.2.0)
+  - WtCore (0.4.6):
+    - WtCore/Core (= 0.4.6)
+    - WtCore/DebugTools (= 0.4.6)
+    - WtCore/Observer (= 0.4.6)
+    - WtCore/Safety (= 0.4.6)
+    - WtCore/ThunderWeb (= 0.4.6)
+    - WtCore/UI (= 0.4.6)
+    - WtCore/UI-Swift (= 0.4.6)
+  - WtCore/Core (0.4.6):
     - ReactiveCocoa (~> 2.5)
-  - WtCore/DebugTools (0.4.3):
+  - WtCore/DebugTools (0.4.6):
     - FLEX
     - KMCGeigerCounter
     - Masonry
     - ReactiveCocoa (~> 2.5)
     - WtCore/UI
-  - WtCore/Observer (0.4.3):
+  - WtCore/Observer (0.4.6):
     - WtCore/Core
-  - WtCore/Safety (0.4.3):
+  - WtCore/Safety (0.4.6):
     - WtCore/Core
-  - WtCore/ThunderWeb (0.4.3):
+  - WtCore/ThunderWeb (0.4.6):
     - ReactiveCocoa (~> 2.5)
     - WtCore/Observer
     - WtCore/UI
-  - WtCore/UI (0.4.3):
+  - WtCore/UI (0.4.6):
     - FDFullscreenPopGesture
     - Masonry
     - WtCore/Core
-  - WtCore/UI-Swift (0.4.3):
-    - SnapKit (~> 4.0.0)
+  - WtCore/UI-Swift (0.4.6):
+    - SnapKit (~> 3.2.0)
 
 DEPENDENCIES:
   - WtCore (from `../`)
@@ -55,8 +55,8 @@ SPEC CHECKSUMS:
   KMCGeigerCounter: f8cc3c4aa19fc6f8cec168fb03b364b84c118a7a
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  WtCore: 6651c268b48c2c4c29c3fc40472ece1c4760fe95
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  WtCore: 07cd5b3991f0ff8cf68e2ad32268278264987d99
 
 PODFILE CHECKSUM: daf5b8d59f496f60757fa9eeb2ccc4e884d70d7a
 

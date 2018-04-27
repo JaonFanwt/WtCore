@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WtCore'
-  s.version          = '0.4.5'
+  s.version          = '0.4.6'
   s.summary          = 'WtCore library.'
 
 # This description is used to generate tags and improve search results.
@@ -51,6 +51,7 @@ blablabla private~
     ss.dependency 'WtCore/Core'
   end
 
+
   s.subspec "UI" do |ss|
     ss.ios.source_files = "Components/UI/**/*.{h,m}"
     ss.ios.public_header_files = "Components/UI/**/*.h"
@@ -61,7 +62,7 @@ blablabla private~
 
   s.subspec "UI-Swift" do |ss|
     ss.ios.source_files = "Components/UI/**/*.{swift}"
-    ss.dependency 'SnapKit', '~> 4.0.0'
+    ss.dependency 'SnapKit', '~> 3.2.0'
   end
 
   s.subspec "DebugTools" do |ss|
