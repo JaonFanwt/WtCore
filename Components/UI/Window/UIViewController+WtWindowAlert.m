@@ -24,7 +24,7 @@
 
 - (void)wtShowWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden {
     UINavigationController *navCtrl = nil;
-    if (![navCtrl isKindOfClass:[UINavigationController class]] && !navCtrl.navigationController) {
+    if (![self isKindOfClass:[UINavigationController class]] && !self.navigationController) {
         navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
     }else {
         navCtrl = (UINavigationController *)self;
@@ -53,7 +53,7 @@
 
 - (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion {
     UINavigationController *navCtrl = nil;
-    if (![navCtrl isKindOfClass:[UINavigationController class]] && !navCtrl.navigationController) {
+    if (![self isKindOfClass:[UINavigationController class]] && !self.navigationController) {
         navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
     }else {
         navCtrl = (UINavigationController *)self;
@@ -72,7 +72,7 @@
 
 - (void)wtCustomShowWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden {
     UINavigationController *navCtrl = nil;
-    if (![navCtrl isKindOfClass:[UINavigationController class]] && !navCtrl.navigationController) {
+    if (![self isKindOfClass:[UINavigationController class]] && !self.navigationController) {
         navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
     }else {
         navCtrl = (UINavigationController *)self;
