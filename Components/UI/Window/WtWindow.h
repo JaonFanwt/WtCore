@@ -12,4 +12,5 @@
 @interface WtWindow : UIWindow
 @property (nonatomic, weak) WtWindowAlert *windowAlert;
 - (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion;
+- (void)wtCustomCloseWithCompletion:(void (^)(BOOL finished))completion;
 @end

@@ -11,10 +11,6 @@
 #import "UIView+WtExtension.h"
 
 @implementation WtWindow
-- (void)dealloc {
-    NSLog(@"%s", __func__);
-}
-
 - (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion {
     UIViewController *firstViewController = self.rootViewController;
     [self.windowAlert closeAnimateWithDuration:kWtWindowAlertShowAnimationDurationTime
@@ -22,6 +18,16 @@
                                         CGRect f = firstViewController.view.frame;
                                         firstViewController.view.transform = CGAffineTransformMakeTranslation(0, f.size.height);
                                     } completion:^(BOOL finished) {
+                                        if (completion) {
+                                            completion(finished);
+                                        }
+                                    }];
+}
+
+- (void)wtCustomCloseWithCompletion:(void (^)(BOOL finished))completion {
+    [self.windowAlert closeAnimateWithDuration:0
+                                    animations:nil
+                                    completion:^(BOOL finished) {
                                         if (completion) {
                                             completion(finished);
                                         }
