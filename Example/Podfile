@@ -11,3 +11,13 @@ target 'WtCore_Example' do
     
   end
 end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if !target.name.start_with?('WtCore')
+            target.build_configurations.each do |config|
+                config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+            end
+        end
+    end
+end
