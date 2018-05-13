@@ -369,10 +369,10 @@
     WtCellGlue *cellGlue = _datas[indexPath.row];
     
     UITableViewCell *cell = [cellGlue.tableViewDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
-    
-    if ([[UIDevice currentDevice] wtEqualOrGreaterThan:9]) {
-        [self registerForPreviewingWithDelegate:cellGlue.previewingDelegate sourceView:cell];
-    }
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_9_0
+    [self registerForPreviewingWithDelegate:cellGlue.previewingDelegate sourceView:cell];
+#endif
     
     return cell;
 }

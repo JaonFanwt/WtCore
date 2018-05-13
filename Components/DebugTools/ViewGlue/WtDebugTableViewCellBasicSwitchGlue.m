@@ -6,6 +6,7 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+#import "WtCore.h"
 #import "WtDebugTableViewCellBasicSwitch.h"
 #import "UISwitch+RACSignalSupport.h"
 #import "UITableViewCell+RACSignalSupport.h"

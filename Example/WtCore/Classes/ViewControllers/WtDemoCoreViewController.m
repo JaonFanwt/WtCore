@@ -89,7 +89,7 @@
         cellGlue.subTitle = @"在主线程中执行block，带参数（可变参数）";
         [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
             
-            wtDispatch_in_main(^(NSString *str, int num, char c, CGRect frame, void (^block)()){
+            wtDispatch_in_main(^(NSString *str, int num, char c, CGRect frame, void (^block)(void)){
                 NSLog(@"[IsMainThread:%d]在主线程中执行block，带参数（可变参数）", [NSThread isMainThread]);
                 NSLog(@"str:%@, num:%d, frame:%@, char:%c", str, num, NSStringFromCGRect(frame), c);
                 if (block) {

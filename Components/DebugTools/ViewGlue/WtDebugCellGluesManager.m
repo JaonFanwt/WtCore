@@ -12,6 +12,7 @@
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+#import "WtCore.h"
 #import "WtDispatch.h"
 #import "WtDebugShowFontsCellGlue.h"
 #import "WtDebugTableViewCellRightDetailGlue.h"

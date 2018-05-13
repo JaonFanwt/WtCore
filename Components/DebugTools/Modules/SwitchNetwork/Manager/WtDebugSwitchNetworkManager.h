@@ -12,7 +12,7 @@
 
 @interface WtDebugSwitchNetworkManager : NSObject
 @property (nonatomic, readonly) NSArray<WtDebugSwitchNetworkGroup *> *networkGroups;
-@property (nonatomic, copy) NSArray<WtDebugSwitchNetworkGroup *> * (^initialNetworkGroupsIfNecessary)();
+@property (nonatomic, copy) NSArray<WtDebugSwitchNetworkGroup *> * (^initialNetworkGroupsIfNecessary)(void);
 + (instancetype)sharedManager;
 - (WtDebugSwitchNetworkGroup *)networkGroup:(NSString *)key;
 @end

@@ -10,6 +10,7 @@
 #import <Masonry/Masonry.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+#import "WtCore.h"
 #import "WtDispatch.h"
 #import "WtDebugShowFontsCellGlue.h"
 

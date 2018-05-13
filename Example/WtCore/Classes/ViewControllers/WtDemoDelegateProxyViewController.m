@@ -112,7 +112,7 @@
             [proxy tableView:[UITableView new] moveRowAtIndexPath:[NSIndexPath indexPathForRow:300 inSection:300] toIndexPath:[NSIndexPath indexPathForRow:400 inSection:400]];
             
             NSLog(@"%s - %@", __func__, cell.reuseIdentifier);
-            NSLog(@"%s - %zd", __func__, canEdit);
+            NSLog(@"%s - %d", __func__, canEdit);
         }];
     }
 }

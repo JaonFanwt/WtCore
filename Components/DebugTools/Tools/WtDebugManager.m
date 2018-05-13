@@ -34,9 +34,11 @@
 }
 
 - (BOOL)isDebugOn {
+    @weakify(self);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _isDebugOn = [[[NSUserDefaults standardUserDefaults] objectForKey:@"WtDebugOn"] boolValue];
+        @strongify(self);
+        self.isDebugOn = [[[NSUserDefaults standardUserDefaults] objectForKey:@"WtDebugOn"] boolValue];
     });
     return _isDebugOn;
 }
