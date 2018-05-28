@@ -9,5 +9,5 @@
 @interface WtDebugTableViewCellBasicSwitchGlue : WtCellGlue
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *detailDescription;
-@property (nonatomic, assign) BOOL on;
+@property (nonatomic, assign) BOOL switchOn;
 @end

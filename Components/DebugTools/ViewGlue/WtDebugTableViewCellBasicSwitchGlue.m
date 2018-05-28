@@ -36,16 +36,16 @@
         
         cell.titleLabel.text = self.name;
         cell.subTitleLabel.text = self.detailDescription;
-        cell.switchControl.on = self.on;
+        cell.switchControl.on = self.switchOn;
         
         @weakify(self);
         [[[cell.switchControl rac_newOnChannel] takeUntil:[cell rac_prepareForReuseSignal]] subscribeNext:^(id x) {
             @strongify(self);
-            self.on = [x boolValue];
+            self.switchOn = [x boolValue];
         }];
         
         @weakify(cell);
-        [[RACObserve(self, on) takeUntil:[cell rac_prepareForReuseSignal]] subscribeNext:^(id x) {
+        [[RACObserve(self, switchOn) takeUntil:[cell rac_prepareForReuseSignal]] subscribeNext:^(id x) {
             @strongify(cell);
             cell.switchControl.on = [x boolValue];
         }];

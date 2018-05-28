@@ -82,9 +82,9 @@
         
         cellGlue.name = @"FPS";
         cellGlue.detailDescription = @"检测FPS，显示在状态栏当中";
-        cellGlue.on = [KMCGeigerCounter sharedGeigerCounter].enabled;
+        cellGlue.switchOn = [KMCGeigerCounter sharedGeigerCounter].enabled;
         
-        [[RACObserve(cellGlue, on) takeUntil:[cellGlue rac_willDeallocSignal]] subscribeNext:^(id x) {
+        [[RACObserve(cellGlue, switchOn) takeUntil:[cellGlue rac_willDeallocSignal]] subscribeNext:^(id x) {
             [KMCGeigerCounter sharedGeigerCounter].enabled = [x boolValue];
         }];
     }
