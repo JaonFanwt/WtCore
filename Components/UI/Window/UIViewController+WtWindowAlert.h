@@ -18,5 +18,6 @@ static NSTimeInterval kWtWindowAlertShowAnimationDurationTime = 0.4;
 - (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion;
 
 - (void)wtCustomShowWithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden;
+- (void)wtCustomShowWithBeforeAnimations:(void (^)(void))beforeAnimations WithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden;
 - (void)wtCustomCloseWithCompletion:(void (^)(BOOL finished))completion;
 @end

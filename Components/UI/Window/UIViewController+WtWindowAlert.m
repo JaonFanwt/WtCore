@@ -95,6 +95,31 @@
                                 }];
 }
 
+- (void)wtCustomShowWithBeforeAnimations:(void (^)(void))beforeAnimations WithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden {
+  UINavigationController *navCtrl = nil;
+  if (![self isKindOfClass:[UINavigationController class]] && !self.navigationController) {
+    navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
+  }else {
+    navCtrl = (UINavigationController *)self;
+  }
+  navCtrl.view.backgroundColor = [UIColor clearColor];
+  self.wtWindowAlert.maskingColor = [UIColor clearColor];
+  self.fd_prefersNavigationBarHidden = hidden;
+  [self.wtWindowAlert showViewController:navCtrl
+                     animateWithDuration:0
+                         backgroundColor:[UIColor clearColor]
+                        beforeAnimations:beforeAnimations
+                              animations:^{
+                                CGRect f = navCtrl.view.frame;
+                                f.origin.y = 0;
+                                navCtrl.view.frame = f;
+                              } completion:^(BOOL finished) {
+                                if (completion) {
+                                  completion(finished);
+                                }
+                              }];
+}
+
 - (void)wtCustomCloseWithCompletion:(void (^)(BOOL finished))completion {
     if ([self.view.window isKindOfClass:[WtWindow class]]) {
         WtWindow *window = (WtWindow *)self.view.window;
