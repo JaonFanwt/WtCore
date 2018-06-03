@@ -243,6 +243,19 @@
             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
         }];
     }
+
+    {
+        WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
+        [_datas addObject:cellGlue];
+        cellGlue.title = @"TouchableOpacity";
+        cellGlue.subTitle = @"";
+        [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath){
+            Class cls = WTClassFromString(@"WtDemoTouchableViewController");
+            if (!cls) return;
+            UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoTouchableViewController" bundle:nil];
+            [self.navigationController pushViewController:toViewCtrl animated:YES];
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource

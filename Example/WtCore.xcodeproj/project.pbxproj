@@ -50,6 +50,8 @@
 		B093C9A02014317300EFB719 /* WtDemoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99B2014317300EFB719 /* WtDemoUIViewController.xib */; };
 		B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */; };
 		B093C9A22014317300EFB719 /* WtDemoUICutterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */; };
+		B0E0828420C3D0E70018B876 /* WtDemoTouchableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */; };
+		B0E0828520C3D0E70018B876 /* WtDemoTouchableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +132,9 @@
 		B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUICutterViewController.m; sourceTree = "<group>"; };
 		B093C99D2014317300EFB719 /* WtDemoUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoUIViewController.h; sourceTree = "<group>"; };
 		B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoUICutterViewController.xib; sourceTree = "<group>"; };
+		B0E0828120C3D0E70018B876 /* WtDemoTouchableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoTouchableViewController.h; sourceTree = "<group>"; };
+		B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoTouchableViewController.m; sourceTree = "<group>"; };
+		B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WtDemoTouchableViewController.xib; sourceTree = "<group>"; };
 		F0F2F4244F4B8DFAE6074F8E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F8F45F305DAF92D6A023524A /* Pods-WtCore_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -317,6 +322,9 @@
 				0B814AD0204D2F3F009641C7 /* WtDemoHUDViewController.h */,
 				0B814AD1204D2F3F009641C7 /* WtDemoHUDViewController.m */,
 				0B814AD2204D2F3F009641C7 /* WtDemoHUDViewController.xib */,
+				B0E0828120C3D0E70018B876 /* WtDemoTouchableViewController.h */,
+				B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */,
+				B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -425,6 +433,7 @@
 				0BFD019E1FE3E09400BFE94A /* WtDemoViewGlueController.xib in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */,
+				B0E0828520C3D0E70018B876 /* WtDemoTouchableViewController.xib in Resources */,
 				B05A21391F59313900FBB990 /* WtDemoObserverViewController.xib in Resources */,
 				0B814AD4204D2F3F009641C7 /* WtDemoHUDViewController.xib in Resources */,
 				B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */,
@@ -542,6 +551,7 @@
 				B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */,
 				B05A213D1F594AD800FBB990 /* WtDemoThunderWebViewController.m in Sources */,
 				0BFD019A1FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift in Sources */,
+				B0E0828420C3D0E70018B876 /* WtDemoTouchableViewController.m in Sources */,
 				6003F59E195388D20070C39A /* WtAppDelegate.m in Sources */,
 				B05A21381F59313900FBB990 /* WtDemoObserverViewController.m in Sources */,
 				B093C9972010F17300EFB719 /* WtDemoUICutterGlue.m in Sources */,
