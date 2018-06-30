@@ -13,41 +13,54 @@
 #import "WtWindowRootViewController.h"
 #import "UIWindow+WtWindow.h"
 
-static UIWindowLevel wtHUDWindowLevel = 1000;
+#ifndef wtWindowLevel
+#define wtWindowLevel UIWindowLevelNormal + 1
+#endif
+#ifndef wtHUDWindowLevel
+#define wtHUDWindowLevel UIWindowLevelAlert + 1
+#endif
+
+static int kWtWindowAlertNum = 0;
 
 @interface WtWindowAlert ()
 @property (nonatomic, strong) WtWindow *window;
 @property (nonatomic, weak) UIView *containerView;
 @property (nonatomic, weak) UIView *backgroundView;
 @property (nonatomic, weak) WtWindowRootViewController *modalViewCtrl;
+@property (nonatomic, assign) int windowLevelGrowNum;
 @end
 
 @implementation WtWindowAlert
+- (void)dealloc {
+    --kWtWindowAlertNum;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
+        self.windowLevelGrowNum = ++kWtWindowAlertNum;
         WtWindow *window = [[WtWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         window.windowAlert = self;
         window.backgroundColor = [UIColor clearColor];
         window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         window.opaque = NO;
-        window.windowLevel = UIWindowLevelNormal;
+        window.windowLevel = wtWindowLevel + self.windowLevelGrowNum;
         self.window = window;
-        
+
         self.frame = window.frame;
         self.backgroundColor = [UIColor clearColor];
-        
+
         UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
         _containerView = containerView;
         containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-                                            UIViewAutoresizingFlexibleWidth |
-                                            UIViewAutoresizingFlexibleRightMargin |
-                                            UIViewAutoresizingFlexibleTopMargin |
-                                            UIViewAutoresizingFlexibleHeight |
-                                            UIViewAutoresizingFlexibleBottomMargin;
+        UIViewAutoresizingFlexibleWidth |
+        UIViewAutoresizingFlexibleRightMargin |
+        UIViewAutoresizingFlexibleTopMargin |
+        UIViewAutoresizingFlexibleHeight |
+        UIViewAutoresizingFlexibleBottomMargin;
         containerView.backgroundColor = [UIColor clearColor];
         [self addSubview:containerView];
         containerView.center = window.center;
-        
+
         WtWindowRootViewController *modalViewCtrl = [[WtWindowRootViewController alloc] initWithNibName:nil bundle:nil];
         modalViewCtrl.view.backgroundColor = [UIColor clearColor];
         modalViewCtrl.wrapView = self;
@@ -58,8 +71,8 @@ static UIWindowLevel wtHUDWindowLevel = 1000;
 
 - (void)setIsHUD:(BOOL)isHUD {
     _isHUD = isHUD;
-    
-    self.window.windowLevel = _isHUD?wtHUDWindowLevel++:UIWindowLevelNormal;
+
+    self.window.windowLevel = _isHUD?(wtHUDWindowLevel + self.windowLevelGrowNum):(wtWindowLevel + self.windowLevelGrowNum);
     self.window.userInteractionEnabled = !isHUD;
 }
 
@@ -115,22 +128,22 @@ static UIWindowLevel wtHUDWindowLevel = 1000;
     }
     [self.window setHidden:NO];
     if (!_isHUD) [self.window makeKeyAndVisible];
-    
+
     if (!_maskingColor) {
         _maskingColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
     }
-    
+
     if (beforeAnimations) {
         beforeAnimations();
     }
-    
+
     if (!_isHUD) {
         UIWindow *window = [self.window wtPreWindow];
         UIViewController* preViewCtrl = [window wtTopViewController];
         if (preViewCtrl) {
             [self viewController:preViewCtrl viewWillDisAppear:YES];
         }
-        
+
         // 添加背景色
         UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
         backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
@@ -154,7 +167,7 @@ static UIWindowLevel wtHUDWindowLevel = 1000;
                                                                   attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
         _backgroundView = backgroundView;
     }
-    
+
     viewCtrl.view.userInteractionEnabled = NO;
     [UIView animateWithDuration:duration
                           delay:0
@@ -182,17 +195,17 @@ static UIWindowLevel wtHUDWindowLevel = 1000;
     if (!_isHUD) {
         UIWindow *window = [self.window wtPreWindow];
         viewCtrl = [window wtTopViewController];
-        
+
         if (viewCtrl) {
             [self viewController:viewCtrl viewWillAppear:YES];
         }
-        
+
         viewCtrl.view.userInteractionEnabled = NO;
         _window.userInteractionEnabled = NO;
     }
-    
+
     UIColor *maskingColor = [self.maskingColor colorWithAlphaComponent:0];
-    
+
     [UIView animateWithDuration:duration
                           delay:0
          usingSpringWithDamping:1.0
