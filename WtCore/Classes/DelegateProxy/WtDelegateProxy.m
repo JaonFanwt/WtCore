@@ -40,7 +40,6 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
 
 @implementation WtDelegateProxy
 - (void)dealloc {
-    NSLog(@"%s - %@", __func__, self);
 }
 
 - (instancetype)initWithProtocol:(Protocol *)protocol {
