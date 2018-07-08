@@ -9,9 +9,9 @@
 
 @interface UIWindow (WtMask)
 @property (nonatomic, readonly) UIView *wtWindowMask;
-@property (nonatomic, readonly) UIView *wtStatusBarMask;
 @property (nonatomic, assign) CGFloat wtMaskAlpha; // 0..<1
 @property (nonatomic, assign) CGFloat wtMaxMaskAlpha; // Default 0.5
+@property (nonatomic, assign) NSTimeInterval wtMaskAnimationDuration; // Default 0.25
 - (void)wtPrepareMask;
 - (void)wtShowMask;
 - (void)wtHideMask;

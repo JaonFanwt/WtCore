@@ -37,6 +37,18 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
     return [self WTWindowMask];
 }
 
+- (NSTimeInterval)wtMaskAnimationDuration {
+    id t = objc_getAssociatedObject(self, @selector(wtMaskAnimationDuration));
+    if (!t) {
+        self.wtMaskAnimationDuration = .25;
+    }
+    return [t doubleValue];
+}
+
+- (void)setWtMaskAnimationDuration:(NSTimeInterval)wtMaskAnimationDuration {
+    objc_setAssociatedObject(self, @selector(wtMaskAnimationDuration), @(wtMaskAnimationDuration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (void)wtPrepareMask {
     UIView *statusBar = [self wtAppleStatusBar];
     WtMaskView *mask = [self WTWindowMask]; // 先看是否有引用
@@ -48,10 +60,10 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
             if (!v) {
                 mask = [[WtMaskView alloc] init];
                 mask.tag = tag;
-                [self addSubview:mask];
+                [statusBar addSubview:mask];
                 [mask mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.right.bottom.equalTo(self);
-                    make.top.equalTo(self.mas_top).offset(statusBar.frame.size.height);
+                    make.left.top.right.equalTo(statusBar);
+                    make.height.mas_equalTo(self.frame.size.height);
                 }];
                 break;
             }else if ([v isKindOfClass:[WtMaskView class]]){
@@ -65,24 +77,13 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
         mask.hidden = YES;
         mask.userInteractionEnabled = NO;
     }
-    
-    [self wtPrepareStatusBarMask];
 }
 
 - (void)wtShowMask {
     WtMaskView *windowMask = [self WTWindowMask];
-    WtMaskView *statusBarMask = [self WTStatusBarMask];
-    
-    UIView *statusBar = [self wtAppleStatusBar];
-    CGFloat statusBarHeight = statusBar.frame.size.height;
-    [windowMask mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(statusBarHeight);
-    }];
     
     windowMask.alpha = 0;
     windowMask.hidden = NO;
-    statusBarMask.alpha = 0;
-    statusBarMask.hidden = NO;
     NSNumber *alpha = [self WTMaskAlpha];
     CGFloat alphaFloat = 0.5;
     if (alpha == nil) {
@@ -94,11 +95,10 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
         alphaFloat = self.wtMaxMaskAlpha;
     }
     
-    if (windowMask && statusBarMask) {
+    if (windowMask) {
         self.window.userInteractionEnabled = NO;
         [UIView animateWithDuration:0.35 animations:^{
             windowMask.alpha = alphaFloat;
-            statusBarMask.alpha = alphaFloat;
         } completion:^(BOOL finished) {
             self.window.userInteractionEnabled = YES;
         }];
@@ -107,67 +107,23 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
 
 - (void)wtHideMask {
     WtMaskView *windowMask = [self WTWindowMask];
-    WtMaskView *statusBarMask = [self WTStatusBarMask];
-    if (windowMask && statusBarMask) {
+    if (windowMask) {
         self.window.userInteractionEnabled = NO;
-        [UIView animateWithDuration:0.35 animations:^{
+        [UIView animateWithDuration:self.wtMaskAnimationDuration animations:^{
             windowMask.alpha = 0.0;
-            statusBarMask.alpha = 0.0;
         } completion:^(BOOL finished) {
             windowMask.hidden = YES;
-            statusBarMask.hidden = YES;
         }];
     }
 }
 
 #pragma mark - Statusbar
-- (void)setWTStatusBarMask:(WtMaskView *)mask {
-    objc_setAssociatedObject(self, @selector(WTStatusBarMask), mask, OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (WtMaskView *)WTStatusBarMask {
-    return objc_getAssociatedObject(self, @selector(WTStatusBarMask));
-}
-
-- (UIView *)wtStatusBarMask {
-    return [self WTStatusBarMask];
-}
-
 - (UIView *)wtAppleStatusBar {
     UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
     if ([statusBar isKindOfClass:[UIView class]]) {
-        return statusBar;
+        return statusBar.superview;
     }
     return nil;
-}
-
-- (void)wtPrepareStatusBarMask {
-    UIView *statusBar = [self wtAppleStatusBar];
-    WtMaskView *mask = [self WTStatusBarMask]; // 先看是否有引用
-    if (mask == nil) {
-        NSUInteger tag = kWTWindowMaskBeginTag;
-        while (true) {
-            tag++;
-            UIView *v = [statusBar viewWithTag:tag];
-            if (!v) {
-                mask = [[WtMaskView alloc] init];
-                mask.tag = tag;
-                [statusBar.superview addSubview:mask];
-                [mask mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.top.right.bottom.equalTo(statusBar);
-                }];
-                break;
-            }else if ([v isKindOfClass:[WtMaskView class]]){
-                mask = (WtMaskView *)v;
-                break;
-            }
-        }
-        [self setWTStatusBarMask:mask];
-        mask.backgroundColor = [UIColor blackColor];
-        mask.alpha = 0.5;
-        mask.hidden = YES;
-        mask.userInteractionEnabled = NO;
-    }
 }
 
 #pragma mark - wtMaskAlpha
@@ -181,9 +137,7 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
 
 - (void)setWtMaskAlpha:(CGFloat)wtMaskAlpha {
     WtMaskView *windowMask = [self WTWindowMask];
-    WtMaskView *statusBarMask = [self WTStatusBarMask];
     windowMask.alpha = wtMaskAlpha;
-    statusBarMask.alpha = wtMaskAlpha;
     
     [self setWTMaskAlpha:wtMaskAlpha];
 }
