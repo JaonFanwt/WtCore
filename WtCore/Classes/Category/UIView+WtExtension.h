@@ -10,4 +10,5 @@
 
 @interface UIView (WtExtension)
 - (UIViewController *)wtFirstViewController;
+- (UIView *)wtFirstSuperViewWithClass:(Class)cls;
 @end

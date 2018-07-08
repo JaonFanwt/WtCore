@@ -23,4 +23,18 @@
         return nil;
     }
 }
+
+- (UIView *)wtFirstSuperViewWithClass:(Class)cls {
+    return [self wtTraverseSuperViewChainForUIViewWithClass:cls];
+}
+
+- (id)wtTraverseSuperViewChainForUIViewWithClass:(Class)cls {
+    id superView = [self superview];
+    if (!superView) return nil;
+  
+    if ([superView isKindOfClass:cls]) {
+        return superView;
+    }
+    return [superView wtTraverseSuperViewChainForUIViewWithClass:cls];
+}
 @end
