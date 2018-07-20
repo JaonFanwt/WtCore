@@ -78,6 +78,7 @@ static int kWtWindowAlertNum = 0;
 
 - (void)viewController:(UIViewController *)viewCtrl viewWillAppear:(BOOL)animation {
     if (_isHUD) return;
+    if (_isCard) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewWillAppear:animation];
     }else {
@@ -87,6 +88,7 @@ static int kWtWindowAlertNum = 0;
 
 - (void)viewController:(UIViewController *)viewCtrl viewDidAppear:(BOOL)animation {
     if (_isHUD) return;
+    if (_isCard) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewDidAppear:animation];
     }else {
@@ -96,6 +98,7 @@ static int kWtWindowAlertNum = 0;
 
 - (void)viewController:(UIViewController *)viewCtrl viewWillDisAppear:(BOOL)animation {
     if (_isHUD) return;
+    if (_isCard) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewWillDisappear:animation];
     }else {
@@ -105,6 +108,7 @@ static int kWtWindowAlertNum = 0;
 
 - (void)viewController:(UIViewController *)viewCtrl viewDidDisAppear:(BOOL)animation {
     if (_isHUD) return;
+    if (_isCard) return;
     if ([viewCtrl isKindOfClass:[UINavigationController class]]) {
         [[(UINavigationController*)viewCtrl topViewController] viewDidDisappear:animation];
     }else {
@@ -140,7 +144,7 @@ static int kWtWindowAlertNum = 0;
     if (!_isHUD) {
         UIWindow *window = [self.window wtPreWindow];
         UIViewController* preViewCtrl = [window wtTopViewController];
-        if (preViewCtrl) {
+        if (preViewCtrl && !_isCard) {
             [self viewController:preViewCtrl viewWillDisAppear:YES];
         }
 
@@ -196,7 +200,7 @@ static int kWtWindowAlertNum = 0;
         UIWindow *window = [self.window wtPreWindow];
         viewCtrl = [window wtTopViewController];
 
-        if (viewCtrl) {
+        if (viewCtrl && !_isCard) {
             [self viewController:viewCtrl viewWillAppear:YES];
         }
 

@@ -10,6 +10,7 @@
 @interface WtWindowAlert : UIView
 @property (nonatomic, copy) UIColor *maskingColor; // Default black, alpha:0.3
 @property (nonatomic, assign) BOOL isHUD;
+@property (nonatomic, assign) BOOL isCard;
 
 -(void)showViewController:(UIViewController*)viewCtrl
       animateWithDuration:(NSTimeInterval)duration
