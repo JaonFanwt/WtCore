@@ -53,8 +53,8 @@
 
 - (void)wtCloseWithCompletion:(void (^)(BOOL finished))completion {
     UINavigationController *navCtrl = nil;
-    if (![self isKindOfClass:[UINavigationController class]] && !self.navigationController) {
-        navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
+    if (self.navigationController) {
+        navCtrl = self.navigationController;
     }else {
         navCtrl = (UINavigationController *)self;
     }
@@ -98,9 +98,9 @@
 - (void)wtCustomShowWithBeforeAnimations:(void (^)(void))beforeAnimations WithCompletion:(void (^)(BOOL finished))completion navigationBarHidden:(BOOL)hidden {
   UINavigationController *navCtrl = nil;
   if (![self isKindOfClass:[UINavigationController class]] && !self.navigationController) {
-    navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
+      navCtrl = [[UINavigationController alloc] initWithRootViewController:self];
   }else {
-    navCtrl = (UINavigationController *)self;
+      navCtrl = (UINavigationController *)self;
   }
   navCtrl.view.backgroundColor = [UIColor clearColor];
   self.wtWindowAlert.maskingColor = [UIColor clearColor];
@@ -121,14 +121,19 @@
 }
 
 - (void)wtCustomCloseWithCompletion:(void (^)(BOOL finished))completion {
-    if ([self.view.window isKindOfClass:[WtWindow class]]) {
-        WtWindow *window = (WtWindow *)self.view.window;
-        
-        [window wtCustomCloseWithCompletion:^(BOOL finished) {
+    UIWindow *window = nil;
+    if (self.navigationController) {
+        window = self.navigationController.view.window;
+    }else {
+        window = self.view.window;
+    }
+
+    if ([window isKindOfClass:[WtWindow class]]) {
+        [(WtWindow *)window wtCustomCloseWithCompletion:^(BOOL finished) {
             if (completion) {
                 completion(finished);
             }
         }];
-    }
+    }else { }
 }
 @end
