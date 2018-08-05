@@ -92,7 +92,6 @@
     @weakify(self);
     [self.backgroundView wtAction:^(UIControl *control, UIControlEvents controlEvents) {
         @strongify(self);
-        [self willClose];
         [self hide];
         if (self.wtUserClosed) {
             self.wtUserClosed();
@@ -119,6 +118,7 @@
 }
 
 - (void)hide {
+    [self willClose];
     [self beforeDismissCardView];
     
     [UIView animateWithDuration:_animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
