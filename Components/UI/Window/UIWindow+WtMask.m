@@ -113,6 +113,8 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
             windowMask.alpha = 0.0;
         } completion:^(BOOL finished) {
             windowMask.hidden = YES;
+            [windowMask removeFromSuperview];
+            [self setWTWindowMask:nil];
         }];
     }
 }
