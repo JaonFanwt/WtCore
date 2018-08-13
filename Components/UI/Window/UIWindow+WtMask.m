@@ -50,7 +50,6 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
 }
 
 - (void)wtPrepareMask {
-    UIView *statusBar = [self wtAppleStatusBar];
     WtMaskView *mask = [self WTWindowMask]; // 先看是否有引用
     if (mask == nil) {
         NSUInteger tag = kWTWindowMaskBeginTag;
@@ -60,9 +59,9 @@ static NSUInteger kWTWindowMaskBeginTag = 7542;
             if (!v) {
                 mask = [[WtMaskView alloc] init];
                 mask.tag = tag;
-                [statusBar addSubview:mask];
+                [self addSubview:mask];
                 [mask mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.top.right.equalTo(statusBar);
+                    make.left.top.right.equalTo(self);
                     make.height.mas_equalTo(self.frame.size.height);
                 }];
                 break;
