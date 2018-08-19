@@ -28,7 +28,6 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		6D545D31A1F215F2AEA0D469 /* Pods_WtCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7487ABAC0D62295FE57BDEF3 /* Pods_WtCore_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
@@ -52,6 +51,7 @@
 		B093C9A22014317300EFB719 /* WtDemoUICutterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */; };
 		B0E0828420C3D0E70018B876 /* WtDemoTouchableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */; };
 		B0E0828520C3D0E70018B876 /* WtDemoTouchableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */; };
+		B0E5B0672129783F0052A6E0 /* WtNSUserDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +98,6 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		67C0DAB7E3A10EF54C860393 /* Pods_WtCore_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WtCore_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -135,6 +134,7 @@
 		B0E0828120C3D0E70018B876 /* WtDemoTouchableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoTouchableViewController.h; sourceTree = "<group>"; };
 		B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoTouchableViewController.m; sourceTree = "<group>"; };
 		B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WtDemoTouchableViewController.xib; sourceTree = "<group>"; };
+		B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtNSUserDefaultsTests.m; sourceTree = "<group>"; };
 		F0F2F4244F4B8DFAE6074F8E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F8F45F305DAF92D6A023524A /* Pods-WtCore_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -230,7 +230,7 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6003F5BB195388D20070C39A /* Tests.m */,
+				B0E5B064212978300052A6E0 /* Core */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -327,6 +327,14 @@
 				B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		B0E5B064212978300052A6E0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		D626093B707FCAE02FD112D0 /* Pods */ = {
@@ -567,7 +575,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
+				B0E5B0672129783F0052A6E0 /* WtNSUserDefaultsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

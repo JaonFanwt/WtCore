@@ -28,6 +28,7 @@
 #import "UIViewController+WtExtension.h"
 #import "UIColor+WtExtension.h"
 #import "NSObject+WtKVO.h"
+#import "NSUserDefaults+WtExtension.h"
 
 #import "WtSwizzle.h"
 #import "WtDispatch.h"
