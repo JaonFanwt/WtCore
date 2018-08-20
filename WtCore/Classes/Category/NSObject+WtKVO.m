@@ -59,11 +59,14 @@
 }
 
 - (void)wtObserveValueForKeyPath:(NSString *)keyPath valueChangedBlock:(void (^)(id newValue))valueChangedBlock {
+    if (![self wtKVODelegateProxiesWithKeyPath:keyPath]) {
+        [self addObserver:WtKVOProxy.shared forKeyPath:keyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:(__bridge void *)self];
+    } else { }
+
     WtDelegateProxy<WtKVODelegate> *kvoDelegate = (WtDelegateProxy<WtKVODelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(WtKVODelegate)];
     [kvoDelegate selector:@selector(valueChanged:) block:valueChangedBlock];
     [self wtEnqueueKVOKeyPath:keyPath delegateProxy:kvoDelegate];
-    
+
     [[WtKVOProxy shared] wtAddObserver:[self wtKVODelegateProxy] forContext:(__bridge void*)self];
-    [self addObserver:WtKVOProxy.shared forKeyPath:keyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:(__bridge void *)self];
 }
 @end

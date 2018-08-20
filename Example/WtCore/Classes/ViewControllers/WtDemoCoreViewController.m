@@ -109,7 +109,7 @@
         cellModel.subTitle = @"在主线程中执行block，带参数（可变参数）";
         
         @weakify(self);
-        [cellModel wtObserveValueForKeyPath:@"title" valueChangedBlock:^(id newValue) {
+        [cellModel wtObserveValueForKeyPath:@keypath(cellModel, title) valueChangedBlock:^(id newValue) {
             @strongify(self);
             [self.tableView reloadData];
         }];
