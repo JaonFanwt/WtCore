@@ -16,6 +16,7 @@
 		0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */; };
 		0BFD019E1FE3E09400BFE94A /* WtDemoViewGlueController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */; };
 		1F5EC48F8CEF60A4CCAB43BF /* Pods_WtCore_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C0DAB7E3A10EF54C860393 /* Pods_WtCore_Tests.framework */; };
+		4FE077C8212AB0C900B5D518 /* WtUIViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE077C7212AB0C900B5D518 /* WtUIViewTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -81,6 +82,7 @@
 		1C601573115B055ACD7EA5F4 /* Pods-WtCore_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Tests/Pods-WtCore_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		1E2EF47D9C14C8A2185F99EB /* Pods-WtCore_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WtCore_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WtCore_Example/Pods-WtCore_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		3D226771933FE0B24C9098EB /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		4FE077C7212AB0C900B5D518 /* WtUIViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtUIViewTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* WtCore_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WtCore_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -333,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */,
+				4FE077C7212AB0C900B5D518 /* WtUIViewTests.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0E5B0672129783F0052A6E0 /* WtNSUserDefaultsTests.m in Sources */,
+				4FE077C8212AB0C900B5D518 /* WtUIViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

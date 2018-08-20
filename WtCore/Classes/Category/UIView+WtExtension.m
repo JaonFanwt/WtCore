@@ -37,4 +37,23 @@
     }
     return [superView wtTraverseSuperViewChainForUIViewWithClass:cls];
 }
+
+- (UIView *)wtFirstSubViewWithClass:(Class)cls {
+  if (!cls) return nil;
+  
+  for (UIView *subView in self.subviews) {
+    if ([subView isKindOfClass:cls]) {
+      return subView;
+    }
+  }
+  
+  for (UIView *subView in self.subviews) {
+    UIView *foundView = [subView wtFirstSubViewWithClass:cls];
+    if (foundView) {
+      return foundView;
+    }
+  }
+  
+  return nil;
+}
 @end

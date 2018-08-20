@@ -11,4 +11,5 @@
 @interface UIView (WtExtension)
 - (UIViewController *)wtFirstViewController;
 - (UIView *)wtFirstSuperViewWithClass:(Class)cls;
+- (UIView *)wtFirstSubViewWithClass:(Class)cls;
 @end
