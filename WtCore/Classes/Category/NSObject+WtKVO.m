@@ -52,7 +52,7 @@
     [delegateProxy selector:@selector(wtKVOObserveValueForKeyPath:ofObject:change:context:) block:^(NSString *keyPath, id object, NSDictionary *change, void *context) {
       @strongify(self);
       for (WtDelegateProxy<WtKVODelegate> *kvoDelegate in [self wtKVODelegateProxiesWithKeyPath:keyPath]) {
-        [kvoDelegate valueChanged:object];
+        [kvoDelegate valueChanged:change[@"new"]];
       }
     }];
   }

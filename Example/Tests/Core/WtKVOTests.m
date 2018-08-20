@@ -32,6 +32,7 @@
   UIView *view = [[UIView alloc] init];
   __block int changedTimes = 0;
   [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
     changedTimes++;
   }];
   view.hidden = NO;
@@ -47,9 +48,11 @@
   __block int changedTimes1 = 0;
   __block int num = 0;
   [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
     changedTimes1++;
   }];
   [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
     num++;
     num++;
   }];
@@ -69,9 +72,11 @@
   __block int changedTimes1 = 0;
   __block int num = 0;
   [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
     changedTimes1++;
   }];
   [view wtObserveValueForKeyPath:@keypath(view, alpha) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
     num++;
   }];
   view.hidden = NO;
