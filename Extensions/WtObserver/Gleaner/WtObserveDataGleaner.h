@@ -11,20 +11,21 @@
 #import "WtObserveData.h"
 
 #ifndef wtPathCreateIfNotExists
-#define wtPathCreateIfNotExists(path) \
-if (![[NSFileManager defaultManager] fileExistsAtPath:path]) { \
-    [[NSFileManager defaultManager] createDirectoryAtPath:path \
-        withIntermediateDirectories:YES \
-        attributes:nil \
-        error:NULL]; \
-}
+#define wtPathCreateIfNotExists(path)                            \
+  if (![[NSFileManager defaultManager] fileExistsAtPath:path]) { \
+    [[NSFileManager defaultManager] createDirectoryAtPath:path   \
+                              withIntermediateDirectories:YES    \
+                                               attributes:nil    \
+                                                    error:NULL]; \
+  }
 #endif
 
 typedef enum {
-    eWtObserveDataGleanNameNilError = 20101,
-    eWtObserveDataGleanValueNilError,
-    eWtObserveDataGleanDuplicateError,
-}eWtObserveDataGleaneError;
+  eWtObserveDataGleanNameNilError = 20101,
+  eWtObserveDataGleanValueNilError,
+  eWtObserveDataGleanDuplicateError,
+} eWtObserveDataGleaneError;
+
 
 @interface WtObserveDataGleaner : NSObject
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, WtObserveData *> *treasures;

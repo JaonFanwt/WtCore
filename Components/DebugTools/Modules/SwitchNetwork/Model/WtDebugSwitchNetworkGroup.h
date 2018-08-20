@@ -11,6 +11,7 @@
 #import "WtDebugSwitchNetworkItem.h"
 #import "WtDebugTableViewCellSwitchNetworkModel.h"
 
+
 @interface WtDebugSwitchNetworkGroup : NSObject
 @property (nonatomic, copy) NSString *key;
 @property (nonatomic, copy) NSString *name;
@@ -18,6 +19,6 @@
 
 - (void)addModel:(WtDebugSwitchNetworkItem *)model;
 - (void)selectModel:(WtDebugSwitchNetworkItem *)model;
-- (NSArray <WtDebugSwitchNetworkItem *> *)models;
-- (NSArray <WtDebugTableViewCellSwitchNetworkModel *> *)cellGlues;
+- (NSArray<WtDebugSwitchNetworkItem *> *)models;
+- (NSArray<WtDebugTableViewCellSwitchNetworkModel *> *)cellGlues;
 @end

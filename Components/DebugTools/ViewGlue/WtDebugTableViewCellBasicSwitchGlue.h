@@ -6,6 +6,7 @@
 
 #import "WtCellGlue.h"
 
+
 @interface WtDebugTableViewCellBasicSwitchGlue : WtCellGlue
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *detailDescription;

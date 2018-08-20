@@ -8,8 +8,8 @@
 
 #import <objc/runtime.h>
 
-typedef void(^CTMethodEnumertor)(Class class, Method method);
-typedef BOOL(^CTClassTest)(Class subclass);
+typedef void (^CTMethodEnumertor)(Class class, Method method);
+typedef BOOL (^CTClassTest)(Class subclass);
 
 /**
  @abstract Swizzles originalSelector with newSelector.
@@ -46,4 +46,3 @@ void class_implementPropertyInUserDefaults(Class class, NSString *propertyName, 
  Implements a property at runtime.
  */
 void class_implementProperty(Class class, NSString *propertyName);
-

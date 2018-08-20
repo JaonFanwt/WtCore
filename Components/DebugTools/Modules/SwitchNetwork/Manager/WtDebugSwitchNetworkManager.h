@@ -10,6 +10,7 @@
 
 #import "WtDebugSwitchNetworkGroup.h"
 
+
 @interface WtDebugSwitchNetworkManager : NSObject
 @property (nonatomic, readonly) NSArray<WtDebugSwitchNetworkGroup *> *networkGroups;
 @property (nonatomic, copy) NSArray<WtDebugSwitchNetworkGroup *> * (^initialNetworkGroupsIfNecessary)(void);

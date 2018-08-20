@@ -11,6 +11,7 @@
 
 #import "WtCellGlue.h"
 
+
 @interface WtDebugTableViewCellSwitchNetworkModel : WtCellGlue
 @property (nonatomic, strong) WtDebugSwitchNetworkItem *model;
 @end

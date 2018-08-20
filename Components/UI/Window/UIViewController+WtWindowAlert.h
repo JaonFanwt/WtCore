@@ -11,6 +11,7 @@
 
 static NSTimeInterval kWtWindowAlertShowAnimationDurationTime = 0.4;
 
+
 @interface UIViewController (WtWindowAlert)
 @property (nonatomic, readonly) WtWindowAlert *wtWindowAlert;
 

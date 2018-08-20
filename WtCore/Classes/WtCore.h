@@ -12,11 +12,11 @@
 
 #ifdef RACObserve
 #undef RACObserve
-#define RACObserve(TARGET, KEYPATH) \
-    ({ \
-        __weak id target_ = (TARGET); \
-        [target_ rac_valuesForKeyPath:@keypath(TARGET, KEYPATH) observer:self]; \
-    })
+#define RACObserve(TARGET, KEYPATH)                                         \
+  ({                                                                        \
+    __weak id target_ = (TARGET);                                           \
+    [target_ rac_valuesForKeyPath:@keypath(TARGET, KEYPATH) observer:self]; \
+  })
 #endif
 
 #import "NSString+WtEncrypt.h"

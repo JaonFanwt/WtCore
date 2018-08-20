@@ -8,9 +8,10 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    eWtFindPureSeparateLinePointDirectionDown = 0,
-    eWtFindPureSeparateLinePointDirectionUp
-}eWtFindPureSeparateLinePointDirection;
+  eWtFindPureSeparateLinePointDirectionDown = 0,
+  eWtFindPureSeparateLinePointDirectionUp
+} eWtFindPureSeparateLinePointDirection;
+
 
 @interface WtFindPureColorPoint : NSObject
 @property (nonatomic, assign) CGFloat beginX;
@@ -21,13 +22,14 @@ typedef enum {
 @property (nonatomic, readonly) WtFindPureColorPoint *findPureColorPoint;
 @end
 
+
 @interface UIView (WtCutter)
 - (CGPoint)wt_findPureColorLineWithBeginAnchor:(CGPoint)point
-                                         length:(CGFloat)length
+                                        length:(CGFloat)length
                                       sliceNum:(int)sliceNum
                                      direction:(eWtFindPureSeparateLinePointDirection)direction;
 - (CGPoint)wt_trimPureColorLineWithBeginAnchor:(CGPoint)point
-                                         length:(CGFloat)length
+                                        length:(CGFloat)length
                                       sliceNum:(int)sliceNum
                                      direction:(eWtFindPureSeparateLinePointDirection)direction;
 @end

@@ -9,10 +9,10 @@
 
 void wtWarningCallStackSymbols() {
 #ifdef DEBUG
-    NSLog(@"----------- *[WtSafety warning!]* -----------");
-    for (NSString *symbol in [NSThread callStackSymbols]) {
-        NSLog(@"%@", symbol);
-    }
-    NSLog(@"---------------------------------------------");
+  NSLog(@"----------- *[WtSafety warning!]* -----------");
+  for (NSString *symbol in [NSThread callStackSymbols]) {
+    NSLog(@"%@", symbol);
+  }
+  NSLog(@"---------------------------------------------");
 #endif
 }

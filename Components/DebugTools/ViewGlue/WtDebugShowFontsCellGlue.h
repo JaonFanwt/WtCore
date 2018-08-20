@@ -15,8 +15,8 @@
 @property (nonatomic, copy) NSString *fontName;
 @end
 
-@interface WtDebugShowFontsCellModel : NSObject
-<WtDebugShowFontsCellModelProtocol>
+
+@interface WtDebugShowFontsCellModel : NSObject <WtDebugShowFontsCellModelProtocol>
 @end
 
 // Glue

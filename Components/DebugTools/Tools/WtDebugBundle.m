@@ -8,10 +8,11 @@
 
 #import "WtDebugBundle.h"
 
+
 @implementation WtDebugBundle
 + (NSBundle *)bundle {
-    NSString *bundlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"WtDebugTools" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    return bundle;
+  NSString *bundlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"WtDebugTools" ofType:@"bundle"];
+  NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+  return bundle;
 }
 @end

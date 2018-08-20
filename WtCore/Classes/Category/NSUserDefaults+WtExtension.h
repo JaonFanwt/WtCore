@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSUserDefaults (WtExtension)
 + (id)wtGetValueWithKey:(NSString *)key;
 + (BOOL)wtSaveValue:(id)value key:(NSString *)key;

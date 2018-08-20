@@ -15,6 +15,7 @@
 NSURLRequest *wtThunderProduceWebRequest(NSURLRequest *request, NSString *userIdentifier);
 NSURLRequest *wtThunderConsumeWebRequest(NSURLRequest *request, NSString *userIdentifier);
 
+
 @interface WtThunderClient : NSObject
 @property (nonatomic, assign) NSTimeInterval cacheControlMaxAge; // Default 10s
 + (instancetype)shared;

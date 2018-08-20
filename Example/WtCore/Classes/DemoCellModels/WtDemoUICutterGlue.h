@@ -15,12 +15,14 @@
 @property (nonatomic, strong) UIView *cutterView;
 @end
 
-@interface WtDemoUICutterModel : NSObject
-<WtDemoUICutterModelProtocol>
+
+@interface WtDemoUICutterModel : NSObject <WtDemoUICutterModelProtocol>
 @property (nonatomic, strong) UIView *cutterView;
 @end
 
 #pragma mark - Glue
+
+
 @interface WtDemoUICutterGlue : WtCellGlue
 @property (nonatomic, strong) id<WtDemoUICutterModelProtocol> model;
 @end

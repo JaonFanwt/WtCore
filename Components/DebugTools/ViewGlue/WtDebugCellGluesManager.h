@@ -9,6 +9,7 @@
 
 #import "WtCellGlue.h"
 
+
 @interface WtDebugCellGluesManager : NSObject
 @property (nonatomic, strong) NSMutableArray<WtCellGlue *> *cellGlues;
 + (instancetype)shared;

@@ -7,21 +7,22 @@
 
 #import "WtWindowRootViewController.h"
 
+
 @implementation WtWindowRootViewController
 - (void)dealloc {
-    NSLog(@"%s", __func__);
+  NSLog(@"%s", __func__);
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.view = _wrapView;
+  [super viewDidLoad];
+  self.view = _wrapView;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return [UIApplication sharedApplication].statusBarStyle;
+  return [UIApplication sharedApplication].statusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return [UIApplication sharedApplication].statusBarHidden;
+  return [UIApplication sharedApplication].statusBarHidden;
 }
 @end

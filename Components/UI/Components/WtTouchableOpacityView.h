@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface WtTouchableOpacityView : UIControl
 @property (nonatomic, assign) CGFloat activeOpacity;
 @property (nonatomic, assign) CGFloat duration;

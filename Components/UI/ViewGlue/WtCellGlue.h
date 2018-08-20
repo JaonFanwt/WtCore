@@ -20,7 +20,7 @@
 @property (nonatomic, strong, readonly) WtDelegateProxy<UICollectionViewDataSource> *collectionDatasource;
 @end
 
-@interface WtCellGlue : WtViewGlue
-<WtCellGlueProtocol, WtCollectionGlueProtocol>
+
+@interface WtCellGlue : WtViewGlue <WtCellGlueProtocol, WtCollectionGlueProtocol>
 - (UITableViewCell *)loadNibName:(NSString *)nibName index:(NSUInteger)index;
 @end

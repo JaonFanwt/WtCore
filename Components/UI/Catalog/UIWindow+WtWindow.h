@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIWindow (WtWindow)
 + (UIWindow *)wtTopWindow;
 - (UIWindow *)wtPreWindow;

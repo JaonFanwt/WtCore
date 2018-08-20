@@ -10,6 +10,7 @@
 
 #import "WtDelegateProxy.h"
 
+
 @interface UIAlertView (WtUI)
 @property (nonatomic, strong, readonly) WtDelegateProxy<UIAlertViewDelegate> *wtDelegateProxy;
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface UIDevice (WtExtension)
 - (BOOL)wtEqualOrGreaterThan:(NSInteger)iOSVersion;
 @end

@@ -10,7 +10,8 @@
 
 #import "WtDebugSwitchNetworkGroup.h"
 
+
 @interface WtDebugSwitchNetworkDB : NSObject
-+ (NSArray <WtDebugSwitchNetworkGroup *> *)loadFromCache;
-+ (void)cacheToCache:(NSArray <WtDebugSwitchNetworkGroup *>*)array;
++ (NSArray<WtDebugSwitchNetworkGroup *> *)loadFromCache;
++ (void)cacheToCache:(NSArray<WtDebugSwitchNetworkGroup *> *)array;
 @end

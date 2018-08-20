@@ -10,36 +10,37 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+
 @implementation WtDebugManager
 + (instancetype)shared {
-    static WtDebugManager *manager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        manager = [[WtDebugManager alloc] init];
-    });
-    return manager;
+  static WtDebugManager *manager = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    manager = [[WtDebugManager alloc] init];
+  });
+  return manager;
 }
 
 - (instancetype)init {
-    if (self = [super init]) {
-        @weakify(self);
-        [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
-            @strongify(self);
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isDebugOn] forKey:@"WtDebugOn"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }];
-    }
-    return self;
+  if (self = [super init]) {
+    @weakify(self);
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
+      @strongify(self);
+
+      [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isDebugOn] forKey:@"WtDebugOn"];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+  }
+  return self;
 }
 
 - (BOOL)isDebugOn {
-    @weakify(self);
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        @strongify(self);
-        self.isDebugOn = [[[NSUserDefaults standardUserDefaults] objectForKey:@"WtDebugOn"] boolValue];
-    });
-    return _isDebugOn;
+  @weakify(self);
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    @strongify(self);
+    self.isDebugOn = [[[NSUserDefaults standardUserDefaults] objectForKey:@"WtDebugOn"] boolValue];
+  });
+  return _isDebugOn;
 }
 @end

@@ -10,6 +10,7 @@
 
 #import <WtCore/WtCellGlue.h>
 
+
 @interface WtDemoCellGlue : WtCellGlue
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subTitle;

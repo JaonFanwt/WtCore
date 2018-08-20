@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface WtDebugSwitchNetworkItem : NSObject
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, copy) NSString *urlDescription;

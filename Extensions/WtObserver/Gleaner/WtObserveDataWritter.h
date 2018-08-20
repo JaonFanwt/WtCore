@@ -10,6 +10,7 @@
 
 #import "WtObserveData.h"
 
+
 @interface WtObserveDataWritter : NSObject
 + (NSString *)path;
 + (NSString *)toCSV:(NSArray<WtObserveData *> *)observeDatas;

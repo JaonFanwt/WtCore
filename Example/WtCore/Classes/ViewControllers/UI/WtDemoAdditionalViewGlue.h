@@ -12,9 +12,12 @@
 @import WtCore;
 
 #pragma mark - UI
+
+
 @interface WtDemoAdditionalViewCell : UITableViewCell
 @property (nonatomic, weak) IBOutlet UILabel *contentLabel;
 @end
+
 
 @interface WtDemoAdttionalMoreViewCell : UITableViewCell
 
@@ -26,16 +29,19 @@
 @property (nonatomic, copy) NSString *content;
 @end
 
-@interface WtDemoAdditionalViewCellModel : NSObject
-<WtDemoAdditionalViewCellModelProtocol>
+
+@interface WtDemoAdditionalViewCellModel : NSObject <WtDemoAdditionalViewCellModelProtocol>
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;
 @end
 
 #pragma mark - Glue
+
+
 @interface WtDemoAdditionalViewCellGlue : WtCellGlue
 @property (nonatomic, strong) id<WtDemoAdditionalViewCellModelProtocol> model;
 @end
+
 
 @interface WtDemoAdttionalMoreViewCellGlue : WtCellGlue
 

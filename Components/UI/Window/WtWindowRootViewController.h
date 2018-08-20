@@ -9,6 +9,7 @@
 
 #import "WtWindowAlert.h"
 
+
 @interface WtWindowRootViewController : UIViewController
 @property (nonatomic, weak) UIView *wrapView;
 @end

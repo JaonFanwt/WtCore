@@ -13,6 +13,7 @@
 - (void)valueChanged:(id)value;
 @end
 
+
 @interface NSObject (WtKVO)
 - (void)wtObserveValueForKeyPath:(NSString *)keyPath valueChangedBlock:(void (^)(id newValue))valueChangedBlock;
 @end

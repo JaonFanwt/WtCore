@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface WtDebugManager : NSObject
 @property (nonatomic, assign) BOOL isDebugOn;
 + (instancetype)shared;

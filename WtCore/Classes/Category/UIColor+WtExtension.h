@@ -11,10 +11,12 @@
 UIColor *wtRandomColor(CGFloat alpha);
 UIColor *wtHTMLColor(NSString *name);
 
+
 @interface UIColor (WtExtension)
 + (UIColor *)wtRandom;
 + (UIColor *)wtRandomWithAlpha:(CGFloat)alpha;
 @end
+
 
 @interface UIColor (WtHTML)
 /**

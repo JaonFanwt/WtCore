@@ -21,6 +21,8 @@
 NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier);
 
 #pragma mark - Class
+
+
 @interface WtThunderSession : NSObject
 @property (nonatomic, assign, readonly) NSTimeInterval beginTime;
 @property (nonatomic, assign, readonly) NSTimeInterval endTime;

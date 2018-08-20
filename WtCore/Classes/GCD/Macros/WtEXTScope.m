@@ -9,7 +9,6 @@
 
 #import "WtEXTScope.h"
 
-void wt_executeCleanupBlock (__strong wt_cleanupBlock_t *block) {
-    (*block)();
+void wt_executeCleanupBlock(__strong wt_cleanupBlock_t *block) {
+  (*block)();
 }
-

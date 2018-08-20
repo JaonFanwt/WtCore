@@ -9,9 +9,8 @@
 @import UIKit;
 #import "WtAppDelegate.h"
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([WtAppDelegate class]));
-    }
+int main(int argc, char *argv[]) {
+  @autoreleasepool {
+    return UIApplicationMain(argc, argv, nil, NSStringFromClass([WtAppDelegate class]));
+  }
 }

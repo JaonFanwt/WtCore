@@ -11,14 +11,15 @@
 #import "UIWindow+WtWindow.h"
 #import "UIViewController+WtUI.h"
 
+
 @implementation NSObject (WtWindow)
 - (UIWindow *)wtTopWindow {
-    return [UIWindow wtTopWindow];
+  return [UIWindow wtTopWindow];
 }
 
 - (UIViewController *)wtTopViewController {
-    UIWindow *window = [self wtTopWindow];
-    
-    return [window.rootViewController wtTopViewController];
+  UIWindow *window = [self wtTopWindow];
+
+  return [window.rootViewController wtTopViewController];
 }
 @end

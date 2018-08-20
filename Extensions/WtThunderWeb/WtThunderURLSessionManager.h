@@ -9,8 +9,8 @@
 
 #import "WtURLSessionManagerTaskDelegate.h"
 
-@interface WtThunderURLSessionManager : NSObject
-<NSURLSessionDelegate, NSURLSessionDataDelegate>
+
+@interface WtThunderURLSessionManager : NSObject <NSURLSessionDelegate, NSURLSessionDataDelegate>
 + (instancetype)shared;
 - (NSURLSessionTask *)wtTaskWithRequest:(NSURLRequest *)request
                                delegate:(WtURLSessionManagerTaskDelegate *)delegate;

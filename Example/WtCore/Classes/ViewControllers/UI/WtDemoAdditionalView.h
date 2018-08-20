@@ -10,6 +10,7 @@
 
 @import WtCore;
 
+
 @interface WtDemoAdditionalView : UIView
 + (WtFindPureColorPoint *)pureColorPoint;
 - (instancetype)initWithCellGlues:(NSArray *)glues;

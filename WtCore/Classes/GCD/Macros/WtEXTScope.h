@@ -29,8 +29,10 @@
  * a useless construct in such a case anyways.
  */
 #define onExit \
-    try {} @finally {} \
-    __strong wt_cleanupBlock_t metamacro_concat(wt_exitBlock_, __LINE__) __attribute__((cleanup(wt_executeCleanupBlock), unused)) = ^
+  try {        \
+  } @finally { \
+  }            \
+  __strong wt_cleanupBlock_t metamacro_concat(wt_exitBlock_, __LINE__) __attribute__((cleanup(wt_executeCleanupBlock), unused)) = ^
 
 /**
  * Creates \c __weak shadow variables for each of the variables provided as
@@ -43,16 +45,20 @@
  * See #strongify for an example of usage.
  */
 #define weakify(...) \
-    try {} @finally {} \
-    metamacro_foreach_cxt(wt_weakify_,, __weak, __VA_ARGS__)
+  try {              \
+  } @finally {       \
+  }                  \
+  metamacro_foreach_cxt(wt_weakify_, , __weak, __VA_ARGS__)
 
 /**
  * Like #weakify, but uses \c __unsafe_unretained instead, for targets or
  * classes that do not support weak references.
  */
 #define unsafeify(...) \
-    try {} @finally {} \
-    metamacro_foreach_cxt(wt_weakify_,, __unsafe_unretained, __VA_ARGS__)
+  try {                \
+  } @finally {         \
+  }                    \
+  metamacro_foreach_cxt(wt_weakify_, , __unsafe_unretained, __VA_ARGS__)
 
 /**
  * Strongly references each of the variables provided as arguments, which must
@@ -80,20 +86,22 @@
 
  * @endcode
  */
-#define strongify(...) \
-    try {} @finally {} \
-    _Pragma("clang diagnostic push") \
-    _Pragma("clang diagnostic ignored \"-Wshadow\"") \
-    metamacro_foreach(wt_strongify_,, __VA_ARGS__) \
-    _Pragma("clang diagnostic pop")
+#define strongify(...)                                \
+  try {                                               \
+  } @finally {                                        \
+  }                                                   \
+  _Pragma("clang diagnostic push")                    \
+    _Pragma("clang diagnostic ignored \"-Wshadow\"")  \
+      metamacro_foreach(wt_strongify_, , __VA_ARGS__) \
+        _Pragma("clang diagnostic pop")
 
 /*** implementation details follow ***/
 typedef void (^wt_cleanupBlock_t)(void);
 
-void wt_executeCleanupBlock (__strong wt_cleanupBlock_t *block);
+void wt_executeCleanupBlock(__strong wt_cleanupBlock_t *block);
 
 #define wt_weakify_(INDEX, CONTEXT, VAR) \
-    CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
+  CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
 
 #define wt_strongify_(INDEX, VAR) \
-    __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
+  __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);

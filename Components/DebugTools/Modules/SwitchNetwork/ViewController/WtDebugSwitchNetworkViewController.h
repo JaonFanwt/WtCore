@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WtDebugSwitchNetworkViewController :UIViewController
+
+@interface WtDebugSwitchNetworkViewController : UIViewController
 @property (nonatomic, weak, readonly) UITableView *tableView;
 @end

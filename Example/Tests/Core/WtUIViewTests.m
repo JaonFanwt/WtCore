@@ -15,6 +15,7 @@
 
 @end
 
+
 @implementation WtUIViewTests
 
 - (void)setUp {
@@ -29,14 +30,18 @@
 
 - (void)testFirstSubViewWithClass {
   UIView *containerView = [[UIView alloc] init];
-  UILabel *label = [[UILabel alloc] init]; [containerView addSubview:label];
-  UIView *subview = [[UIView alloc] init]; [containerView addSubview:subview];
-  UIScrollView *scrollView = [[UIScrollView alloc] init]; [subview addSubview:scrollView];
-  UITextView *textView = [[UITextView alloc] init]; [scrollView addSubview:textView];
-  
+  UILabel *label = [[UILabel alloc] init];
+  [containerView addSubview:label];
+  UIView *subview = [[UIView alloc] init];
+  [containerView addSubview:subview];
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  [subview addSubview:scrollView];
+  UITextView *textView = [[UITextView alloc] init];
+  [scrollView addSubview:textView];
+
   UIScrollView *foundScrollView = (UIScrollView *)[containerView wtFirstSubViewWithClass:[UIScrollView class]];
   UITextView *foundTextView = (UITextView *)[containerView wtFirstSubViewWithClass:[UITextView class]];
-  
+
   XCTAssertTrue(foundScrollView == scrollView);
   XCTAssertTrue(foundTextView == textView);
 }

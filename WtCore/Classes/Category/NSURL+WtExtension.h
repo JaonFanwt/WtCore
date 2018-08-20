@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSURL (WtExtension)
 + (NSDictionary *)wtParseQueryComponentsFromQueryString:(NSString *)queryStr includingDuplicateParamName:(BOOL)includingDuplicateParamName;
 - (NSDictionary *)wtQueryComponents;

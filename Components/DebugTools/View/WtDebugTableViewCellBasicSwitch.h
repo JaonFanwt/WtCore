@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface WtDebugTableViewCellBasicSwitch : UITableViewCell
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic, weak) UILabel *subTitleLabel;

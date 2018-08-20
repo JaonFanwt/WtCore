@@ -7,20 +7,21 @@
 
 #import "NSUserDefaults+WtExtension.h"
 
+
 @implementation NSUserDefaults (WtExtension)
 + (id)wtGetValueWithKey:(NSString *)key {
-    id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:value];
+  id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+  return [NSKeyedUnarchiver unarchiveObjectWithData:value];
 }
 
 + (BOOL)wtSaveValue:(id)value key:(NSString *)key {
-    if (!key) return NO;
+  if (!key) return NO;
 
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
-    if (!data) return NO;
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+  if (!data) return NO;
 
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
+  [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
 
-    return [[NSUserDefaults standardUserDefaults] synchronize];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 @end
