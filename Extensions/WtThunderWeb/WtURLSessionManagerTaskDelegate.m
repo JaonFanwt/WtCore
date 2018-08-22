@@ -11,7 +11,9 @@
 
 @implementation WtURLSessionManagerTaskDelegate
 - (void)dealloc {
+#ifdef DEBUG
   NSLog(@"%s", __func__);
+#endif
 }
 
 - (instancetype)init {

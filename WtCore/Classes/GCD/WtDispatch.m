@@ -94,7 +94,9 @@ void __wtDispatch_in_main(id block, va_list arg_ptr) {
         break;
       }
       default: {
+#ifdef DEBUG
         NSLog(@"error type %s", argumentType);
+#endif
         break;
       }
     }

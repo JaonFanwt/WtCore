@@ -10,7 +10,9 @@
 
 @implementation WtWindowRootViewController
 - (void)dealloc {
+#ifdef DEBUG
   NSLog(@"%s", __func__);
+#endif
 }
 
 - (void)viewDidLoad {

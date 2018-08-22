@@ -47,7 +47,9 @@ static NSString *kWtThunderProtocolDataKey = @"kWtThunderProtocolDataKey";
     return NO;
   } else if ((value && ([value isEqualToString:WtThunderHeaderValueProduceLoad] || [value isEqualToString:WtThunderHeaderValueConsumeLoad])) ||
              ([[WtThunderClient shared] isExistSessionWithUrlString:request.URL.absoluteString userIdentifier:@""])) {
+#ifdef DEBUG
     NSLog(@"[Pre load request]: %@", request.URL.absoluteString);
+#endif
 
     wtDispatch_in_main(^{
       [[NSNotificationCenter defaultCenter] postNotificationName:WtThunderCanInitWithRequestURLNotification object:[NSString stringWithFormat:@"%@", request.URL.absoluteString]];

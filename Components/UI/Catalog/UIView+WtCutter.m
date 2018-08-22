@@ -525,7 +525,9 @@
     CGImageRef imageRef = CGBitmapContextCreateImage(contex);
     UIImage *__image = [UIImage imageWithCGImage:imageRef];
 
+#ifdef DEBUG
     NSLog(@"%s - %@", __func__, __image);
+#endif
 
     int rgbaIdx = 0; // 0:r, 1:g, 2:b, 3:a
     NSArray *rgbaArray = nil;

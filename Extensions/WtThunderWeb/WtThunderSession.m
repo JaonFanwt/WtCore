@@ -47,7 +47,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 
 @implementation WtThunderSession
 - (void)dealloc {
+#ifdef DEBUG
   NSLog(@"%s", __func__);
+#endif
   [self cancel];
 }
 
@@ -166,7 +168,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
   _endTime = [[NSDate date] timeIntervalSince1970];
   NSString *t = [NSString stringWithFormat:@"%.0f", (_endTime - _beginTime) * 1000];
+#ifdef DEBUG
   NSLog(@"[Glean Web BI]Session request takes %@ms", t);
+#endif
 
   _isCompletion = YES;
   _sessionDidFinishTime = [[NSDate date] timeIntervalSince1970];
@@ -226,7 +230,9 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 - (void)sessionDidFinish:(NSURLSession *)session {
   _endTime = [[NSDate date] timeIntervalSince1970];
   NSString *t = [NSString stringWithFormat:@"%.0f", (_endTime - _beginTime) * 1000];
+#ifdef DEBUG
   NSLog(@"[Glean Web BI]Session request takes %@ms", t);
+#endif
 
   _isCompletion = YES;
   _sessionDidFinishTime = [[NSDate date] timeIntervalSince1970];

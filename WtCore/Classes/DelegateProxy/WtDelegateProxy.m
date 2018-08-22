@@ -152,7 +152,9 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
           break;
         }
         default: {
+#ifdef DEBUG
           NSLog(@"error type %s", argumentType);
+#endif
           break;
         }
       }
@@ -255,7 +257,9 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
           break;
         }
         default: {
+#ifdef DEBUG
           NSLog(@"error type %s", returnType);
+#endif
           break;
         }
       }

@@ -83,7 +83,9 @@
         [self setTimeInterval:endTime sel:@selector(endDidStartLoadTime)];
         [self didChangeValueForKey:@"endDidStartLoadTime"];
 
+#ifdef DEBUG
         NSLog(@"(%p)[%@ Till webViewDidStartLoad first finished consumed time]: %.0fms", self, [self class], (endTime - self.startInitTime) * 1000);
+#endif
       }
 
     }];
@@ -110,7 +112,9 @@
         [self setTimeInterval:endTime sel:@selector(endDidFinishLoadTime)];
         [self didChangeValueForKey:@"endDidFinishLoadTime"];
 
+#ifdef DEBUG
         NSLog(@"(%p)[%@ Till webViewDidFinishLoad first finished consumed time]: %.0fms", self, [self class], (endTime - self.startInitTime) * 1000);
+#endif
       }
 
     }];
@@ -246,6 +250,8 @@
     [self didChangeValueForKey:@"endLoadRequestTime"];
   }
 
+#ifdef DEBUG
   NSLog(@"(%p)[%@ Till webViewLoadRequest first finished consumed time]: %.0fms", self, [self class], (endTime - self.startInitTime) * 1000);
+#endif
 }
 @end

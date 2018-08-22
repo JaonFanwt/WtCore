@@ -110,7 +110,9 @@
     [self setTimeInterval:endTime sel:@selector(endViewDidLoadTime)];
     [self didChangeValueForKey:@"endViewDidLoadTime"];
 
+#ifdef DEBUG
     NSLog(@"(%p)[%@ Till ViewDidLoad finished consumed time]: %.0fms", self, [self class], (startTime - self.startInitTime) * 1000);
+#endif
   }
 }
 
@@ -136,7 +138,9 @@
     [self setTimeInterval:endTime sel:@selector(endViewWillAppearTime)];
     [self didChangeValueForKey:@"endViewWillAppearTime"];
 
+#ifdef DEBUG
     NSLog(@"(%p)[%@ Till ViewWillAppear finished consumed time]: %.0fms", self, [self class], (startTime - self.startInitTime) * 1000);
+#endif
   }
 }
 
@@ -162,7 +166,9 @@
     [self setTimeInterval:endTime sel:@selector(endViewDidAppearTime)];
     [self didChangeValueForKey:@"endViewDidAppearTime"];
 
+#ifdef DEBUG
     NSLog(@"(%p)[%@ Till ViewDidAppear finished consumed time]: %.0fms", self, [self class], (startTime - self.startInitTime) * 1000);
+#endif
   }
 }
 @end

@@ -220,7 +220,9 @@ NSString *wtThunderSessionDelegateProxyID(WtDelegateProxy<WtThunderSessionDelega
 
   [_lock unlock];
 
+#ifdef DEBUG
   NSLog(@"[Glean Web BI]%s - %@", __func__, session.urlString);
+#endif
 }
 
 - (void)sessionDidFinish:(WtThunderSession *)session {
@@ -257,6 +259,8 @@ NSString *wtThunderSessionDelegateProxyID(WtDelegateProxy<WtThunderSessionDelega
 
   [_lock unlock];
 
+#ifdef DEBUG
   NSLog(@"[Glean Web BI]%s - %@", __func__, session.urlString);
+#endif
 }
 @end
