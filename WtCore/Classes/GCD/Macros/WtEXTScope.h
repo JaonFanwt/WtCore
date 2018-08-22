@@ -7,7 +7,7 @@
 //  Released under the MIT license.
 //
 
-#import "metamacros.h"
+#import "WtMetamacros.h"
 
 /**
  * \@onExit defines some code to be executed when the current scope exits. The
@@ -29,10 +29,8 @@
  * a useless construct in such a case anyways.
  */
 #define onExit \
-  try {        \
-  } @finally { \
-  }            \
-  __strong wt_cleanupBlock_t metamacro_concat(wt_exitBlock_, __LINE__) __attribute__((cleanup(wt_executeCleanupBlock), unused)) = ^
+    rac_keywordify \
+    __strong rac_cleanupBlock_t metamacro_concat(rac_exitBlock_, __LINE__) __attribute__((cleanup(rac_executeCleanupBlock), unused)) = ^
 
 /**
  * Creates \c __weak shadow variables for each of the variables provided as
@@ -45,20 +43,16 @@
  * See #strongify for an example of usage.
  */
 #define weakify(...) \
-  try {              \
-  } @finally {       \
-  }                  \
-  metamacro_foreach_cxt(wt_weakify_, , __weak, __VA_ARGS__)
+    rac_keywordify \
+    metamacro_foreach_cxt(rac_weakify_,, __weak, __VA_ARGS__)
 
 /**
  * Like #weakify, but uses \c __unsafe_unretained instead, for targets or
  * classes that do not support weak references.
  */
 #define unsafeify(...) \
-  try {                \
-  } @finally {         \
-  }                    \
-  metamacro_foreach_cxt(wt_weakify_, , __unsafe_unretained, __VA_ARGS__)
+    rac_keywordify \
+    metamacro_foreach_cxt(rac_weakify_,, __unsafe_unretained, __VA_ARGS__)
 
 /**
  * Strongly references each of the variables provided as arguments, which must
@@ -86,22 +80,26 @@
 
  * @endcode
  */
-#define strongify(...)                                \
-  try {                                               \
-  } @finally {                                        \
-  }                                                   \
-  _Pragma("clang diagnostic push")                    \
-    _Pragma("clang diagnostic ignored \"-Wshadow\"")  \
-      metamacro_foreach(wt_strongify_, , __VA_ARGS__) \
-        _Pragma("clang diagnostic pop")
+#define strongify(...) \
+    rac_keywordify \
+    _Pragma("clang diagnostic push") \
+    _Pragma("clang diagnostic ignored \"-Wshadow\"") \
+    metamacro_foreach(rac_strongify_,, __VA_ARGS__) \
+    _Pragma("clang diagnostic pop")
 
 /*** implementation details follow ***/
-typedef void (^wt_cleanupBlock_t)(void);
+typedef void (^rac_cleanupBlock_t)(void);
 
-void wt_executeCleanupBlock(__strong wt_cleanupBlock_t *block);
+void rac_executeCleanupBlock(__strong rac_cleanupBlock_t *block);
 
-#define wt_weakify_(INDEX, CONTEXT, VAR) \
-  CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
+#define rac_weakify_(INDEX, CONTEXT, VAR) \
+    CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
 
-#define wt_strongify_(INDEX, VAR) \
-  __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
+#define rac_strongify_(INDEX, VAR) \
+    __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
+
+#if DEBUG
+#define rac_keywordify autoreleasepool {}
+#else
+#define rac_keywordify try {} @catch (...) {}
+#endif
