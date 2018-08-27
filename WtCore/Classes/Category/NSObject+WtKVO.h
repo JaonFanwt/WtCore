@@ -15,5 +15,6 @@
 
 
 @interface NSObject (WtKVO)
+- (void)wtRemoveAllObserves;
 - (void)wtObserveValueForKeyPath:(NSString *)keyPath valueChangedBlock:(void (^)(id newValue))valueChangedBlock;
 @end

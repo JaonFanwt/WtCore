@@ -17,6 +17,14 @@
 
 @implementation NSObject (WtKVO)
 
+- (void)wtRemoveAllObserves {
+  NSMutableDictionary *mapping = objc_getAssociatedObject(self, @selector(wtKVOKeyPathDelegateProxyMapping));
+  for (NSString *key in mapping.allKeys) {
+    [self removeObserver:WtKVOProxy.shared forKeyPath:key context:(__bridge void *)self];
+  }
+  [[WtKVOProxy shared] wtRemoveObserverForContext:(__bridge void *)self];
+}
+
 - (NSMutableDictionary *)wtKVOKeyPathDelegateProxyMapping {
   NSMutableDictionary *mapping = objc_getAssociatedObject(self, _cmd);
   if (!mapping) {
