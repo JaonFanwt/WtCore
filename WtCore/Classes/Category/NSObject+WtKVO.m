@@ -13,15 +13,12 @@
 @import ReactiveCocoa;
 
 #import "WtKVOProxy.h"
+#import "WtDeallocWatcher.h"
 
 
 @implementation NSObject (WtKVO)
 
 - (void)wtRemoveAllObserves {
-  NSMutableDictionary *mapping = objc_getAssociatedObject(self, @selector(wtKVOKeyPathDelegateProxyMapping));
-  for (NSString *key in mapping.allKeys) {
-    [self removeObserver:WtKVOProxy.shared forKeyPath:key context:(__bridge void *)self];
-  }
   [[WtKVOProxy shared] wtRemoveObserverForContext:(__bridge void *)self];
 }
 
@@ -55,7 +52,7 @@
   if (!delegateProxy) {
     delegateProxy = (WtDelegateProxy<WtKVOProxyDelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(WtKVOProxyDelegate)];
     objc_setAssociatedObject(self, _cmd, delegateProxy, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
+    
     @weakify(self);
     [delegateProxy selector:@selector(wtKVOObserveValueForKeyPath:ofObject:change:context:) block:^(NSString *keyPath, id object, NSDictionary *change, void *context) {
       @strongify(self);
@@ -72,11 +69,22 @@
     [self addObserver:WtKVOProxy.shared forKeyPath:keyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:(__bridge void *)self];
   } else {
   }
-
+  
   WtDelegateProxy<WtKVODelegate> *kvoDelegate = (WtDelegateProxy<WtKVODelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(WtKVODelegate)];
   [kvoDelegate selector:@selector(valueChanged:) block:valueChangedBlock];
   [self wtEnqueueKVOKeyPath:keyPath delegateProxy:kvoDelegate];
-
+  
   [[WtKVOProxy shared] wtAddObserver:[self wtKVODelegateProxy] forContext:(__bridge void *)self];
+  [self wtAutoRemoveObserver];
+}
+
+- (void)wtAutoRemoveObserver {
+  WtDeallocWatcher *deallocWatcher = objc_getAssociatedObject(self, _cmd);
+  if (!deallocWatcher) {
+    deallocWatcher = [WtDeallocWatcher watcher:^(id owner) {
+      [owner wtRemoveAllObserves];
+    } owner:self];
+    objc_setAssociatedObject(self, _cmd, deallocWatcher, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
 }
 @end
