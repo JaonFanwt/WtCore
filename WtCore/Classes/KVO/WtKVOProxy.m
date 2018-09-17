@@ -34,15 +34,21 @@
   return self;
 }
 
-- (void)wtAddObserver:(WtDelegateProxy<WtKVOProxyDelegate> *)delegateProxy forContext:(void *)context {
+- (void)wtAddObserver:(WtDelegateProxy<WtKVOProxyDelegate> *)delegateProxy keyPath:(NSString *)keyPath forContext:(void *)context {
   NSValue *valueContext = [NSValue valueWithPointer:context];
   __block NSMutableDictionary *keyPathMapping;
   dispatch_sync(_queue, ^{
     [self.delegateProxyMapping setObject:delegateProxy forKey:valueContext];
     keyPathMapping = [self.contextKeyPathMapping objectForKey:valueContext];
+    
+    if (!keyPathMapping) {
+      keyPathMapping = @{}.mutableCopy;
+      [self.contextKeyPathMapping setObject:keyPathMapping forKey:valueContext];
+    }
   });
-  if (!keyPathMapping) {
-    [self.contextKeyPathMapping setObject:@{}.mutableCopy forKey:valueContext];
+  
+  if (keyPath) {
+    [keyPathMapping setObject:@1 forKey:keyPath];
   }
 }
 
@@ -64,16 +70,11 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context {
   NSValue *valueContext = [NSValue valueWithPointer:context];
   __block WtDelegateProxy<WtKVOProxyDelegate> *delegateProxy;
-  __block NSMutableDictionary *keyPathMapping;
 
   dispatch_sync(_queue, ^{
     delegateProxy = [self.delegateProxyMapping objectForKey:valueContext];
-    keyPathMapping = [self.contextKeyPathMapping objectForKey:valueContext];
   });
 
   [delegateProxy wtKVOObserveValueForKeyPath:keyPath ofObject:object change:change context:context];
-  if (keyPath) {
-    [keyPathMapping setObject:@1 forKey:keyPath];
-  }
 }
 @end

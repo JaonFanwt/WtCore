@@ -16,6 +16,6 @@
 
 @interface WtKVOProxy : NSObject
 + (instancetype)shared;
-- (void)wtAddObserver:(WtDelegateProxy<WtKVOProxyDelegate> *)delegateProxy forContext:(void *)context;
+- (void)wtAddObserver:(WtDelegateProxy<WtKVOProxyDelegate> *)delegateProxy keyPath:(NSString *)keyPath forContext:(void *)context;
 - (void)wtRemoveObserverForContext:(void *)context;
 @end

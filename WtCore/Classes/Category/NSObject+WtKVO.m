@@ -74,7 +74,7 @@
   [kvoDelegate selector:@selector(valueChanged:) block:valueChangedBlock];
   [self wtEnqueueKVOKeyPath:keyPath delegateProxy:kvoDelegate];
   
-  [[WtKVOProxy shared] wtAddObserver:[self wtKVODelegateProxy] forContext:(__bridge void *)self];
+  [[WtKVOProxy shared] wtAddObserver:[self wtKVODelegateProxy] keyPath:keyPath forContext:(__bridge void *)self];
   [self wtAutoRemoveObserver];
 }
 
