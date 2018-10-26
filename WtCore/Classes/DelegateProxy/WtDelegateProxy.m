@@ -71,6 +71,10 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
+  if (_delegate && ![_delegate isKindOfClass:self.class] && [_delegate respondsToSelector:invocation.selector]) {
+    [invocation invokeWithTarget:_delegate];
+  }
+  
   CTBlockDescription *blockDescription = [self blockDescriptionWithSelector:[invocation selector]];
   if (blockDescription) {
     NSMethodSignature *blockMethodSignature = blockDescription.blockSignature;
@@ -290,6 +294,10 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
     if (blockDescription) {
       return YES;
     }
+  }
+  
+  if (_delegate && ![_delegate isKindOfClass:self.class] && [_delegate respondsToSelector:aSelector]) {
+    return YES;
   }
 
   return b;

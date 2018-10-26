@@ -12,6 +12,7 @@ extern NSString *wtExtractStructName(NSString *typeEncodeString);
 
 
 @interface WtDelegateProxy : NSObject
+@property (nonatomic, weak) id delegate;
 - (instancetype)initWithProtocol:(Protocol *)protocol;
 - (void)selector:(SEL)selector block:(id)block;
 @end
