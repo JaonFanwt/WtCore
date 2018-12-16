@@ -102,6 +102,8 @@ void __wtDispatch_in_main(id block, va_list arg_ptr) {
     }
   }
 
+  [blockInvocation retainArguments];
+
   if ([NSThread isMainThread]) {
     [blockInvocation invokeWithTarget:blockDescription.block];
   } else {
@@ -115,26 +117,35 @@ void __wtDispatch_in_main(id block, va_list arg_ptr) {
 void wtDispatch_in_main(id block, ...) {
   if (!block) return;
 
-  va_list arg_ptr; // 可变参数指针
-  va_start(arg_ptr, block);
+  @autoreleasepool {
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
 
-  __wtDispatch_in_main(block, arg_ptr);
+    __wtDispatch_in_main(block, arg_ptr);
 
-  va_end(arg_ptr);
+    va_end(arg_ptr);
+  }
 }
 
 NSTimeInterval wtDispatch_in_main_clock(id block, ...) {
   if (!block) return 0.0;
 
-  va_list arg_ptr; // 可变参数指针
-  va_start(arg_ptr, block);
+  __block NSTimeInterval result = 0.0;
+  @autoreleasepool {
+    va_list arg_ptr; // 可变参数指针
+    va_start(arg_ptr, block);
 
-  NSDate *beginDate = [NSDate date];
+    NSDate *beginDate = [NSDate date];
 
-  __wtDispatch_in_main(block, arg_ptr);
+    __wtDispatch_in_main(block, arg_ptr);
 
-  NSDate *endDate = [NSDate date];
+    NSDate *endDate = [NSDate date];
 
-  va_end(arg_ptr);
-  return [endDate timeIntervalSince1970] - [beginDate timeIntervalSince1970];
+    va_end(arg_ptr);
+
+    result = [endDate timeIntervalSince1970] - [beginDate timeIntervalSince1970];
+  }
+
+  return result;
 }
+
