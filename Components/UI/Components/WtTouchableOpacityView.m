@@ -8,6 +8,10 @@
 #import "WtTouchableOpacityView.h"
 
 
+@interface WtTouchableOpacityView ()
+@property (nonatomic, assign) CGFloat originAlpha;
+@end
+
 @implementation WtTouchableOpacityView
 - (instancetype)init {
   if (self = [super init]) {
@@ -25,12 +29,12 @@
 
 - (void)awakeFromNib {
   [super awakeFromNib];
-
+  
   [self buildConfigs];
 }
 
 - (void)buildConfigs {
-  _activeOpacity = 0.2;
+  _activeOpacity = 0.78;
   _duration = 0.25;
 }
 
@@ -39,9 +43,9 @@
   [UIView beginAnimations:nil context:nil];
   [UIView setAnimationDuration:duration];
   [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-
+  
   self.alpha = alpha;
-
+  
   [UIView commitAnimations];
 }
 
@@ -50,21 +54,22 @@
 }
 
 - (void)opacityInactive:(CGFloat)duration {
-  [self setOpaciyTo:1 duration:duration];
+  [self setOpaciyTo:_originAlpha duration:duration];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  _originAlpha = self.alpha;
   [super touchesBegan:touches withEvent:event];
   [self opacityActive:_duration];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-  [self touchesEnded:touches withEvent:event];
+  [super touchesEnded:touches withEvent:event];
   [self opacityInactive:_duration];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
-  [self touchesCancelled:touches withEvent:event];
+  [super touchesCancelled:touches withEvent:event];
   [self opacityInactive:_duration];
 }
 @end
