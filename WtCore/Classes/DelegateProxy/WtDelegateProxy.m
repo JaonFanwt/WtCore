@@ -278,7 +278,7 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
 
   if (methodDescription.name == NULL) {
     methodDescription = protocol_getMethodDescription(_protocol, selector, YES, YES);
-    if (methodDescription.name == NULL) return [super methodSignatureForSelector:selector];
+    if (methodDescription.name == NULL) return [NSObject instanceMethodSignatureForSelector:@selector(init)];
   }
 
   NSMethodSignature *methodSignature = [NSMethodSignature signatureWithObjCTypes:methodDescription.types];
