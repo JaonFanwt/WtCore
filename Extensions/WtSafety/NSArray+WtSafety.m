@@ -20,6 +20,10 @@
 }
 
 + (instancetype)wt_swizzleSafety_arrayWithObjects:(const id _Nonnull[])objects count:(NSUInteger)cnt {
+  if (cnt == 0) {
+    return [self wt_swizzleSafety_arrayWithObjects:objects count:cnt];
+  }
+
   id wrapObjects[cnt];
   int j = 0;
   for (int i = 0; i < cnt && j < cnt; i++) {

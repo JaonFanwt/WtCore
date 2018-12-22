@@ -23,6 +23,10 @@
 }
 
 - (instancetype)wt_swizzleSafety_initWithObjects:(const id _Nonnull[_Nullable])objects forKeys:(const id<NSCopying> _Nonnull[_Nullable])keys count:(NSUInteger)cnt {
+  if (cnt == 0) {
+    return [self wt_swizzleSafety_initWithObjects:objects forKeys:keys count:cnt];
+  }
+  
   id wrapKeys[cnt];
   id wrapObjects[cnt];
   int j = 0;
@@ -96,6 +100,10 @@
 }
 
 + (instancetype)wt_swizzleSafety_dictionaryWithObjects:(const id _Nonnull[_Nullable])objects forKeys:(const id<NSCopying> _Nonnull[_Nullable])keys count:(NSUInteger)cnt {
+  if (cnt == 0) {
+    return [self wt_swizzleSafety_dictionaryWithObjects:objects forKeys:keys count:cnt];
+  }
+
   id wrapKeys[cnt];
   id wrapObjects[cnt];
   int j = 0;

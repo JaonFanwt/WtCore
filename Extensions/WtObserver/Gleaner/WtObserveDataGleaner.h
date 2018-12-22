@@ -31,5 +31,5 @@ typedef enum {
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, WtObserveData *> *treasures;
 + (instancetype)shared;
 - (NSString *)cacheToDisk;
-- (void)glean:(NSString *)name columnName:(NSString *)columnName value:(id)value error:(NSError **)error;
+- (BOOL)glean:(NSString *)name columnName:(NSString *)columnName value:(id)value error:(NSError **)error;
 @end

@@ -206,6 +206,10 @@ void class_implementProperty(Class class, NSString *propertyName) {
     setterName = [setterName stringByAppendingString:@":"];
   }
 
+  if (!encoding) {
+    return;
+  }
+
   NSCAssert([encoding characterAtIndex:0] != '{', @"structs are not supported");
   NSCAssert([encoding characterAtIndex:0] != '(', @"unions are not supported");
 

@@ -66,13 +66,13 @@
   }
 }
 
-- (void)glean:(NSString *)name columnName:(NSString *)columnName value:(id)value error:(NSError **)error {
+- (BOOL)glean:(NSString *)name columnName:(NSString *)columnName value:(id)value error:(NSError **)error {
   if (!name || name.length == 0) {
     if (error) {
       NSString *domain = [NSString stringWithFormat:@"[%@] - 搜集名为空.", [self class]];
       *error = [NSError errorWithDomain:domain code:eWtObserveDataGleanNameNilError userInfo:nil];
     }
-    return;
+    return NO;
   }
 
   if (!value) {
@@ -80,7 +80,7 @@
       NSString *domain = [NSString stringWithFormat:@"[%@] - 搜集数据为空.", [self class]];
       *error = [NSError errorWithDomain:domain code:eWtObserveDataGleanValueNilError userInfo:nil];
     }
-    return;
+    return NO;
   }
 
   WtObserveData *treasure = _treasures[name];
@@ -94,6 +94,7 @@
   }
 
   [treasure addValue:value withKey:columnName];
+  return YES;
 }
 
 @end
