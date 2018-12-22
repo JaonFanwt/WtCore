@@ -8,10 +8,11 @@
 #import "WtDebugShowFontsViewController.h"
 
 #import <Masonry/Masonry.h>
-#import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "WtCore.h"
 #import "WtDispatch.h"
+#import "WtEXTScope.h"
+#import "WtEXTKeyPathCoding.h"
 #import "WtDebugShowFontsCellGlue.h"
 
 
@@ -50,9 +51,9 @@
   }];
 
   @weakify(self);
-  [[RACObserve(tableView, hidden) takeUntil:[tableView rac_willDeallocSignal]] subscribeNext:^(id x) {
+  [tableView wtObserveValueForKeyPath:@keypath(tableView, hidden) valueChangedBlock:^(id newValue) {
     @strongify(self);
-    self.loadingView.hidden = ![x boolValue];
+    self.loadingView.hidden = ![newValue boolValue];
   }];
 
   self.tableView.hidden = YES;

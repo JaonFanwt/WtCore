@@ -8,8 +8,6 @@
 
 #import "WtDemoWebViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import <WtCore/WtThunderWeb.h>
 #import <WtCore/WtCore.h>
 #import <WtCore/WtObserver.h>

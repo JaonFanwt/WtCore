@@ -8,8 +8,6 @@
 
 #import "WtDemoAdditionalView.h"
 
-@import ReactiveCocoa;
-
 
 @interface WtDemoAdditionalView () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) UITableView *tableView;

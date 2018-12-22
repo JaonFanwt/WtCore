@@ -8,7 +8,7 @@
 
 #import "WtDemoCellGlue.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
+@import WtCore;
 
 
 @implementation WtDemoCellGlue

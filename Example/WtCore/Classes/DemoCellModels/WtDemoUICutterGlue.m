@@ -8,10 +8,8 @@
 
 #import "WtDemoUICutterGlue.h"
 
-@import ReactiveCocoa;
 
 #pragma mark - Model
-
 
 @implementation WtDemoUICutterModel
 

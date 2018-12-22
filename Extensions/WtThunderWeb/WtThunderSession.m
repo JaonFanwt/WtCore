@@ -8,10 +8,9 @@
 
 #import "WtThunderSession.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import "WtCore.h"
 #import "WtDispatch.h"
+#import "WtEXTScope.h"
 
 #import "WtThunderQueueManager.h"
 #import "WtThunderConstants.h"
@@ -167,8 +166,8 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
   _endTime = [[NSDate date] timeIntervalSince1970];
-  NSString *t = [NSString stringWithFormat:@"%.0f", (_endTime - _beginTime) * 1000];
 #ifdef DEBUG
+  NSString *t = [NSString stringWithFormat:@"%.0f", (_endTime - _beginTime) * 1000];
   NSLog(@"[Glean Web BI]Session request takes %@ms", t);
 #endif
 
@@ -229,8 +228,8 @@ NSString *wtThunderSessionID(NSString *urlString, NSString *userIdentifier) {
 
 - (void)sessionDidFinish:(NSURLSession *)session {
   _endTime = [[NSDate date] timeIntervalSince1970];
-  NSString *t = [NSString stringWithFormat:@"%.0f", (_endTime - _beginTime) * 1000];
 #ifdef DEBUG
+  NSString *t = [NSString stringWithFormat:@"%.0f", (_endTime - _beginTime) * 1000];
   NSLog(@"[Glean Web BI]Session request takes %@ms", t);
 #endif
 

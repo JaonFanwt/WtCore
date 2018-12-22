@@ -11,7 +11,6 @@
 #import <Masonry/Masonry.h>
 #import <FLEX/FLEXManager.h>
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
-#import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "WtCellGlue.h"
 #import "WtDebugCellGluesManager.h"

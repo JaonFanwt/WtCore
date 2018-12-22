@@ -42,7 +42,6 @@ blablabla private~
   s.subspec "Core" do |ss|
     ss.ios.source_files = "WtCore/Classes/**/*.{h,m}"
     ss.ios.public_header_files = "WtCore/Classes/**/*.h"
-    ss.dependency 'ReactiveCocoa', '~> 2.5'
   end
 
   s.subspec "Observer" do |ss|
@@ -50,7 +49,6 @@ blablabla private~
     ss.ios.public_header_files = "Extensions/WtObserver/**/*.h"
     ss.dependency 'WtCore/Core'
   end
-
 
   s.subspec "UI" do |ss|
     ss.ios.source_files = "Components/UI/**/*.{h,m}"
@@ -62,7 +60,7 @@ blablabla private~
 
   s.subspec "UI-Swift" do |ss|
     ss.ios.source_files = "Components/UI/**/*.{swift}"
-    ss.dependency 'SnapKit', '~> 3.2.0'
+    ss.dependency 'SnapKit'
   end
 
   s.subspec "DebugTools" do |ss|
@@ -71,14 +69,12 @@ blablabla private~
     ss.dependency 'FLEX'
     ss.dependency 'KMCGeigerCounter'
     ss.dependency 'Masonry'
-    ss.dependency 'ReactiveCocoa', '~> 2.5'
     ss.dependency 'WtCore/UI'
   end
 
   s.subspec "ThunderWeb" do |ss|
     ss.ios.source_files = "Extensions/WtThunderWeb/**/*.{h,m}"
     ss.ios.public_header_files = "Extensions/WtThunderWeb/**/*.h"
-    ss.dependency 'ReactiveCocoa', '~> 2.5'
     ss.dependency 'WtCore/UI'
     ss.dependency 'WtCore/Observer'
   end

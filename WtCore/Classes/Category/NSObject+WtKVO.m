@@ -10,8 +10,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
-@import ReactiveCocoa;
-
+#import "WtEXTScope.h"
 #import "WtKVOProxy.h"
 #import "WtDeallocWatcher.h"
 

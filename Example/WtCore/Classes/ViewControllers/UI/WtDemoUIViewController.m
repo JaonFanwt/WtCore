@@ -8,11 +8,9 @@
 
 #import "WtDemoUIViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Masonry/Masonry.h>
 
-#import <WtCore/WtCore.h>
-#import <WtCore/WtUI.h>
+@import WtCore;
 
 #import "WtDemoCellGlue.h"
 #import "WtDemoHUDViewController.h"

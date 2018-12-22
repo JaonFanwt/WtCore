@@ -8,7 +8,7 @@
 
 #import "WtDebugManager.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "WtEXTScope.h"
 
 
 @implementation WtDebugManager
@@ -21,17 +21,20 @@
   return manager;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)init {
   if (self = [super init]) {
-    @weakify(self);
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
-      @strongify(self);
-
-      [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isDebugOn] forKey:@"WtDebugOn"];
-      [[NSUserDefaults standardUserDefaults] synchronize];
-    }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidEnterBackgroundNotification) name:UIApplicationDidEnterBackgroundNotification object:nil];
   }
   return self;
+}
+
+- (void)handleApplicationDidEnterBackgroundNotification {
+  [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isDebugOn] forKey:@"WtDebugOn"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)isDebugOn {

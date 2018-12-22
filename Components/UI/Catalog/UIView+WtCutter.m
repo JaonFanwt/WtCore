@@ -37,12 +37,12 @@
   }
   CGSize size = CGSizeMake(pixelsWidth, sliceHeight);
 
-  CGFloat originY = point.y;
+  CGFloat originY = 0;
   int sliceIndex = sliceNum - 1;
   BOOL found = NO;
   int i = -1;
 
-  NSInteger x = point.x;
+  NSInteger x = 0;
   NSInteger y = point.y;
 
   while ((sliceIndex > 0) && (y >= 0) && (y < sliceIndex * sliceHeight)) {
@@ -71,11 +71,13 @@
     int bitCount = bitPerRow * size.height;
     UInt8 *bitdata = malloc(bitCount);
     if (bitdata == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
     CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
     if (deviceRGB == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
@@ -118,9 +120,9 @@
             x = point.x;
             y += i;
             preR = -1;
-            preG = -1;
-            preB = -1;
-            preA = -1;
+//            preG = -1;
+//            preB = -1;
+//            preA = -1;
           }
         } else {
           rgbaIdx++;
@@ -155,9 +157,9 @@
           x = point.x;
           y += i;
           preR = -1;
-          preG = -1;
-          preB = -1;
-          preA = -1;
+//          preG = -1;
+//          preB = -1;
+//          preA = -1;
         } else {
           x++;
         }
@@ -194,12 +196,12 @@
   }
   CGSize size = CGSizeMake(pixelsWidth, sliceHeight);
 
-  CGFloat originY = point.y;
+  CGFloat originY = 0;
   int sliceIndex = 0;
   BOOL found = NO;
   int i = 1;
 
-  NSInteger x = point.x;
+  NSInteger x = 0;
   NSInteger y = point.y;
 
   while ((y < pixelsHeight) && (y > (sliceIndex + 1) * sliceHeight)) {
@@ -233,6 +235,7 @@
 
     CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
     if (deviceRGB == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
@@ -267,9 +270,9 @@
             x = point.x;
             y += i;
             preR = -1;
-            preG = -1;
-            preB = -1;
-            preA = -1;
+//            preG = -1;
+//            preB = -1;
+//            preA = -1;
           }
         } else {
           rgbaIdx++;
@@ -297,9 +300,9 @@
           x = point.x;
           y += i;
           preR = -1;
-          preG = -1;
-          preB = -1;
-          preA = -1;
+//          preG = -1;
+//          preB = -1;
+//          preA = -1;
         } else {
           x++;
         }
@@ -335,12 +338,12 @@
   if (sliceHeight < pixelsHeight) { // 余下的小数位增一页
     ++sliceNum;
   }
-  CGFloat originY = point.y;
+  CGFloat originY = 0;
   int sliceIndex = sliceNum - 1;
   BOOL found = NO;
   int i = -1;
 
-  NSInteger x = point.x;
+  NSInteger x = 0;
   NSInteger y = point.y;
 
   while ((sliceIndex > 0) && (y >= 0) && (y < sliceIndex * sliceHeight)) {
@@ -369,11 +372,13 @@
     int bitCount = bitPerRow * size.height;
     UInt8 *bitdata = malloc(bitCount);
     if (bitdata == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
     CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
     if (deviceRGB == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
@@ -402,9 +407,9 @@
           x = point.x;
           y += i;
           preR = -1;
-          preG = -1;
-          preB = -1;
-          preA = -1;
+//          preG = -1;
+//          preB = -1;
+//          preA = -1;
         } else {
           rgbaIdx++;
           x = point.x;
@@ -464,12 +469,12 @@
   if (sliceHeight < pixelsHeight) { // 余下的小数位增一页
     ++sliceNum;
   }
-  CGFloat originY = point.y;
+  CGFloat originY = 0;
   int sliceIndex = 0;
   BOOL found = NO;
   int i = 1;
 
-  NSInteger x = point.x;
+  NSInteger x = 0;
   NSInteger y = point.y;
 
   while ((y < pixelsHeight) && (y > (sliceIndex + 1) * sliceHeight)) {
@@ -498,11 +503,13 @@
     int bitCount = bitPerRow * size.height;
     UInt8 *bitdata = malloc(bitCount);
     if (bitdata == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
     CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
     if (deviceRGB == NULL) {
+      free(bitdata);
       return CGPointMake(-1, NSNotFound);
     }
 
@@ -522,12 +529,13 @@
 
     [self.layer renderInContext:contex];
 
-    CGImageRef imageRef = CGBitmapContextCreateImage(contex);
-    UIImage *__image = [UIImage imageWithCGImage:imageRef];
-
-#ifdef DEBUG
-    NSLog(@"%s - %@", __func__, __image);
-#endif
+//    CGImageRef imageRef = CGBitmapContextCreateImage(contex);
+//    UIImage *__image = [UIImage imageWithCGImage:imageRef];
+//    CGImageRelease(imageRef);
+//
+//#ifdef DEBUG
+//    NSLog(@"%s - %@", __func__, __image);
+//#endif
 
     int rgbaIdx = 0; // 0:r, 1:g, 2:b, 3:a
     NSArray *rgbaArray = nil;
@@ -538,9 +546,9 @@
           x = point.x;
           y += i;
           preR = -1;
-          preG = -1;
-          preB = -1;
-          preA = -1;
+//          preG = -1;
+//          preB = -1;
+//          preA = -1;
         } else {
           rgbaIdx++;
           x = point.x;

@@ -107,6 +107,7 @@
 
   CGColorSpaceRef deviceRGB = CGColorSpaceCreateDeviceRGB();
   if (deviceRGB == NULL) {
+    free(bitdata);
     return nil;
   }
 

@@ -1,46 +1,36 @@
 PODS:
   - FDFullscreenPopGesture (1.1)
   - FLEX (2.4.0)
-  - KMCGeigerCounter (0.2.2)
+  - KMCGeigerCounter (0.3.0)
   - Masonry (1.1.0)
-  - ReactiveCocoa (2.5):
-    - ReactiveCocoa/UI (= 2.5)
-  - ReactiveCocoa/Core (2.5):
-    - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.5)
-  - ReactiveCocoa/UI (2.5):
-    - ReactiveCocoa/Core
-  - SnapKit (3.2.0)
-  - WtCore (0.4.6):
-    - WtCore/Core (= 0.4.6)
-    - WtCore/DebugTools (= 0.4.6)
-    - WtCore/Observer (= 0.4.6)
-    - WtCore/Safety (= 0.4.6)
-    - WtCore/ThunderWeb (= 0.4.6)
-    - WtCore/UI (= 0.4.6)
-    - WtCore/UI-Swift (= 0.4.6)
-  - WtCore/Core (0.4.6):
-    - ReactiveCocoa (~> 2.5)
-  - WtCore/DebugTools (0.4.6):
+  - SnapKit (4.2.0)
+  - WtCore (0.4.8):
+    - WtCore/Core (= 0.4.8)
+    - WtCore/DebugTools (= 0.4.8)
+    - WtCore/Observer (= 0.4.8)
+    - WtCore/Safety (= 0.4.8)
+    - WtCore/ThunderWeb (= 0.4.8)
+    - WtCore/UI (= 0.4.8)
+    - WtCore/UI-Swift (= 0.4.8)
+  - WtCore/Core (0.4.8)
+  - WtCore/DebugTools (0.4.8):
     - FLEX
     - KMCGeigerCounter
     - Masonry
-    - ReactiveCocoa (~> 2.5)
     - WtCore/UI
-  - WtCore/Observer (0.4.6):
+  - WtCore/Observer (0.4.8):
     - WtCore/Core
-  - WtCore/Safety (0.4.6):
+  - WtCore/Safety (0.4.8):
     - WtCore/Core
-  - WtCore/ThunderWeb (0.4.6):
-    - ReactiveCocoa (~> 2.5)
+  - WtCore/ThunderWeb (0.4.8):
     - WtCore/Observer
     - WtCore/UI
-  - WtCore/UI (0.4.6):
+  - WtCore/UI (0.4.8):
     - FDFullscreenPopGesture
     - Masonry
     - WtCore/Core
-  - WtCore/UI-Swift (0.4.6):
-    - SnapKit (~> 3.2.0)
+  - WtCore/UI-Swift (0.4.8):
+    - SnapKit
 
 DEPENDENCIES:
   - WtCore (from `../`)
@@ -51,7 +41,6 @@ SPEC REPOS:
     - FLEX
     - KMCGeigerCounter
     - Masonry
-    - ReactiveCocoa
     - SnapKit
 
 EXTERNAL SOURCES:
@@ -61,11 +50,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  KMCGeigerCounter: f8cc3c4aa19fc6f8cec168fb03b364b84c118a7a
+  KMCGeigerCounter: a06cfeed4a96e8f9a49028abb3ba7e53604d3219
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  WtCore: 9c6581f17145abd9f880e67d50eab0c4c6123a73
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  WtCore: dbcfb9c9d3166a7b321691babb4ee5b7a77e54d2
 
 PODFILE CHECKSUM: f14c47536dfdce2eb7cf887a65d5c7ca32ab9b1d
 

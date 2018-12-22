@@ -11,9 +11,8 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import "WtSwizzle.h"
+#import "WtEXTScope.h"
 #import "WtDelegateProxy.h"
 
 

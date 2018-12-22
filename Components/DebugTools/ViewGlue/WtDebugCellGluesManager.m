@@ -10,10 +10,10 @@
 #import <Masonry/Masonry.h>
 #import <FLEX/FLEXManager.h>
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
-#import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "WtCore.h"
 #import "WtDispatch.h"
+#import "WtEXTKeyPathCoding.h"
 #import "WtDebugShowFontsCellGlue.h"
 #import "WtDebugTableViewCellRightDetailGlue.h"
 #import "WtDebugTableViewCellBasicSwitchGlue.h"
@@ -85,8 +85,8 @@
     cellGlue.detailDescription = @"检测FPS，显示在状态栏当中";
     cellGlue.switchOn = [KMCGeigerCounter sharedGeigerCounter].enabled;
 
-    [[RACObserve(cellGlue, switchOn) takeUntil:[cellGlue rac_willDeallocSignal]] subscribeNext:^(id x) {
-      [KMCGeigerCounter sharedGeigerCounter].enabled = [x boolValue];
+    [cellGlue wtObserveValueForKeyPath:@keypath(cellGlue, switchOn) valueChangedBlock:^(id newValue) {
+      [KMCGeigerCounter sharedGeigerCounter].enabled = [newValue boolValue];
     }];
   }
 

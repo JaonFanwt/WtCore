@@ -8,14 +8,15 @@
 #import "WtDebugSwitchNetworkViewController.h"
 
 #import <Masonry/Masonry.h>
-#import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "WtCellGlue.h"
-
-#import "WtDebugSwitchNetworkManager.h"
+#import "WtEXTScope.h"
+#import "UIAlertView+WtUI.h"
 #import "WtDebugBundle.h"
 #import "WtDebugSwitchNetworkItem.h"
 #import "WtDebugSwitchNetworkGroup.h"
+#import "WtDebugSwitchNetworkManager.h"
+#import "WtUI.h"
 
 
 @interface WtDebugSwitchNetworkViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -67,11 +68,10 @@
 - (void)handlerAddNetworkItemWithIndexPath:(NSInteger)section {
   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"添加自定义URL" message:@"请输入" delegate:nil cancelButtonTitle:@"添加" otherButtonTitles:nil];
   alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-
   [alertView show];
 
   @weakify(self);
-  [[alertView rac_buttonClickedSignal] subscribeNext:^(NSNumber *buttonIndex) {
+  [alertView.wtDelegateProxy selector:@selector(actionSheet:clickedButtonAtIndex:) block:^(UIAlertView *alertView, NSInteger buttonIndex){
     @strongify(self);
     UITextField *tf = [alertView textFieldAtIndex:0];
     NSString *tfStr = tf.text;
@@ -129,11 +129,10 @@
   b.frame = CGRectMake(0, 0, CGRectGetWidth(tableView.frame), 44.0f);
   [b setImage:[UIImage imageNamed:@"QDKeyboardShowIcon" inBundle:[WtDebugBundle bundle] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
   @weakify(self);
-  b.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+  [b wtAction:^(UIControl *control, UIControlEvents controlEvents) {
     @strongify(self);
     [self handlerAddNetworkItemWithIndexPath:section];
-    return [RACSignal empty];
-  }];
+  } forControlEvents:UIControlEventTouchUpInside];
 
   return v;
 }

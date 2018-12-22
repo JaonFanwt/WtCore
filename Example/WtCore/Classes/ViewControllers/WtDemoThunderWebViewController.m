@@ -8,11 +8,7 @@
 
 #import "WtDemoThunderWebViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
-#import <WtCore/WtCore.h>
-#import <WtCore/WtObserver.h>
-#import <WtCore/WtThunderWeb.h>
+@import WtCore;
 
 #import "WtDemoCellGlue.h"
 #import "WtDemoWebViewController.h"

@@ -4,12 +4,11 @@
 
 #import "WtDebugTableViewCellBasicSwitchGlue.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import "WtCore.h"
+#import "WtEXTScope.h"
+#import "UIControl+WtUI.h"
+#import "WtEXTKeyPathCoding.h"
 #import "WtDebugTableViewCellBasicSwitch.h"
-#import "UISwitch+RACSignalSupport.h"
-#import "UITableViewCell+RACSignalSupport.h"
 
 
 @interface WtDebugTableViewCellBasicSwitchGlue ()
@@ -40,16 +39,15 @@
     cell.subTitleLabel.text = self.detailDescription;
     cell.switchControl.on = self.switchOn;
 
-    @weakify(self);
-    [[[cell.switchControl rac_newOnChannel] takeUntil:[cell rac_prepareForReuseSignal]] subscribeNext:^(id x) {
+    @weakify(self, cell);
+    [cell.switchControl wtAction:^(UIControl *control, UIControlEvents controlEvents) {
       @strongify(self);
-      self.switchOn = [x boolValue];
-    }];
+      self.switchOn = cell.switchControl.on;
+    } forControlEvents:UIControlEventValueChanged];
 
-    @weakify(cell);
-    [[RACObserve(self, switchOn) takeUntil:[cell rac_prepareForReuseSignal]] subscribeNext:^(id x) {
+    [self wtObserveValueForKeyPath:@keypath(self, switchOn) valueChangedBlock:^(id newValue) {
       @strongify(cell);
-      cell.switchControl.on = [x boolValue];
+      cell.switchControl.on = [newValue boolValue];
     }];
 
     return cell;

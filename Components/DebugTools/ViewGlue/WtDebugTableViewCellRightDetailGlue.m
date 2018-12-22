@@ -4,8 +4,7 @@
 
 #import "WtDebugTableViewCellRightDetailGlue.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
+#import "WtEXTScope.h"
 #import "WtDebugTableViewCellRightDetail.h"
 #import "WtDebugSwitchNetworkViewController.h"
 

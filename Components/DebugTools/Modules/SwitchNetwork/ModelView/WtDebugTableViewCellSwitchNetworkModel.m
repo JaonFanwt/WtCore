@@ -7,8 +7,7 @@
 
 #import "WtDebugTableViewCellSwitchNetworkModel.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
+#import "WtEXTScope.h"
 #import "WtDebugTableViewCellSwitchNetwork.h"
 
 

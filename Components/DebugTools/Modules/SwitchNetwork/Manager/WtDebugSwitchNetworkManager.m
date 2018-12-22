@@ -8,11 +8,7 @@
 
 #import "WtDebugSwitchNetworkManager.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import "WtDebugSwitchNetworkDB.h"
-#import "NSNotificationCenter+RACSupport.h"
-#import "RACSignal.h"
 
 
 @interface WtDebugSwitchNetworkManager ()
@@ -52,11 +48,11 @@
 }
 
 - (void)createActions {
-  @weakify(self);
-  [[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil] subscribeNext:^(id x) {
-    @strongify(self);
-    [WtDebugSwitchNetworkDB cacheToCache:self.privateNetworkGroups];
-  }];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidEnterBackgroundNotification) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)handleApplicationDidEnterBackgroundNotification {
+  [WtDebugSwitchNetworkDB cacheToCache:self.privateNetworkGroups];
 }
 
 #pragma mark - public

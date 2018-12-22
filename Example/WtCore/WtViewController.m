@@ -8,12 +8,7 @@
 
 #import "WtViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
-#import <WtCore/WtCore.h>
-#import <WtCore/WtDebugTools.h>
-#import <WtCore/WtThunderWeb.h>
-#import <WtCore/WtUI.h>
+@import WtCore;
 
 #import "WtDemoCellGlue.h"
 
@@ -311,9 +306,9 @@
       @strongify(self);
       UIViewController *toViewCtrl = [[UIViewController alloc] init];
       toViewCtrl.view.frame = self.view.frame;
-      [[toViewCtrl rac_willDeallocSignal] subscribeCompleted:^{
-        NSLog(@"%s [Line %d]", __PRETTY_FUNCTION__, __LINE__);
-      }];
+//      [[toViewCtrl rac_willDeallocSignal] subscribeCompleted:^{
+//        NSLog(@"%s [Line %d]", __PRETTY_FUNCTION__, __LINE__);
+//      }];
 
       UIButton *subView = [UIButton buttonWithType:UIButtonTypeCustom];
       subView.frame = CGRectMake(-50, (arc4random() % 300), 50, 80);

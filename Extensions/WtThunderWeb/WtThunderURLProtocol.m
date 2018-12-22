@@ -8,10 +8,9 @@
 
 #import "WtThunderURLProtocol.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import "WtObserver.h"
 #import "WtDispatch.h"
+#import "WtEXTScope.h"
 
 #import "WtThunderClient.h"
 #import "WtThunderConstants.h"

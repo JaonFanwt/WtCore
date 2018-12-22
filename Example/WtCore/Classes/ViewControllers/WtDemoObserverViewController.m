@@ -8,10 +8,7 @@
 
 #import "WtDemoObserverViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
-#import <WtCore/WtCore.h>
-#import <WtCore/WtObserver.h>
+@import WtCore;
 
 #import "WtDemoCellGlue.h"
 
@@ -69,31 +66,30 @@
 
 - (void)createActions {
   @weakify(self);
-
-  [[RACObserve(self, endViewDidLoadTime) takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
+  [self wtObserveValueForKeyPath:@keypath(self, endViewDidLoadTime) valueChangedBlock:^(id newValue) {
     @strongify(self);
-    NSInteger time = (NSInteger)(([x doubleValue] - self.startInitTime) * 1000);
+    NSInteger time = (NSInteger)(([newValue doubleValue] - self.startInitTime) * 1000);
     NSLog(@"[WtObserver]Init到ViewDidLoad耗时: %zdms", time);
     [[WtObserveDataGleaner shared] glean:@"Web BI" columnName:@"ViewDidLoad" value:@(time) error:nil];
   }];
 
-  [[[RACObserve(_webView, endLoadRequestTime) skip:1] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
+  [_webView wtObserveValueForKeyPath:@keypath(_webView, endLoadRequestTime) valueChangedBlock:^(id newValue) {
     @strongify(self);
-    NSInteger time = (NSInteger)(([x doubleValue] - self.startInitTime) * 1000);
+    NSInteger time = (NSInteger)(([newValue doubleValue] - self.startInitTime) * 1000);
     NSLog(@"[WtObserver]Init到LoadRequest耗时: %zdms", time);
     [[WtObserveDataGleaner shared] glean:@"Web BI" columnName:@"WebViewLoad" value:@(time) error:nil];
   }];
 
-  [[[RACObserve(_webView, endDidStartLoadTime) skip:1] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
+  [_webView wtObserveValueForKeyPath:@keypath(_webView, endDidStartLoadTime) valueChangedBlock:^(id newValue) {
     @strongify(self);
-    NSInteger time = (NSInteger)(([x doubleValue] - self.startInitTime) * 1000);
+    NSInteger time = (NSInteger)(([newValue doubleValue] - self.startInitTime) * 1000);
     NSLog(@"[WtObserver]Init到DidStartLoad耗时: %zdms", time);
     [[WtObserveDataGleaner shared] glean:@"Web BI" columnName:@"WebViewStartLoad" value:@(time) error:nil];
   }];
 
-  [[[RACObserve(_webView, endDidFinishLoadTime) skip:1] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
+  [_webView wtObserveValueForKeyPath:@keypath(_webView, endDidFinishLoadTime) valueChangedBlock:^(id newValue) {
     @strongify(self);
-    NSInteger time = (NSInteger)(([x doubleValue] - self.startInitTime) * 1000);
+    NSInteger time = (NSInteger)(([newValue doubleValue] - self.startInitTime) * 1000);
     NSLog(@"[WtObserver]Init到DidFinishLoad耗时: %zdms", time);
     [[WtObserveDataGleaner shared] glean:@"Web BI" columnName:@"WebViewFinishLoad" value:@(time) error:nil];
   }];

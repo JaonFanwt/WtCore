@@ -276,7 +276,7 @@ public class WtWattpadView: UIView {
 
         loadContentViews(index: hCurrentIndex!)
 
-        bringSubview(toFront: containerView.current)
+        bringSubviewToFront(containerView.current)
 
         zip(containerView.array(), contentView.array()).forEach { (_containerView, _contentView) in
             _contentView.isUserInteractionEnabled = true
@@ -315,7 +315,7 @@ public class WtWattpadView: UIView {
             insertSubview(contentView.basemap.current!, at: 0)
         }
 
-        bringSubview(toFront: containerView.current)
+        bringSubviewToFront(containerView.current)
     }
 
     func loadPreContentView() {
@@ -331,7 +331,7 @@ public class WtWattpadView: UIView {
         contentView.basemap.pre?.removeFromSuperview()
         contentView.basemap.pre = datasource.flipView(flipView: self, baseMapViewAtIndex: contentIndex.pre)
 
-        bringSubview(toFront: containerView.current)
+        bringSubviewToFront(containerView.current)
     }
 
     func swapCurrentToNext() {
@@ -500,7 +500,7 @@ public class WtWattpadView: UIView {
     // MARK: 滑动结束
     func flipEnd(withTranslatPoint translatPoint: CGPoint) {
         if orientation == .upDown {
-            if fabs(translatPoint.y) <= flipMinOffset {
+            if abs(translatPoint.y) <= flipMinOffset {
                 flipToOriginal()
             } else if translatPoint.y < 0 {
                 flipToNextPage(o: .y)
@@ -508,7 +508,7 @@ public class WtWattpadView: UIView {
                 flipToPrePage(o: .y)
             }
         } else {
-            if fabs(translatPoint.x) <= flipMinOffset {
+            if abs(translatPoint.x) <= flipMinOffset {
                 flipToOriginal()
             } else if translatPoint.x < 0 {
                 flipToNextPage(o: .x)
@@ -606,7 +606,7 @@ public class WtWattpadView: UIView {
                     if contentView.basemap.current!.superview == nil {
                         contentView.basemap.pre?.removeFromSuperview()
                         insertSubview(contentView.basemap.current!, at: 0)
-                        bringSubview(toFront: containerView.current)
+                        bringSubviewToFront(containerView.current)
                     } else {} // 不做处理
 
                     containerView.current.transform = CGAffineTransform(translationX: transformX, y: transformY)
@@ -620,7 +620,7 @@ public class WtWattpadView: UIView {
                     if contentView.basemap.pre!.superview == nil {
                         contentView.basemap.current?.removeFromSuperview()
                         insertSubview(contentView.basemap.pre!, at: 0)
-                        bringSubview(toFront: containerView.current)
+                        bringSubviewToFront(containerView.current)
                     } else {} // 不做处理
 
                     containerView.current.transform = CGAffineTransform(translationX: transformX, y: transformY)

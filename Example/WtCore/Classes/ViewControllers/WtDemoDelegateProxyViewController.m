@@ -8,8 +8,6 @@
 
 #import "WtDemoDelegateProxyViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
 #import <WtCore/WtCore.h>
 
 #import "WtDemoCellGlue.h"

@@ -7,10 +7,10 @@
 
 #import "WtDebugShowFontsCellGlue.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
-#import "WtDebugShowFontsTableViewCell.h"
+#import "WtEXTScope.h"
 #import "UIColor+WtExtension.h"
+#import "WtDebugShowFontsTableViewCell.h"
+
 
 // Model
 @implementation WtDebugShowFontsCellModel

@@ -8,9 +8,7 @@
 
 #import "WtDemoCoreViewController.h"
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
-
-#import <WtCore/WtCore.h>
+@import WtCore;
 
 #import "WtDemoCellGlue.h"
 

@@ -8,7 +8,6 @@
 #import "UIWindow+WtMask.h"
 
 @import Masonry;
-@import ReactiveCocoa;
 #import <objc/runtime.h>
 
 #import "WtCore.h"
