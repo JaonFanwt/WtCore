@@ -71,7 +71,7 @@
   [alertView show];
 
   @weakify(self);
-  [alertView.wtDelegateProxy selector:@selector(actionSheet:clickedButtonAtIndex:) block:^(UIAlertView *alertView, NSInteger buttonIndex){
+  [alertView.wtDelegateProxy selector:@selector(alertView:clickedButtonAtIndex:) block:^(UIAlertView *alertView, NSInteger buttonIndex){
     @strongify(self);
     UITextField *tf = [alertView textFieldAtIndex:0];
     NSString *tfStr = tf.text;
