@@ -16,6 +16,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     wt_swizzleClassStaticMethod([self class], @selector(arrayWithObjects:count:), @selector(wt_swizzleSafety_arrayWithObjects:count:));
+    wt_swizzleClassStaticMethod(self.class, @selector(arrayWithArray:), @selector(wt_swizzleSafety_arrayWithArray:));
   });
 }
 
@@ -35,6 +36,10 @@
     }
   }
   return [self wt_swizzleSafety_arrayWithObjects:wrapObjects count:j];
+}
+
++ (instancetype)wt_swizzleSafety_arrayWithArray:(NSArray *)array {
+  return [self wt_swizzleSafety_arrayWithArray:array?:@[]];
 }
 @end
 
