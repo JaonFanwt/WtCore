@@ -275,14 +275,15 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
   struct objc_method_description methodDescription = protocol_getMethodDescription(_protocol, selector, NO, YES);
-
+  
   if (methodDescription.name == NULL) {
     methodDescription = protocol_getMethodDescription(_protocol, selector, YES, YES);
-    if (methodDescription.name == NULL) return [NSObject instanceMethodSignatureForSelector:@selector(init)];
+    if (methodDescription.name == NULL && _delegate && [_delegate respondsToSelector:selector]) {
+      return [_delegate methodSignatureForSelector:selector];
+    } else { }
   }
-
+  
   NSMethodSignature *methodSignature = [NSMethodSignature signatureWithObjCTypes:methodDescription.types];
-
   return methodSignature;
 }
 
