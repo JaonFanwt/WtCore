@@ -75,7 +75,7 @@
   [bkView_s addSubview:line];
   [line mas_makeConstraints:^(MASConstraintMaker *make) {
     make.left.equalTo(bkView_s).offset(18.0);
-    make.right.bottom.width.equalTo(bkView_s);
+    make.right.bottom.equalTo(bkView_s);
     make.height.mas_equalTo(@0.6f);
   }];
 }
