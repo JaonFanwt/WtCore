@@ -92,4 +92,9 @@ static NSString *kWtDebugSwitchNetworkConfigPlist = @"DebugSwitchNetworkConfig.p
   NSData *resultData = [NSKeyedArchiver archivedDataWithRootObject:dataArray];
   [resultData writeToFile:[self cachedPlistPath] atomically:YES];
 }
+
++ (BOOL)cleanCache:(NSError **)error {
+  NSString *filePath = [self cachedPlistPath];
+  return [[NSFileManager defaultManager] removeItemAtPath:filePath error:error];
+}
 @end

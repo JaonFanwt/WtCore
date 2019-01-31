@@ -14,4 +14,5 @@
 @interface WtDebugSwitchNetworkDB : NSObject
 + (NSArray<WtDebugSwitchNetworkGroup *> *)loadFromCache;
 + (void)cacheToCache:(NSArray<WtDebugSwitchNetworkGroup *> *)array;
++ (BOOL)cleanCache:(NSError **)error;
 @end
