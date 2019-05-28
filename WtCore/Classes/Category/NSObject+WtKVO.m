@@ -19,6 +19,7 @@
 
 - (void)wtRemoveAllObserves {
   [[WtKVOProxy shared] wtRemoveObserverForContext:(__bridge void *)self];
+  objc_setAssociatedObject(self, @selector(wtKVOKeyPathDelegateProxyMapping), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSMutableDictionary *)wtKVOKeyPathDelegateProxyMapping {
