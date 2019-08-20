@@ -9,6 +9,6 @@
 
 #import "WtEXTScope.h"
 
-void rac_executeCleanupBlock(__strong rac_cleanupBlock_t *block) {
+void wt_rac_executeCleanupBlock(__strong wt_rac_cleanupBlock_t *block) {
   (*block)();
 }

@@ -30,7 +30,7 @@
  */
 #define onExit \
     rac_keywordify \
-    __strong rac_cleanupBlock_t metamacro_concat(rac_exitBlock_, __LINE__) __attribute__((cleanup(rac_executeCleanupBlock), unused)) = ^
+    __strong wt_rac_cleanupBlock_t metamacro_concat(rac_exitBlock_, __LINE__) __attribute__((cleanup(wt_rac_executeCleanupBlock), unused)) = ^
 
 /**
  * Creates \c __weak shadow variables for each of the variables provided as
@@ -88,9 +88,9 @@
     _Pragma("clang diagnostic pop")
 
 /*** implementation details follow ***/
-typedef void (^rac_cleanupBlock_t)(void);
+typedef void (^wt_rac_cleanupBlock_t)(void);
 
-void rac_executeCleanupBlock(__strong rac_cleanupBlock_t *block);
+void wt_rac_executeCleanupBlock(__strong wt_rac_cleanupBlock_t *block);
 
 #define rac_weakify_(INDEX, CONTEXT, VAR) \
     CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
