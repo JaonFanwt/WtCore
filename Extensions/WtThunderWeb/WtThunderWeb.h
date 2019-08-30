@@ -14,3 +14,5 @@
 #import "WtThunderSession.h"
 #import "WtThunderURLProtocol.h"
 #import "WtThunderClient.h"
+#import "WtThunderURLSessionManager.h"
+#import "WtURLSessionManagerTaskDelegate.h"
