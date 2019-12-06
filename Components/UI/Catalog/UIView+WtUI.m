@@ -128,4 +128,12 @@
 
   return bitdata;
 }
+
+- (UIImage *)wtSnapshot {
+  UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0);
+  [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
 @end

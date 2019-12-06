@@ -26,4 +26,8 @@
  *  The return value (UInt8 *) requires the user to release after use.
  */
 - (UInt8 *)wtBitdataWithFrame:(CGRect)frame scale:(CGFloat)scale;
+/**
+ *  Creates a snapshot
+ */
+- (UIImage *)wtSnapshot;
 @end
