@@ -34,6 +34,7 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		B00234A8212B1464005D332C /* WtKVOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B00234A7212B1464005D332C /* WtKVOTests.m */; };
+		B03719F223E9917B00925F4C /* WtTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B03719F123E9917B00925F4C /* WtTimerTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B05A212A1F59026100FBB990 /* WtDemoCellGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21291F59026100FBB990 /* WtDemoCellGlue.m */; };
 		B05A21331F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21311F5909AC00FBB990 /* WtDemoDelegateProxyViewController.m */; };
 		B05A21341F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21321F5909AC00FBB990 /* WtDemoDelegateProxyViewController.xib */; };
@@ -109,6 +110,7 @@
 		7487ABAC0D62295FE57BDEF3 /* Pods_WtCore_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WtCore_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B00234A7212B1464005D332C /* WtKVOTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtKVOTests.m; sourceTree = "<group>"; };
+		B03719F123E9917B00925F4C /* WtTimerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtTimerTests.m; sourceTree = "<group>"; };
 		B05A21281F59026100FBB990 /* WtDemoCellGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoCellGlue.h; sourceTree = "<group>"; };
 		B05A21291F59026100FBB990 /* WtDemoCellGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCellGlue.m; sourceTree = "<group>"; };
 		B05A21301F5909AC00FBB990 /* WtDemoDelegateProxyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoDelegateProxyViewController.h; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */,
 				4FE077C7212AB0C900B5D518 /* WtUIViewTests.m */,
 				B00234A7212B1464005D332C /* WtKVOTests.m */,
+				B03719F123E9917B00925F4C /* WtTimerTests.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -511,7 +515,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/..\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint lint --path \"${SRCROOT}/..\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		FA20C1479D0F63B955F4B67A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -593,6 +597,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F3A6E972202F3DD00388533 /* WtDebugToolsTest.m in Sources */,
+				B03719F223E9917B00925F4C /* WtTimerTests.m in Sources */,
 				B0E5B0672129783F0052A6E0 /* WtNSUserDefaultsTests.m in Sources */,
 				4FE077C8212AB0C900B5D518 /* WtUIViewTests.m in Sources */,
 				B00234A8212B1464005D332C /* WtKVOTests.m in Sources */,
