@@ -1,130 +1,164 @@
 //
-//  NSURL+WtExtension.m
-//  WtCore
+// NSURL+WtExtension.m
+// WtCore
 //
-//  Created by wtfan on 2017/8/30.
+// Created by wtfan on 2017/8/30.
+// Copyright © 2017 wtfan.
 //
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "NSURL+WtExtension.h"
 
 
 @implementation NSURL (WtExtension)
-+ (NSDictionary *)wtParseQueryComponentsFromQueryString:(NSString *)queryStr includingDuplicateParamName:(BOOL)includingDuplicateParamName {
-  NSMutableDictionary *results = [NSMutableDictionary new];
-  if (queryStr && queryStr.length > 0) {
-    NSArray *components = [queryStr componentsSeparatedByString:@"&"];
-    for (NSString *component in components) {
-      //检查kv的长度，有可能没value甚至没key
-      /*NSArray *kv = [component componentsSeparatedByString:@"="];
-             NSString *key = kv.count > 0 ? [kv objectAtIndex:0] : nil;
-             NSString *value = kv.count > 1 ? [kv objectAtIndex:1] : nil;*/
-      NSRange range = [component rangeOfString:@"="];
-      NSString *key, *value;
-      if (range.location == NSNotFound) {
-        key = component;
-        value = @"";
-      } else {
-        key = [component substringToIndex:range.location];
-        value = [component substringFromIndex:range.location + 1];
-      }
-      if (value == nil) value = @"";
-      //必须至少有个key，value默认为空字符串
-      if (key && key.length && value) {
-        id existedValue = [results objectForKey:key];
-        if (existedValue) {
-          //如果key已经存在且需要考虑重名参数，则将key对应的值改成一个数组
-          if (includingDuplicateParamName) {
-            if ([existedValue isKindOfClass:[NSMutableArray class]]) {
-              [existedValue addObject:value];
-            } else {
-              [results setObject:[NSMutableArray arrayWithObjects:existedValue, value, nil] forKey:key];
-            }
-          }
-        } else {
-          [results setObject:value forKey:key];
-        }
-      }
-    }
-  }
-  return results;
+
+#pragma mark - private
+- (NSArray<NSURLQueryItem *> *)_wtQueryItemsWithParameters:(NSDictionary<NSString *, NSString *> *)dict {
+  NSMutableArray<NSURLQueryItem *> *items = @[].mutableCopy;
+  if (!dict || ![dict isKindOfClass:NSDictionary.class] || dict.count == 0) return nil;
+  
+  [dict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+    NSURLQueryItem *item = [NSURLQueryItem queryItemWithName:key value:obj];
+    [items addObject:item];
+  }];
+  
+  return items;
 }
 
-- (NSDictionary *)wtQueryComponents {
-  return [[self class] wtParseQueryComponentsFromQueryString:self.query includingDuplicateParamName:YES];
+#pragma mark - query
+- (NSDictionary<NSString *, NSArray<NSString *> *> *)wtQueryComponents {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  NSMutableDictionary<NSString *, NSMutableArray<NSString *> *> *queries = @{}.mutableCopy;
+  [urlComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+   NSMutableArray *params = queries[obj.name];
+   if (!params) {
+     params = @[].mutableCopy;
+     queries[obj.name] = params;
+   }
+   [params addObject:obj.value];
+  }];
+  return queries;
+}
+
+- (NSDictionary<NSString *, NSString *> *)wtQueryComponentsWithNoDuplicate {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  NSMutableDictionary<NSString *, NSString *> *queries = @{}.mutableCopy;
+  [urlComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+   if (!queries[obj.name]) {
+     queries[obj.name] = obj.value;
+   }
+  }];
+  return queries;
 }
 
 - (NSString *)wtQueryComponentNamed:(NSString *)name index:(NSInteger)index {
-  id result = [[self wtQueryComponents] objectForKey:name];
-  if ([result isKindOfClass:[NSArray class]]) {
-    if ([result count]) {
-      return [result firstObject];
-    } else
-      return nil;
+  NSArray<NSString *> *params = [self wtQueryComponentNamed:name];
+  if (index < params.count) {
+    return params[index];
   }
-  return result;
+  return nil;
 }
 
+- (NSArray<NSString *> *)wtQueryComponentNamed:(NSString *)name {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  NSMutableArray<NSString *> *results = @[].mutableCopy;
+  [urlComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    if ([obj.name isEqualToString:name]) {
+      [results addObject:obj.value];
+    }
+  }];
+  return results;
+}
+
+#pragma mark - NSURL
 - (NSURL *)wtSortedByCompareQueryComponents {
-  NSDictionary *queryComponents = [self wtQueryComponents];
-  NSArray *allKeys = [queryComponents.allKeys sortedArrayUsingSelector:@selector(compare:)];
-
-  NSMutableArray *params = @[].mutableCopy;
-  for (NSString *key in allKeys) {
-    [params addObject:[NSString stringWithFormat:@"%@=%@", key, queryComponents[key]]];
-  }
-
-  NSString *query = [params componentsJoinedByString:@"&"];
-
-  NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:NO];
-  components.path = self.path;
-  if (params.count > 0) components.query = query;
-  return components.URL;
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.queryItems = [urlComponents.queryItems sortedArrayUsingComparator:^NSComparisonResult(NSURLQueryItem *obj1, NSURLQueryItem * obj2) {
+    return [obj1.name compare:obj2.name];
+  }];
+  return urlComponents.URL;
 }
 
-- (NSURL *)wtRemoveParams:(NSArray<NSString *> *)keys {
-  NSMutableDictionary *queryComponents = [self wtQueryComponents].mutableCopy;
-  NSMutableDictionary *lowercaseQueryKeyMapping = @{}.mutableCopy;
-
-  NSMutableArray *lowercaseQueryKeys = @[].mutableCopy;
-  for (NSString *key in queryComponents.allKeys) {
-    NSString *lowKey = [key lowercaseString];
-    [lowercaseQueryKeys addObject:lowKey];
-    [lowercaseQueryKeyMapping setObject:key forKey:lowKey];
-  }
-
-  NSMutableArray *lowercaseInputKeys = @[].mutableCopy;
-  for (NSString *key in keys) {
-    [lowercaseInputKeys addObject:[key lowercaseString]];
-  }
-
-  NSMutableArray *params = @[].mutableCopy;
-
-  NSMutableSet *paramKeys = [NSMutableSet setWithArray:lowercaseQueryKeys];
-  [paramKeys minusSet:[NSSet setWithArray:lowercaseInputKeys]];
-  for (NSString *key in paramKeys) {
-    [params addObject:[NSString stringWithFormat:@"%@=%@", lowercaseQueryKeyMapping[key], queryComponents[lowercaseQueryKeyMapping[key]]]];
-  }
-
-  NSString *query = [params componentsJoinedByString:@"&"];
-
-  NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:NO];
-  components.path = self.path;
-  if (params.count > 0) components.query = query;
-  return components.URL;
+- (NSURL *)wtRemoveQueries:(NSArray<NSString *> *)queries {
+  return [self wtRemoveQueries:queries caseSensitive:YES];
 }
 
-- (NSString *)withoutQueryString {
-  NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:NO];
-  components.query = nil;
+- (NSURL *)wtRemoveQueries:(NSArray<NSString *> *)queries caseSensitive:(BOOL)caseSensitive {
+  if (!queries || queries.count == 0) return self;
+  
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  NSMutableDictionary<NSString *, NSString *> *queriesMapping = @{}.mutableCopy;
+  [queries enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (obj.length == 0) return;
+    
+    if (caseSensitive) {
+      queriesMapping[obj] = obj;
+    } else {
+      queriesMapping[obj.lowercaseString] = obj;
+    }
+  }];
+  
+  NSMutableArray *wrappedQueryItems = urlComponents.queryItems.mutableCopy;
+  [urlComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    NSString *name = caseSensitive ? obj.name : obj.name.lowercaseString;
+    if (queriesMapping[name]) {
+      [wrappedQueryItems removeObject:obj];
+    }
+  }];
+  
+  urlComponents.queryItems = wrappedQueryItems;
+  return urlComponents.URL;
+}
+
+#pragma mark - Converts to NSString
+- (NSString *)wtAbsoluteStringWithBaseUrl:(BOOL)withBaseURL withQueryString:(BOOL)withQueryString {
+  NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:withBaseURL];
+  if (!withQueryString) components.query = nil;
   return [components URL].absoluteString;
 }
 
-- (NSURL *)replaceRelativePath:(NSString *)relativePath {
-  NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:NO];
-  components.path = relativePath;
-  return [components URL];
+#pragma mark - replaces
+- (NSURLComponents *)wtNSURLComponents {
+  NSURLComponents *components = [NSURLComponents componentsWithURL:self resolvingAgainstBaseURL:YES];
+  return components;
 }
 
+- (NSURL *)wtReplaceScheme:(NSString *)scheme {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.scheme = scheme;
+  return urlComponents.URL;
+}
+
+- (NSURL *)wtReplaceHost:(NSString *)host {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.host = host;
+  return urlComponents.URL;
+}
+
+- (NSURL *)wtReplacePort:(NSNumber *)port {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.port = port;
+  return urlComponents.URL;
+}
+
+- (NSURL *)wtReplacePath:(NSString *)path {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.path = path;
+  return urlComponents.URL;
+}
+
+- (NSURL *)wtReplaceQuery:(NSDictionary *)query {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.queryItems = [self _wtQueryItemsWithParameters:query];
+  return urlComponents.URL;
+}
+
+- (NSURL *)wtReplaceFragment:(NSString *)fragment {
+  NSURLComponents *urlComponents = [self wtNSURLComponents];
+  urlComponents.fragment = fragment;
+  return urlComponents.URL;
+}
 
 @end
