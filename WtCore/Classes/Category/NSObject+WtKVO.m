@@ -1,8 +1,12 @@
 //
-//  NSObject+WtKVO.m
-//  WtCore
+// NSObject+WtKVO.m
+// WtCore
 //
-//  Created by wtfan on 2017/11/23.
+// Created by wtfan on 2017/11/23.
+// Copyright © 2017 wtfan.
+//
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "NSObject+WtKVO.h"
@@ -14,6 +18,14 @@
 #import "WtKVOProxy.h"
 #import "WtDeallocWatcher.h"
 
+
+@protocol WtKVODelegate <NSObject>
+
+/// Callback returns the changed value.
+/// @param value The changed value.
+- (void)valueChanged:(id)value;
+
+@end
 
 @implementation NSObject (WtKVO)
 
