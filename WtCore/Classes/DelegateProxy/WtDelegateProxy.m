@@ -1,9 +1,12 @@
 //
-//  WtDelegateProxy.m
-//  WtCore
+// WtDelegateProxy.m
+// WtCore
 //
-//  Created by wtfan on 2017/7/29.
-//  Copyright © 2017年 wtfan(long). All rights reserved.
+// Created by wtfan on 2017/7/29.
+// Copyright © 2017 wtfan.
+//
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "WtDelegateProxy.h"
@@ -41,8 +44,6 @@ NSString *wtExtractStructName(NSString *typeEncodeString) {
 
 
 @implementation WtDelegateProxy
-- (void)dealloc {
-}
 
 - (instancetype)initWithProtocol:(Protocol *)protocol {
   NSCParameterAssert(protocol != NULL);
