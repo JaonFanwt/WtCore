@@ -11,7 +11,9 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface NSTimer (WtAutoInvalidate)
+
 /// Automatically invalid on owner release.
 /// @param owner The owner of this timer.
 - (void)wtAutoInvalidateWhenOwnerDealloc:(_Nonnull id)owner;
@@ -63,4 +65,5 @@
                                               repeats:(BOOL)repeats
                        autoInvalidateWhenOwnerDealloc:(_Nonnull id)owner
                                                 block:(void (^_Nullable)(NSTimer * _Nonnull timer))block;
+
 @end

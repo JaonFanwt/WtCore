@@ -24,4 +24,5 @@
 /// @param keyPath The key path, relative to the object receiving this message, of the property to observe. This value must not be nil.
 /// @param valueChangedBlock The Callback block.
 - (void)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath valueChangedBlock:(void (^_Nullable)(id _Nullable newValue))valueChangedBlock;
+
 @end

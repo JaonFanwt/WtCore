@@ -1,18 +1,23 @@
 //
-//  UIColor+WtExtension.m
-//  WtCore
+// UIColor+WtExtension.m
+// WtCore
 //
-//  Created by wtfan on 2017/9/12.
+// Created by wtfan on 2017/9/12.
+// Copyright © 2017 wtfan.
 //
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "UIColor+WtExtension.h"
 
 #import "NSString+WtExtension.h"
 
+
 UIColor *wtRandomColor(CGFloat alpha) {
   return [UIColor wtRandomWithAlpha:alpha];
 }
+
 
 UIColor *wtHTMLColor(NSString *name) {
   return [UIColor wtColorWithHTMLName:name];
@@ -34,6 +39,7 @@ UIColor *wtHTMLColor(NSString *name) {
 
 
 @implementation UIColor (WtHTML)
+
 + (UIColor *)wtColorWithHexString:(NSString *)hex {
   if ([hex hasPrefix:@"#"]) hex = [hex substringFromIndex:1];
 
@@ -92,4 +98,5 @@ UIColor *wtHTMLColor(NSString *name) {
 
   return nil;
 }
+
 @end

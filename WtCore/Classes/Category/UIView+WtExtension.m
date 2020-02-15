@@ -1,15 +1,19 @@
 //
-//  UIView+WtExtension.m
-//  WtCore
+// UIView+WtExtension.m
+// WtCore
 //
-//  Created by wtfan on 2017/9/12.
+// Created by wtfan on 2017/9/12.
+// Copyright © 2017 wtfan.
 //
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "UIView+WtExtension.h"
 
 
 @implementation UIView (WtExtension)
+
 - (UIViewController *)wtFirstViewController {
   return (UIViewController *)[self wtTraverseResponderChainForUIViewController];
 }
@@ -57,4 +61,5 @@
 
   return nil;
 }
+
 @end

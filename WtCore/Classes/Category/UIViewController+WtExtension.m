@@ -1,14 +1,19 @@
 //
-//  UIViewController+WtExtension.m
-//  WtCore
+// UIViewController+WtExtension.m
+// WtCore
 //
-//  Created by wtfan on 2018/1/2.
+// Created by wtfan on 2018/1/2.
+// Copyright © 2018 wtfan.
+//
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "UIViewController+WtExtension.h"
 
 
 @implementation UIViewController (WtExtension)
+
 - (UIViewController *)wtPreviousViewController {
   NSArray *vcStack = self.navigationController.viewControllers;
   NSInteger selfIdx = [vcStack indexOfObject:self];
@@ -39,4 +44,5 @@
     [navgationController setViewControllers:newStack animated:animated];
   }
 }
+
 @end

@@ -99,4 +99,5 @@
     objc_setAssociatedObject(self, _cmd, deallocWatcher, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
 }
+
 @end

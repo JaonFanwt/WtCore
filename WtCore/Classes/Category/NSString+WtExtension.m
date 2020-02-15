@@ -1,14 +1,17 @@
 //
-//  NSString+WtExtension.m
-//  WtCore
+// NSString+WtExtension.m
+// WtCore
 //
-//  Created by wtfan on 2017/9/12.
+// Created by wtfan on 2017/9/12.
+// Copyright © 2017 wtfan.
 //
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "NSString+WtExtension.h"
 
-// Func
+
 Class WTClassFromString(NSString *className) {
   Class c = NSClassFromString(className);
   if (c) return c;
@@ -18,16 +21,18 @@ Class WTClassFromString(NSString *className) {
   return c;
 }
 
-// Class
+
 @implementation NSString (WtExtension)
 
 @end
 
-// HTML
+
 @implementation NSString (WtHTML)
+
 - (NSUInteger)wtIntegerValueFromHex {
   unsigned long result = 0;
   sscanf([self UTF8String], "%lx", &result);
   return (NSUInteger)result;
 }
+
 @end

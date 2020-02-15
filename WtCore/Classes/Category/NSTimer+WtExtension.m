@@ -19,8 +19,11 @@
 
 
 @protocol _WtTimerProtocol <NSObject>
+
 - (void)wtTimer:(NSTimer *)timer;
+
 @end
+
 
 @implementation NSTimer (WtAutoInvalidate)
 
@@ -86,4 +89,5 @@
   [timer wtAutoInvalidateWhenOwnerDealloc:owner];
   return timer;
 }
+
 @end

@@ -1,14 +1,18 @@
 //
-//  NSString+WtEncrypt.m
-//  WtCore
+// NSString+WtEncrypt.m
+// WtCore
 //
-//  Created by wtfan on 2017/8/29.
+// Created by wtfan on 2017/8/29.
+// Copyright © 2017 wtfan.
 //
+// This source code is licensed under the MIT-style license found in the
+// LICENSE file in the root directory of this source tree.
 //
 
 #import "NSString+WtEncrypt.h"
 
 #import <CommonCrypto/CommonDigest.h>
+
 
 NSString *wtStringFromMD5(NSString *str) {
   if (!str || str.length == 0 || ![str isKindOfClass:[NSString class]]) return nil;
@@ -18,6 +22,7 @@ NSString *wtStringFromMD5(NSString *str) {
 
 
 @implementation NSString (WtEncrypt)
+
 - (NSString *)wtStringFromMD5 {
   if (self.length == 0) return nil;
 
@@ -33,4 +38,5 @@ NSString *wtStringFromMD5(NSString *str) {
 
   return outputString;
 }
+
 @end
