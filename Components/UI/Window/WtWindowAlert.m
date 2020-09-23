@@ -143,9 +143,10 @@ static int kWtWindowAlertNum = 0;
     beforeAnimations();
   }
 
+  UIViewController *preViewCtrl = nil;
   if (!_isHUD) {
     UIWindow *window = [self.window wtPreWindow];
-    UIViewController *preViewCtrl = [window wtTopViewController];
+    preViewCtrl = [window wtTopViewController];
     if (preViewCtrl && !_isCard) {
       [self viewController:preViewCtrl viewWillDisAppear:YES];
     }
@@ -198,7 +199,11 @@ static int kWtWindowAlertNum = 0;
       if (completion) {
         completion(YES);
       }
-      [self viewController:viewCtrl viewDidDisAppear:YES];
+    
+      if (preViewCtrl && !_isCard) {
+        [self viewController:preViewCtrl viewDidDisAppear:YES];
+      }
+      
       viewCtrl.view.userInteractionEnabled = YES;
     }];
 }
