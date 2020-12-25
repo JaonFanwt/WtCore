@@ -3,34 +3,30 @@ PODS:
   - FLEX (2.4.0)
   - KMCGeigerCounter (0.3.0)
   - Masonry (1.1.0)
-  - SnapKit (4.2.0)
-  - WtCore (0.5.1):
-    - WtCore/Core (= 0.5.1)
-    - WtCore/DebugTools (= 0.5.1)
-    - WtCore/Observer (= 0.5.1)
-    - WtCore/Safety (= 0.5.1)
-    - WtCore/ThunderWeb (= 0.5.1)
-    - WtCore/UI (= 0.5.1)
-    - WtCore/UI-Swift (= 0.5.1)
-  - WtCore/Core (0.5.1)
-  - WtCore/DebugTools (0.5.1):
+  - WtCore (0.5.3):
+    - WtCore/Core (= 0.5.3)
+    - WtCore/DebugTools (= 0.5.3)
+    - WtCore/Observer (= 0.5.3)
+    - WtCore/Safety (= 0.5.3)
+    - WtCore/ThunderWeb (= 0.5.3)
+    - WtCore/UI (= 0.5.3)
+  - WtCore/Core (0.5.3)
+  - WtCore/DebugTools (0.5.3):
     - FLEX
     - KMCGeigerCounter
     - Masonry
     - WtCore/UI
-  - WtCore/Observer (0.5.1):
+  - WtCore/Observer (0.5.3):
     - WtCore/Core
-  - WtCore/Safety (0.5.1):
+  - WtCore/Safety (0.5.3):
     - WtCore/Core
-  - WtCore/ThunderWeb (0.5.1):
+  - WtCore/ThunderWeb (0.5.3):
     - WtCore/Observer
     - WtCore/UI
-  - WtCore/UI (0.5.1):
+  - WtCore/UI (0.5.3):
     - FDFullscreenPopGesture
     - Masonry
     - WtCore/Core
-  - WtCore/UI-Swift (0.5.1):
-    - SnapKit
 
 DEPENDENCIES:
   - WtCore (from `../`)
@@ -41,7 +37,6 @@ SPEC REPOS:
     - FLEX
     - KMCGeigerCounter
     - Masonry
-    - SnapKit
 
 EXTERNAL SOURCES:
   WtCore:
@@ -52,9 +47,8 @@ SPEC CHECKSUMS:
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   KMCGeigerCounter: a06cfeed4a96e8f9a49028abb3ba7e53604d3219
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  WtCore: fe05a7353380e610c156f2f5f78b6045fedfd1f6
+  WtCore: dae03ce109ff2e60e9e10a8c1b14870e54becf50
 
 PODFILE CHECKSUM: f14c47536dfdce2eb7cf887a65d5c7ca32ab9b1d
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.0

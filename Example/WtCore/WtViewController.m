@@ -238,27 +238,6 @@
     [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
   }
 
-  { // Wattpad
-    WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
-    [_datas addObject:cellGlue];
-    cellGlue.title = @"WtWattpadView";
-    [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath) {
-      @strongify(self);
-      Class cls = WTClassFromString(@"WtDemoWattpadViewController");
-      if (!cls) return;
-      UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
-      [self.navigationController pushViewController:toViewCtrl animated:YES];
-    }];
-
-    [cellGlue.previewingDelegate selector:@selector(previewingContext:viewControllerForLocation:) block:^(id<UIViewControllerPreviewing> previewingContext, CGPoint location) {
-      Class cls = WTClassFromString(@"WtDemoWattpadViewController");
-      UIViewController *toViewCtrl = [[cls alloc] initWithNibName:@"WtDemoWattpadViewController" bundle:nil];
-      return toViewCtrl;
-    }];
-
-    [cellGlue.previewingDelegate selector:@selector(previewingContext:commitViewController:) block:[previewingToCommitBlock copy]];
-  }
-
   { // WindowAlert
     WtDemoCellGlue *cellGlue = [[WtDemoCellGlue alloc] init];
     [_datas addObject:cellGlue];

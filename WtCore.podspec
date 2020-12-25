@@ -23,21 +23,11 @@ blablabla private~
                        DESC
 
   s.homepage         = 'https://github.com/JaonFanwt/WtCore'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'JaonFanwt' => 'fanwt883188@gmail.com' }
   s.source           = { :git => 'https://github.com/JaonFanwt/WtCore.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
-
-  #   = {
-  #   'WtCore' => ['WtCore/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 
   s.subspec "Core" do |ss|
     ss.ios.source_files = "WtCore/Classes/**/*.{h,m}"
@@ -56,11 +46,6 @@ blablabla private~
     ss.dependency 'WtCore/Core'
     ss.dependency 'Masonry'
     ss.dependency 'FDFullscreenPopGesture'
-  end
-
-  s.subspec "UI-Swift" do |ss|
-    ss.ios.source_files = "Components/UI/**/*.{swift}"
-    ss.dependency 'SnapKit'
   end
 
   s.subspec "DebugTools" do |ss|

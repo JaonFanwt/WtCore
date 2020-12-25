@@ -47,8 +47,6 @@
 		B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */; };
 		B05A21471F5E8CE400FBB990 /* WtDemoCoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */; };
 		B05A21481F5E8CE400FBB990 /* WtDemoCoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */; };
-		B0721D2C1F67ADC800F71E94 /* WtDemoWattpadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */; };
-		B0721D2E1F67AEA100F71E94 /* WtDemoWattpadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */; };
 		B093C9972010F17300EFB719 /* WtDemoUICutterGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C9962010F17300EFB719 /* WtDemoUICutterGlue.m */; };
 		B093C99F2014317300EFB719 /* WtDemoUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C9992014317300EFB719 /* WtDemoUIViewController.m */; };
 		B093C9A02014317300EFB719 /* WtDemoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99B2014317300EFB719 /* WtDemoUIViewController.xib */; };
@@ -131,8 +129,6 @@
 		B05A21451F5E8CE400FBB990 /* WtDemoCoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoCoreViewController.m; sourceTree = "<group>"; };
 		B05A21461F5E8CE400FBB990 /* WtDemoCoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoCoreViewController.xib; sourceTree = "<group>"; };
 		B0721D2A1F67ADC800F71E94 /* WtCore_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WtCore_Example-Bridging-Header.h"; sourceTree = "<group>"; };
-		B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WtDemoWattpadViewController.swift; sourceTree = "<group>"; };
-		B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoWattpadViewController.xib; sourceTree = "<group>"; };
 		B093C9952010F17300EFB719 /* WtDemoUICutterGlue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoUICutterGlue.h; sourceTree = "<group>"; };
 		B093C9962010F17300EFB719 /* WtDemoUICutterGlue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoUICutterGlue.m; sourceTree = "<group>"; };
 		B093C9992014317300EFB719 /* WtDemoUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUIViewController.m; sourceTree = "<group>"; };
@@ -317,8 +313,6 @@
 				B05A213F1F594B6D00FBB990 /* WtDemoWebViewController.h */,
 				B05A21401F594B6D00FBB990 /* WtDemoWebViewController.m */,
 				B05A21421F594BBF00FBB990 /* WtDemoWebViewController.xib */,
-				B0721D2B1F67ADC800F71E94 /* WtDemoWattpadViewController.swift */,
-				B0721D2D1F67AEA100F71E94 /* WtDemoWattpadViewController.xib */,
 				0BFD019B1FE3E09400BFE94A /* WtDemoViewGlueController.swift */,
 				0BFD019C1FE3E09400BFE94A /* WtDemoViewGlueController.xib */,
 				B0721D2A1F67ADC800F71E94 /* WtCore_Example-Bridging-Header.h */,
@@ -462,7 +456,6 @@
 				B093C9A02014317300EFB719 /* WtDemoUIViewController.xib in Resources */,
 				0BFC9FEF201477DC0060F565 /* WtDemoAdditionalViewCell.xib in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
-				B0721D2E1F67AEA100F71E94 /* WtDemoWattpadViewController.xib in Resources */,
 				B05A21431F594BBF00FBB990 /* WtDemoWebViewController.xib in Resources */,
 				0BFD019E1FE3E09400BFE94A /* WtDemoViewGlueController.xib in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
@@ -549,7 +542,6 @@
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/KMCGeigerCounter/KMCGeigerCounter.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/WtCore/WtCore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -558,7 +550,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMCGeigerCounter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WtCore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -579,7 +570,6 @@
 				0BFC9FF5201478650060F565 /* WtDemoAdditionalViewGlue.m in Sources */,
 				0B814AD3204D2F3F009641C7 /* WtDemoHUDViewController.m in Sources */,
 				0BFD019D1FE3E09400BFE94A /* WtDemoViewGlueController.swift in Sources */,
-				B0721D2C1F67ADC800F71E94 /* WtDemoWattpadViewController.swift in Sources */,
 				B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */,
 				B05A213D1F594AD800FBB990 /* WtDemoThunderWebViewController.m in Sources */,
 				0BFD019A1FE3E04F00BFE94A /* WtDemoCellGlueSwift.swift in Sources */,
