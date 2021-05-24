@@ -11,3 +11,8 @@
 @interface NSDictionary (WtSafety)
 
 @end
+
+
+@interface NSMutableDictionary (WtSafety)
+
+@end

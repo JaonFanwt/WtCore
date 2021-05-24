@@ -31,3 +31,21 @@ void wt_swizzleSelector(Class c, SEL originalSelector, SEL swizzledSelector) {
     method_exchangeImplementations(originalMethod, swizzledMethod);
   }
 }
+
+void wt_swizzleInnerClassStaicMethod(Class originalClass, SEL originalSelector, Class swizzledClass, SEL swizzledSelector) {
+  Method originalMethod = class_getClassMethod(originalClass, originalSelector);
+  Method swizzledMethod = class_getClassMethod(swizzledClass, swizzledSelector);
+  class_addMethod(originalClass, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+  if (!class_addMethod(originalClass, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))) {
+    method_exchangeImplementations(originalMethod, swizzledMethod);
+  }
+}
+
+void wt_swizzleInnerSelector(Class originalClass, SEL originalSelector, Class swizzledClass, SEL swizzledSelector) {
+  Method originalMethod = class_getInstanceMethod(originalClass, originalSelector);
+  Method swizzledMethod = class_getInstanceMethod(swizzledClass, swizzledSelector);
+  class_addMethod(originalClass, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+  if (!class_addMethod(originalClass, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))) {
+    method_exchangeImplementations(originalMethod, swizzledMethod);
+  }
+}
