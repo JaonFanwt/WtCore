@@ -16,13 +16,21 @@
 
 + (id)wtGetValueWithKey:(NSString *)key {
   id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+  if ([value isKindOfClass:NSNumber.class]) {
+    return value;
+  }
   return [NSKeyedUnarchiver unarchiveObjectWithData:value];
 }
 
 + (BOOL)wtSaveValue:(id)value key:(NSString *)key {
   if (!key) return NO;
 
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+  NSData *data = nil;
+  if ([value isKindOfClass:NSNumber.class]) {
+    data = value;
+  } else {
+    data = [NSKeyedArchiver archivedDataWithRootObject:value];
+  }
   if (!data) return NO;
 
   [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];

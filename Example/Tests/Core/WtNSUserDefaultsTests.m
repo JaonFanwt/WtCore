@@ -40,6 +40,18 @@
   XCTAssertFalse([objNo boolValue]);
 }
 
+- (void)testChar {
+  [NSUserDefaults wtSaveValue:@'A' key:@"NSUserDefaults-WtExtension-Char-A"];
+  id objChar_A = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-Char-A"];
+  XCTAssertNotNil(objChar_A);
+  XCTAssertTrue([objChar_A charValue] == 'A');
+
+  [NSUserDefaults wtSaveValue:@'a' key:@"NSUserDefaults-WtExtension-Char-a"];
+  id objChar_a = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-BOOL-NO"];
+  XCTAssertNotNil(objChar_a);
+  XCTAssertFalse([objChar_a charValue] == 'a');
+}
+
 - (void)testInt {
   [NSUserDefaults wtSaveValue:@0 key:@"NSUserDefaults-WtExtension-int-0"];
   id objInt0 = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-int-0"];
@@ -55,6 +67,13 @@
   id objIntNegative1 = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-int-(-1)"];
   XCTAssertNotNil(objIntNegative1);
   XCTAssertFalse([objIntNegative1 intValue] == -1);
+}
+
+- (void)testDouble {
+  [NSUserDefaults wtSaveValue:@3.1415926 key:@"NSUserDefaults-WtExtension-double-pi"];
+  id objDoublePi = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-double-pi"];
+  XCTAssertNotNil(objDoublePi);
+  XCTAssertTrue([objDoublePi doubleValue] - 3.1415926 < 0.0000001);
 }
 
 - (void)testArray {
