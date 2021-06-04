@@ -16,7 +16,8 @@
 
 + (id)wtGetValueWithKey:(NSString *)key {
   id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-  if ([value isKindOfClass:NSNumber.class]) {
+  if ([value conformsToProtocol:@protocol(NSCopying)]
+      && [value conformsToProtocol:@protocol(NSSecureCoding)]) {
     return value;
   }
   return [NSKeyedUnarchiver unarchiveObjectWithData:value];
@@ -26,7 +27,8 @@
   if (!key) return NO;
 
   NSData *data = nil;
-  if ([value isKindOfClass:NSNumber.class]) {
+  if ([value conformsToProtocol:@protocol(NSCopying)]
+      && [value conformsToProtocol:@protocol(NSSecureCoding)]) {
     data = value;
   } else {
     data = [NSKeyedArchiver archivedDataWithRootObject:value];

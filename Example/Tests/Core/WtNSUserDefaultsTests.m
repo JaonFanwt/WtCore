@@ -76,6 +76,21 @@
   XCTAssertTrue([objDoublePi doubleValue] - 3.1415926 < 0.0000001);
 }
 
+- (void)testString {
+  [NSUserDefaults wtSaveValue:@"The ObjC is the best language in the world." key:@"NSUserDefaults-WtExtension-string"];
+  id objString = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-string"];
+  XCTAssertNotNil(objString);
+  XCTAssertTrue([objString isEqualToString:@"The ObjC is the best language in the world."]);
+}
+
+- (void)testDate {
+  NSDate *date = [NSDate date];
+  [NSUserDefaults wtSaveValue:date key:@"NSUserDefaults-WtExtension-date"];
+  NSDate *objDate = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-date"];
+  XCTAssertNotNil(objDate);
+  XCTAssertTrue([objDate timeIntervalSince1970] - [date timeIntervalSince1970] < 0.0001);
+}
+
 - (void)testArray {
   [NSUserDefaults wtSaveValue:@[ @0, @1, @2 ] key:@"NSUserDefaults-WtExtension-Array"];
   NSArray *obj = [NSUserDefaults wtGetValueWithKey:@"NSUserDefaults-WtExtension-Array"];
