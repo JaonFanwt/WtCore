@@ -219,7 +219,7 @@ static int kWtWindowAlertNum = 0;
     if (viewCtrl && !_isCard) {
       [self viewController:viewCtrl viewWillAppear:YES];
     }
-    [window makeKeyAndVisible];
+    [window makeKeyWindow];
 
     viewCtrl.view.userInteractionEnabled = NO;
     _window.userInteractionEnabled = NO;
