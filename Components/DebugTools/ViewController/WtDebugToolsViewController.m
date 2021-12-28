@@ -9,7 +9,6 @@
 #import "WtDebugToolsViewController.h"
 
 #import <Masonry/Masonry.h>
-#import <FLEX/FLEXManager.h>
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
 
 #import "WtCellGlue.h"

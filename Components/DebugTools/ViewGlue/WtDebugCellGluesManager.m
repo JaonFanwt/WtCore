@@ -8,7 +8,6 @@
 #import "WtDebugCellGluesManager.h"
 
 #import <Masonry/Masonry.h>
-#import <FLEX/FLEXManager.h>
 #import <KMCGeigerCounter/KMCGeigerCounter.h>
 
 #import "WtCore.h"
@@ -61,19 +60,6 @@
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
       WtDebugSwitchNetworkViewController *toViewCtrl = [[WtDebugSwitchNetworkViewController alloc] init];
       [tableView.wtFirstViewController.navigationController pushViewController:toViewCtrl animated:YES];
-    }];
-  }
-
-  { // FLEX
-    WtDebugTableViewCellRightDetailGlue *cellGlue = [[WtDebugTableViewCellRightDetailGlue alloc] init];
-    [self.cellGlues addObject:cellGlue];
-
-    cellGlue.name = @"FLEX";
-    cellGlue.detailDescription = @"辅助工具";
-
-    [cellGlue.tableViewDelegate selector:@selector(tableView:didSelectRowAtIndexPath:) block:^(UITableView *tableView, NSIndexPath *indexPath) {
-      [tableView deselectRowAtIndexPath:indexPath animated:YES];
-      [[FLEXManager sharedManager] showExplorer];
     }];
   }
 
