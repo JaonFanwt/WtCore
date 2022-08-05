@@ -31,9 +31,9 @@
   NSParameterAssert(owner);
   WtDeallocWatcher *deallocWatcher = objc_getAssociatedObject(owner, _cmd);
   if (!deallocWatcher) {
-    deallocWatcher = [WtDeallocWatcher watcher:^(id _) {
+    deallocWatcher = [WtDeallocWatcher watcher:^() {
       [self invalidate];
-    } owner:owner];
+    }];
     objc_setAssociatedObject(owner, _cmd, deallocWatcher, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
 }

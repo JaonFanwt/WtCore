@@ -8,7 +8,6 @@
 #import <Foundation/Foundation.h>
 
 @interface WtDeallocWatcher : NSObject
-@property (nonatomic, assign) id owner;
-@property (nonatomic, copy) void (^whenDeallocBlock)(id owner);
-+(instancetype)watcher:(void (^)(id owner))whenDeallocBlock owner:(id)owner;
+@property (nonatomic, copy) void (^whenDeallocBlock)(void);
++ (instancetype)watcher:(void (^)(void))whenDeallocBlock;
 @end

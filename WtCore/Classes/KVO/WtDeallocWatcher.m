@@ -8,16 +8,17 @@
 #import "WtDeallocWatcher.h"
 
 @implementation WtDeallocWatcher
+
 - (void)dealloc {
   if (_whenDeallocBlock) {
-    _whenDeallocBlock(_owner);
+    _whenDeallocBlock();
   }
 }
 
-+(instancetype)watcher:(void (^)(id owner))whenDeallocBlock owner:(id)owner {
++ (instancetype)watcher:(void (^)(void))whenDeallocBlock {
   WtDeallocWatcher *obj = [[WtDeallocWatcher alloc] init];
-  obj.owner = owner;
   obj.whenDeallocBlock = whenDeallocBlock;
   return obj;
 }
+
 @end

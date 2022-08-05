@@ -9,8 +9,8 @@
 
 
 @interface WtKVOProxy ()
-@property (nonatomic, strong) NSMapTable *delegateProxyMapping;
-@property (nonatomic, strong) NSMapTable *contextKeyPathMapping;
+@property (nonatomic, strong) NSMapTable<NSValue *, WtDelegateProxy<WtKVOProxyDelegate> *> *delegateProxyMapping;
+@property (nonatomic, strong) NSMapTable<NSValue *, NSMutableDictionary<NSString *, NSMutableDictionary<id, id> *> *> *contextKeyPathMapping;
 @property (nonatomic, strong) dispatch_queue_t queue;
 @end
 
@@ -77,4 +77,5 @@
 
   [delegateProxy wtKVOObserveValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
+
 @end

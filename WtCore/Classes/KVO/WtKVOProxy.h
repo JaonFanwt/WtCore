@@ -9,6 +9,9 @@
 
 #import "WtDelegateProxy.h"
 
+typedef void (^WtKVOContextMapping)(NSMutableDictionary *);
+
+
 @protocol WtKVOProxyDelegate <NSObject>
 - (void)wtKVOObserveValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
 @end

@@ -31,13 +31,23 @@
 
 - (void)wtRemoveAllObserves {
   [[WtKVOProxy shared] wtRemoveObserverForContext:(__bridge void *)self];
-  objc_setAssociatedObject(self, @selector(wtKVOKeyPathDelegateProxyMapping), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(wtKVOLock), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, @selector(wtKVOContextMapping), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSMutableDictionary *)wtKVOKeyPathDelegateProxyMapping {
+- (dispatch_semaphore_t)wtKVOLock {
+  dispatch_semaphore_t _lock = objc_getAssociatedObject(self, _cmd);
+  if (!_lock) {
+    _lock = dispatch_semaphore_create(1);
+    objc_setAssociatedObject(self, _cmd, _lock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
+  return _lock;
+}
+
+- (NSMutableDictionary *)wtKVOContextMapping {
   NSMutableDictionary *mapping = objc_getAssociatedObject(self, _cmd);
   if (!mapping) {
-    mapping = [[NSMutableDictionary alloc] initWithCapacity:3];
+    mapping = @{}.mutableCopy;
     objc_setAssociatedObject(self, _cmd, mapping, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
   return mapping;
@@ -45,18 +55,36 @@
 
 - (void)wtEnqueueKVOKeyPath:(NSString *)keyPath delegateProxy:(WtDelegateProxy<WtKVODelegate> *)delegateProxy {
   if (!delegateProxy) return;
-  NSMutableDictionary *mapping = [self wtKVOKeyPathDelegateProxyMapping];
-  NSMutableArray *delegateProxies = mapping[keyPath];
-  if (!delegateProxies) {
-    delegateProxies = [[NSMutableArray alloc] initWithCapacity:3];
-    mapping[keyPath] = delegateProxies;
+  
+  NSMutableDictionary *mapping = [self wtKVOContextMapping];
+  NSMutableDictionary<id, id> *keyPathContextMapping = mapping[keyPath];
+  if (!keyPathContextMapping) {
+    keyPathContextMapping = [[NSMutableDictionary alloc] initWithCapacity:3];
+    mapping[keyPath] = keyPathContextMapping;
   }
-  [delegateProxies addObject:delegateProxy];
+  NSMutableDictionary<NSValue *, WtDelegateProxy<WtKVODelegate> *> *delegateProxies = keyPathContextMapping[@"proxies"];
+  if (!delegateProxies) {
+    delegateProxies = [[NSMutableDictionary alloc] initWithCapacity:3];
+    keyPathContextMapping[@"proxies"] = delegateProxies;
+  }
+  NSValue *pointValue = [NSValue valueWithPointer:(__bridge void *)(delegateProxy)];
+  delegateProxies[pointValue] = delegateProxy;
 }
 
-- (NSArray *)wtKVODelegateProxiesWithKeyPath:(NSString *)keyPath {
-  NSMutableDictionary *mapping = [self wtKVOKeyPathDelegateProxyMapping];
-  return mapping[keyPath];
+- (void)wtDequeueKVOKeyPath:(NSString *)keyPath delegateProxy:(WtDelegateProxy<WtKVODelegate> *)delegateProxy {
+  if (!delegateProxy) return;
+  
+  NSMutableDictionary *mapping = [self wtKVOContextMapping];
+  NSMutableDictionary<id, id> *keyPathContextMapping = mapping[keyPath];
+  if (!keyPathContextMapping) {
+    return;
+  }
+  NSMutableDictionary<NSValue *, WtDelegateProxy<WtKVODelegate> *> *delegateProxies = keyPathContextMapping[@"proxies"];
+  if (!delegateProxies) {
+    return;
+  }
+  NSValue *pointValue = [NSValue valueWithPointer:(__bridge void *)(delegateProxy)];
+  [delegateProxies removeObjectForKey:pointValue];
 }
 
 - (WtDelegateProxy<WtKVOProxyDelegate> *)wtKVODelegateProxy {
@@ -68,34 +96,110 @@
     @weakify(self);
     [delegateProxy selector:@selector(wtKVOObserveValueForKeyPath:ofObject:change:context:) block:^(NSString *keyPath, id object, NSDictionary *change, void *context) {
       @strongify(self);
-      for (WtDelegateProxy<WtKVODelegate> *kvoDelegate in [self wtKVODelegateProxiesWithKeyPath:keyPath]) {
-        [kvoDelegate valueChanged:change[@"new"]];
+      @autoreleasepool {
+        dispatch_semaphore_t _lock = [self wtKVOLock];
+        dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER);
+        NSMutableDictionary *mapping = [self wtKVOContextMapping];
+        NSMutableDictionary<id, id> *keyPathContextMapping = mapping[keyPath];
+        NSArray<WtDelegateProxy<WtKVODelegate> *> *delegateProxies = [keyPathContextMapping[@"proxies"] allValues];
+        dispatch_semaphore_signal(_lock);
+        [delegateProxies enumerateObjectsUsingBlock:^(WtDelegateProxy<WtKVODelegate> * _Nonnull kvoDelegate, NSUInteger idx, BOOL * _Nonnull stop) {
+          [kvoDelegate valueChanged:change[@"new"]];
+        }];
       }
     }];
   }
   return delegateProxy;
 }
 
-- (void)wtObserveValueForKeyPath:(NSString *)keyPath valueChangedBlock:(void (^)(id newValue))valueChangedBlock {
-  if (![self wtKVODelegateProxiesWithKeyPath:keyPath]) {
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock {
+  return [self wtObserveValueForKeyPath:keyPath valueChangedBlock:valueChangedBlock takeUntilTargetDealloc:nil];
+}
+
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock
+                                     takeUntilTargetDealloc:(id)target {
+  return [self wtObserveValueForKeyPath:keyPath valueChangedBlock:valueChangedBlock takeUntilTargetDealloc:target replace:NO];
+}
+
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock
+                                     takeUntilTargetDealloc:(id _Nullable)target
+                                                    replace:(BOOL)replace {
+  dispatch_semaphore_t _lock = [self wtKVOLock];
+  dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER);
+  
+  NSMutableDictionary *mapping = [self wtKVOContextMapping];
+  NSMutableDictionary<id, id> *keyPathContextMapping = mapping[keyPath];
+  NSMutableDictionary<NSValue *, WtDelegateProxy<WtKVODelegate> *> *delegateProxies = keyPathContextMapping[@"proxies"];
+  
+  if (!delegateProxies) {
     [self addObserver:WtKVOProxy.shared forKeyPath:keyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:(__bridge void *)self];
   } else {
+  }
+  
+  if (replace) {
+    NSString *reuseKeyPath = [NSString stringWithFormat:@"%@_%p", keyPath, target];
+    NSMutableDictionary<NSString *, id> *mapping = keyPathContextMapping[@"target_proxies"];
+    WtDelegateProxy<WtKVODelegate> *kvoDelegate = mapping[reuseKeyPath];
+    if (kvoDelegate) {
+      [self wtDequeueKVOKeyPath:keyPath delegateProxy:kvoDelegate];
+      [mapping removeObjectForKey:reuseKeyPath];
+    }
   }
   
   WtDelegateProxy<WtKVODelegate> *kvoDelegate = (WtDelegateProxy<WtKVODelegate> *)[[WtDelegateProxy alloc] initWithProtocol:@protocol(WtKVODelegate)];
   [kvoDelegate selector:@selector(valueChanged:) block:valueChangedBlock];
   [self wtEnqueueKVOKeyPath:keyPath delegateProxy:kvoDelegate];
   
+  if (replace) {
+    NSString *reuseKeyPath = [NSString stringWithFormat:@"%@_%p", keyPath, target];
+    NSMutableDictionary<NSString *, id> *mapping = keyPathContextMapping[@"target_proxies"];
+    if (!mapping) {
+      mapping = @{}.mutableCopy;
+      keyPathContextMapping[@"target_proxies"] = mapping;
+    }
+    mapping[reuseKeyPath] = kvoDelegate;
+  }
+  dispatch_semaphore_signal(_lock);
+  
   [[WtKVOProxy shared] wtAddObserver:[self wtKVODelegateProxy] keyPath:keyPath forContext:(__bridge void *)self];
+  if (target) {
+    NSString *reuseKeyPath = [NSString stringWithFormat:@"%@_%p", keyPath, target];
+    @weakify(self);
+    WtDeallocWatcher *deallocWatcher = [WtDeallocWatcher watcher:^() {
+      @strongify(self);
+      if (!self) {
+        return;
+      }
+      dispatch_semaphore_t _lock = [self wtKVOLock];
+      dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER);
+      
+      [self wtDequeueKVOKeyPath:keyPath delegateProxy:kvoDelegate];
+      
+      if (replace) {
+        NSMutableDictionary<NSString *, id> *mapping = keyPathContextMapping[@"target_proxies"];
+        mapping[reuseKeyPath] = nil;
+      }
+      
+      dispatch_semaphore_signal(_lock);
+    }];
+    objc_setAssociatedObject(target, [NSString stringWithFormat:@"%.0f_dealloc_watcher", CFAbsoluteTimeGetCurrent() * 1000].UTF8String, deallocWatcher, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
+  
   [self wtAutoRemoveObserver];
+  
+  return valueChangedBlock;
 }
 
 - (void)wtAutoRemoveObserver {
   WtDeallocWatcher *deallocWatcher = objc_getAssociatedObject(self, _cmd);
   if (!deallocWatcher) {
-    deallocWatcher = [WtDeallocWatcher watcher:^(id owner) {
-      [owner wtRemoveAllObserves];
-    } owner:self];
+    void *selfPointer = (__bridge void *)self;
+    deallocWatcher = [WtDeallocWatcher watcher:^() {
+      [[WtKVOProxy shared] wtRemoveObserverForContext:selfPointer];
+    }];
     objc_setAssociatedObject(self, _cmd, deallocWatcher, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
 }

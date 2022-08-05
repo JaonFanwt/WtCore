@@ -14,6 +14,8 @@
 #import "WtDelegateProxy.h"
 
 
+typedef void (^WtKVOValueChangedBlock)(id _Nullable newValue);
+
 @interface NSObject (WtKVO)
 
 /// Stops all observer blocks from receiving change notifications for the property specified by using wtObserveValueForKeyPath:valueChangedBlock: registered key paths relative to the object receiving this message.
@@ -21,8 +23,28 @@
 - (void)wtRemoveAllObserves;
 
 /// Registers the observer block to receive KVO notifications for the key path relative to the object receiving this message.
+/// When self-release will trigger automatically remove the KVO observer.
 /// @param keyPath The key path, relative to the object receiving this message, of the property to observe. This value must not be nil.
 /// @param valueChangedBlock The Callback block.
-- (void)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath valueChangedBlock:(void (^_Nullable)(id _Nullable newValue))valueChangedBlock;
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock;
+
+/// Registers the observer block to receive KVO notifications for the key path relative to the object receiving this message.
+/// @param keyPath The key path, relative to the object receiving this message, of the property to observe. This value must not be nil.
+/// @param valueChangedBlock The Callback block.
+/// @param target When the target call dealloc method will trigger remove the KVO observer.
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock
+                                     takeUntilTargetDealloc:(id _Nullable)target;
+
+/// Registers the observer block to receive KVO notifications for the key path relative to the object receiving this message.
+/// @param keyPath The key path, relative to the object receiving this message, of the property to observe. This value must not be nil.
+/// @param valueChangedBlock The Callback block.
+/// @param target When the target call dealloc method will trigger remove the KVO observer.
+/// @param replace When YES, the new [valueChangedBlock] will replace the old [valueChangedBlock]. When NO, same with [wtObserveValueForKeyPath:valueChangedBlock:takeUntilTargetDealloc:].
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock
+                                     takeUntilTargetDealloc:(id _Nullable)target
+                                                    replace:(BOOL)replace;
 
 @end
