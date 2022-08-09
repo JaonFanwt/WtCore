@@ -2,26 +2,26 @@ PODS:
   - FDFullscreenPopGesture (1.1)
   - KMCGeigerCounter (0.3.0)
   - Masonry (1.1.0)
-  - WtCore (0.5.7):
-    - WtCore/Core (= 0.5.7)
-    - WtCore/DebugTools (= 0.5.7)
-    - WtCore/Observer (= 0.5.7)
-    - WtCore/Safety (= 0.5.7)
-    - WtCore/ThunderWeb (= 0.5.7)
-    - WtCore/UI (= 0.5.7)
-  - WtCore/Core (0.5.7)
-  - WtCore/DebugTools (0.5.7):
+  - WtCore (0.6.0):
+    - WtCore/Core (= 0.6.0)
+    - WtCore/DebugTools (= 0.6.0)
+    - WtCore/Observer (= 0.6.0)
+    - WtCore/Safety (= 0.6.0)
+    - WtCore/ThunderWeb (= 0.6.0)
+    - WtCore/UI (= 0.6.0)
+  - WtCore/Core (0.6.0)
+  - WtCore/DebugTools (0.6.0):
     - KMCGeigerCounter
     - Masonry
     - WtCore/UI
-  - WtCore/Observer (0.5.7):
+  - WtCore/Observer (0.6.0):
     - WtCore/Core
-  - WtCore/Safety (0.5.7):
+  - WtCore/Safety (0.6.0):
     - WtCore/Core
-  - WtCore/ThunderWeb (0.5.7):
+  - WtCore/ThunderWeb (0.6.0):
     - WtCore/Observer
     - WtCore/UI
-  - WtCore/UI (0.5.7):
+  - WtCore/UI (0.6.0):
     - FDFullscreenPopGesture
     - Masonry
     - WtCore/Core
@@ -43,8 +43,8 @@ SPEC CHECKSUMS:
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   KMCGeigerCounter: a06cfeed4a96e8f9a49028abb3ba7e53604d3219
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  WtCore: b3afc8dba31df87b585f3cdb84e1783b3c51a7fd
+  WtCore: 6c3239c937463eaaad2418e8237f7258737077c1
 
 PODFILE CHECKSUM: f14c47536dfdce2eb7cf887a65d5c7ca32ab9b1d
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

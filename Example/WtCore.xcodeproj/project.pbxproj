@@ -52,6 +52,7 @@
 		B093C9A02014317300EFB719 /* WtDemoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99B2014317300EFB719 /* WtDemoUIViewController.xib */; };
 		B093C9A12014317300EFB719 /* WtDemoUICutterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */; };
 		B093C9A22014317300EFB719 /* WtDemoUICutterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */; };
+		B09C3FA028A25E2A00986E9F /* WtNotificationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B09C3F9F28A25E2A00986E9F /* WtNotificationTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B0E0828420C3D0E70018B876 /* WtDemoTouchableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */; };
 		B0E0828520C3D0E70018B876 /* WtDemoTouchableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */; };
 		B0E5B0672129783F0052A6E0 /* WtNSUserDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */; };
@@ -137,6 +138,7 @@
 		B093C99C2014317300EFB719 /* WtDemoUICutterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WtDemoUICutterViewController.m; sourceTree = "<group>"; };
 		B093C99D2014317300EFB719 /* WtDemoUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WtDemoUIViewController.h; sourceTree = "<group>"; };
 		B093C99E2014317300EFB719 /* WtDemoUICutterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WtDemoUICutterViewController.xib; sourceTree = "<group>"; };
+		B09C3F9F28A25E2A00986E9F /* WtNotificationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtNotificationTests.m; sourceTree = "<group>"; };
 		B0E0828120C3D0E70018B876 /* WtDemoTouchableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WtDemoTouchableViewController.h; sourceTree = "<group>"; };
 		B0E0828220C3D0E70018B876 /* WtDemoTouchableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WtDemoTouchableViewController.m; sourceTree = "<group>"; };
 		B0E0828320C3D0E70018B876 /* WtDemoTouchableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WtDemoTouchableViewController.xib; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				B0E5B0662129783F0052A6E0 /* WtNSUserDefaultsTests.m */,
 				4FE077C7212AB0C900B5D518 /* WtUIViewTests.m */,
 				B00234A7212B1464005D332C /* WtKVOTests.m */,
+				B09C3F9F28A25E2A00986E9F /* WtNotificationTests.m */,
 				B03719F123E9917B00925F4C /* WtTimerTests.m */,
 				B0371F3E23F52C6800925F4C /* NSURL+WtExtension.m */,
 			);
@@ -593,6 +596,7 @@
 				4FE077C8212AB0C900B5D518 /* WtUIViewTests.m in Sources */,
 				B00234A8212B1464005D332C /* WtKVOTests.m in Sources */,
 				B0371F3F23F52C6800925F4C /* NSURL+WtExtension.m in Sources */,
+				B09C3FA028A25E2A00986E9F /* WtNotificationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
