@@ -25,7 +25,7 @@
   if (sig) {
     return sig;
   }
-  return [NSMethodSignature signatureWithObjCTypes:@encode(void)];
+  return [NSMethodSignature signatureWithObjCTypes:"v@:"];
 }
 
 - (void)gl_forwardInvocation:(NSInvocation *)anInvocation {
