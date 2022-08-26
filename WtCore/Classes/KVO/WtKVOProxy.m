@@ -27,7 +27,7 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    _queue = dispatch_queue_create("com.fanwt.www.WtCore.WtKVOProxy", DISPATCH_QUEUE_SERIAL);
+    _queue = dispatch_queue_create("com.fanwt.www.WtCore.WtKVOProxy", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
     _delegateProxyMapping = [NSMapTable strongToStrongObjectsMapTable];
     _contextKeyPathMapping = [NSMapTable strongToStrongObjectsMapTable];
   }
@@ -54,15 +54,8 @@
 
 - (void)wtRemoveObserverForContext:(void *)context {
   NSValue *valueContext = [NSValue valueWithPointer:context];
-  
-  __block NSMutableDictionary *keyPathMapping;
   dispatch_sync(_queue, ^{
     [self.delegateProxyMapping removeObjectForKey:valueContext];
-    
-    keyPathMapping = [self.contextKeyPathMapping objectForKey:valueContext];
-    for (NSString *key in keyPathMapping.allKeys) {
-      [(__bridge id)context removeObserver:WtKVOProxy.shared forKeyPath:key context:context];
-    }
     [self.contextKeyPathMapping removeObjectForKey:valueContext];
   });
 }
