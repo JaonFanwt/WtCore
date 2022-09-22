@@ -132,6 +132,9 @@
   
   NSMutableDictionary *mapping = [self wtKVOContextMapping];
   NSMutableDictionary<id, id> *keyPathContextMapping = mapping[keyPath];
+  if (!keyPathContextMapping) {
+    keyPathContextMapping = mapping[keyPath] = @{}.mutableCopy;
+  }
   NSMutableDictionary<NSValue *, WtDelegateProxy<WtKVODelegate> *> *delegateProxies = keyPathContextMapping[@"proxies"];
   
   if (!delegateProxies) {
