@@ -40,11 +40,17 @@ typedef void (^WtKVOValueChangedBlock)(id _Nullable newValue);
 /// Registers the observer block to receive KVO notifications for the key path relative to the object receiving this message.
 /// @param keyPath The key path, relative to the object receiving this message, of the property to observe. This value must not be nil.
 /// @param valueChangedBlock The Callback block.
-/// @param target When the target call dealloc method will trigger remove the KVO observer.
-/// @param replace When YES, the new [valueChangedBlock] will replace the old [valueChangedBlock]. When NO, same with [wtObserveValueForKeyPath:valueChangedBlock:takeUntilTargetDealloc:].
+/// @param cell When the cell call prepareForReuse method will trigger remove the KVO observer.
 - (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath
                                           valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock
-                                     takeUntilTargetDealloc:(id _Nullable)target
-                                                    replace:(BOOL)replace;
+                          takeUntilTableCellPrepareForReuse:(UITableViewCell *_Nonnull)cell;
+
+/// Registers the observer block to receive KVO notifications for the key path relative to the object receiving this message.
+/// @param keyPath The key path, relative to the object receiving this message, of the property to observe. This value must not be nil.
+/// @param valueChangedBlock The Callback block.
+/// @param collectionReusableView When the collectionReuseView call prepareForReuse method will trigger remove the KVO observer.
+- (WtKVOValueChangedBlock _Nonnull)wtObserveValueForKeyPath:(NSString *_Nonnull)keyPath
+                                          valueChangedBlock:(WtKVOValueChangedBlock _Nonnull)valueChangedBlock
+             takeUntilCollectionReusableViewPrepareForReuse:(UICollectionReusableView *_Nonnull)collectionReusableView;
 
 @end

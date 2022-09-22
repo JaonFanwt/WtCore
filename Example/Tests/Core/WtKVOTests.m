@@ -110,19 +110,74 @@
   XCTAssertTrue(num == 4);
 }
 
-- (void)testKVOValueChanged4 {
+- (void)testKVOValueChangedCellPrepareForReuse {
   UIView *view = [[UIView alloc] init];
+  UITableViewCell *cell = [[UITableViewCell alloc] init];
   __block int changedTimes1 = 0;
-  for (int i = 0; i < 10000; i++) {
-    [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
-      XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
-      changedTimes1++;
-    } takeUntilTargetDealloc:view replace:YES];
-  }
+  __block int num = 0;
+  [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
+    changedTimes1++;
+  } takeUntilTableCellPrepareForReuse:cell];
+  [view wtObserveValueForKeyPath:@keypath(view, alpha) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
+    num++;
+  } takeUntilTableCellPrepareForReuse:cell];
+  
   view.hidden = NO;
   XCTAssertTrue(changedTimes1 == 1);
   view.hidden = YES;
   XCTAssertTrue(changedTimes1 == 2);
+  view.hidden = YES;
+  XCTAssertTrue(changedTimes1 == 3);
+  
+  view.alpha = 0.1;
+  XCTAssertTrue(num == 1);
+  view.alpha = 0.2;
+  XCTAssertTrue(num == 2);
+  view.alpha = 0.3;
+  XCTAssertTrue(num == 3);
+  view.alpha = 0.4;
+  XCTAssertTrue(num == 4);
+  
+  [cell prepareForReuse];
+  view.hidden = YES;
+  XCTAssertTrue(changedTimes1 == 3);
+  view.alpha = 0.4;
+  XCTAssertTrue(num == 4);
+}
+
+- (void)testKVOValueChangedCollectionReusableViewPrepareForReuse {
+  UIView *view = [[UIView alloc] init];
+  UICollectionReusableView *collectionReusableView = [[UICollectionReusableView alloc] init];
+  __block int changedTimes1 = 0;
+  __block int num = 0;
+  [view wtObserveValueForKeyPath:@keypath(view, hidden) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
+    changedTimes1++;
+  } takeUntilCollectionReusableViewPrepareForReuse:collectionReusableView];
+  [view wtObserveValueForKeyPath:@keypath(view, alpha) valueChangedBlock:^(id newValue) {
+    XCTAssertTrue([newValue isKindOfClass:[NSNumber class]]);
+    num++;
+  } takeUntilCollectionReusableViewPrepareForReuse:collectionReusableView];
+  
+  view.hidden = NO;
+  XCTAssertTrue(changedTimes1 == 1);
+  view.hidden = YES;
+  XCTAssertTrue(changedTimes1 == 2);
+  view.hidden = YES;
+  XCTAssertTrue(changedTimes1 == 3);
+  
+  view.alpha = 0.1;
+  XCTAssertTrue(num == 1);
+  view.alpha = 0.2;
+  XCTAssertTrue(num == 2);
+  view.alpha = 0.3;
+  XCTAssertTrue(num == 3);
+  view.alpha = 0.4;
+  XCTAssertTrue(num == 4);
+  
+  [collectionReusableView prepareForReuse];
   view.hidden = YES;
   XCTAssertTrue(changedTimes1 == 3);
 }
