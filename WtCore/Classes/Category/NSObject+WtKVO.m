@@ -101,6 +101,7 @@ typedef void (^WtKVOHookBeforePrepareForReuseBlock)(void);
       block.block();
     }
   }
+  [[self wtKVOHookBeforePrepareForReuseBlocks] removeAllObjects];
   [self swizzle_wtkvo_prepareForReuse];
 }
 
